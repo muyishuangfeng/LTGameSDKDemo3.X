@@ -44,6 +44,7 @@ public class LoginObject implements Serializable {
     private long role_create_time;// 角色创建时间
     private int server_number;//   服务器编号
 
+
     public int getRole_number() {
         return role_number;
     }

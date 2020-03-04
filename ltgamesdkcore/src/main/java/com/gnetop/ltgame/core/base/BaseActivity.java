@@ -26,8 +26,8 @@ public abstract class BaseActivity extends SwipeBackActivity {
         setContentView(getViewId());
         initView();
         initData();
-    }
 
+    }
 
     /**
      * 绑定布局
@@ -52,10 +52,6 @@ public abstract class BaseActivity extends SwipeBackActivity {
 
     /**
      * 绑定控件
-     *
-     * @param resId
-     * @param <T>
-     * @return
      */
     public <T extends View> T $(int resId) {
         return (T) super.findViewById(resId);
@@ -119,37 +115,24 @@ public abstract class BaseActivity extends SwipeBackActivity {
 
     /**
      * 递归调用，对所有的子Fragment生效
-     *
-     * @param fragment
-     * @param requestCode
-     * @param resultCode
-     * @param data
      */
     private void handleResult(Fragment fragment, int requestCode, int resultCode, Intent data) {
         fragment.onActivityResult(requestCode, resultCode, data);//调用每个Fragment的onActivityResult
         List<Fragment> childFragment = fragment.getChildFragmentManager().getFragments(); //找到第二层Fragment
-        if (childFragment != null)
-            for (Fragment f : childFragment)
-                if (f != null) {
-                    handleResult(f, requestCode, resultCode, data);
-                }
-        if (childFragment == null)
-            Log.e(TAG, "MyBaseFragmentActivity1111");
+        for (Fragment f : childFragment)
+            if (f != null) {
+                handleResult(f, requestCode, resultCode, data);
+            }
     }
 
 
     /**
      * 添加fragment
-     *
-     * @param fragment
      */
     public void addFragment(BaseFragment fragment, boolean addToBackStack, boolean allowAnimation) {
         loadRootFragment(getFragmentContentId(), fragment,
                 addToBackStack, allowAnimation);
     }
-
-
-
 
 
 }

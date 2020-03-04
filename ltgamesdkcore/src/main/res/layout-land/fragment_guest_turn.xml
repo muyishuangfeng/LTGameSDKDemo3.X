@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="@dimen/dp_284"
-    android:layout_height="@dimen/dp_370"
+    android:layout_width="@dimen/dp_400"
+    android:layout_height="@dimen/dp_248"
     android:layout_gravity="center"
     android:background="@drawable/bg_fragment"
     android:gravity="center">
@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/dp_18"
-        android:layout_marginTop="@dimen/dp_50"
+        android:layout_marginTop="@dimen/dp_46"
         android:layout_marginRight="@dimen/dp_18"
         android:gravity="center"
         android:text="@string/text_turn_title"
@@ -24,7 +24,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/txt_guest_turn_title"
         android:layout_marginStart="@dimen/dp_18"
-        android:layout_marginTop="@dimen/dp_38"
+        android:layout_marginTop="@dimen/dp_33"
         android:layout_marginEnd="@dimen/dp_18"
         android:gravity="center">
 
@@ -64,7 +64,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/ryt_guest_bottom"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/dp_38"
+        android:layout_marginTop="@dimen/dp_33"
         android:layout_marginBottom="@dimen/dp_60"
         android:gravity="center"
         android:text="@string/text_login_continue"

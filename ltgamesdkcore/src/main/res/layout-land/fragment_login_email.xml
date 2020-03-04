@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="@dimen/dp_284"
-    android:layout_height="@dimen/dp_370"
+    android:layout_width="@dimen/dp_400"
+    android:layout_height="@dimen/dp_248"
     android:layout_gravity="center"
     android:background="@drawable/bg_fragment"
     android:gravity="center" >
@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/dp_50"
+        android:layout_marginTop="@dimen/dp_35"
         android:gravity="center"
         android:text="@string/text_login_email"
         android:textColor="@color/colorBlack"
@@ -23,9 +23,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/txt_guest_title"
-        android:layout_marginLeft="@dimen/dp_18"
-        android:layout_marginTop="@dimen/dp_25"
-        android:layout_marginRight="@dimen/dp_18"
+        android:layout_marginLeft="@dimen/dp_45"
+        android:layout_marginTop="@dimen/dp_20"
+        android:layout_marginRight="@dimen/dp_45"
         android:orientation="vertical">
 
         <EditText
@@ -103,8 +103,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/edit_layout"
-        android:layout_marginTop="@dimen/dp_22"
-        android:layout_marginBottom="@dimen/dp_60"
+        android:layout_marginTop="@dimen/dp_25"
+        android:layout_marginBottom="@dimen/dp_35"
         android:gravity="center">
 
         <TextView

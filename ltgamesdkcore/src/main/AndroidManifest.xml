@@ -2,9 +2,8 @@
     package="com.gnetop.ltgame.core">
 
     <application>
-        <activity
-            android:name=".widget.activity.LoginUIActivity"
-            android:theme="@style/CustomTheme_Dialog" />
+        <activity android:name=".widget.activity.LoginUIActivity"
+            android:theme="@style/CustomTheme_Dialog"/>
         <activity
             android:name=".widget.activity.FacebookActionActivity"
             android:exported="true"

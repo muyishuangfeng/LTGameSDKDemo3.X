@@ -11,7 +11,6 @@ import com.gnetop.ltgame.core.common.Constants;
 import com.gnetop.ltgame.core.exception.LTResultCode;
 import com.gnetop.ltgame.core.impl.OnLoginStateListener;
 import com.gnetop.ltgame.core.manager.ui.LoginUIManager;
-import com.gnetop.ltgame.core.model.BundleData;
 import com.gnetop.ltgame.core.model.LoginObject;
 import com.gnetop.ltgame.core.model.LoginResult;
 import com.gnetop.ltgame.core.ui.dialog.GeneralCenterDialog;
