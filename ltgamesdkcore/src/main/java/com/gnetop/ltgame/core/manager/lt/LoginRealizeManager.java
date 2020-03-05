@@ -50,17 +50,19 @@ public class LoginRealizeManager {
      * @param bindID    google返回的ID
      * @param account   google的账户
      * @param userName  google返回的昵称
+     * @param access_token  google返回的token
      * @param mListener 接口回调
      */
     public static void googleLogin(final Context context, String bindID,
-                                   String account, String userName,
+                                   String account, String userName,String access_token,
                                    final OnLoginStateListener mListener) {
         LTGameOptions options = LTGameCommon.options();
         if (!TextUtils.isEmpty(options.getLtAppId()) &&
                 !TextUtils.isEmpty(options.getAdID()) &&
                 !TextUtils.isEmpty(bindID) &&
                 !TextUtils.isEmpty(account) &&
-                !TextUtils.isEmpty(userName)) {
+                !TextUtils.isEmpty(userName) &&
+                !TextUtils.isEmpty(access_token)) {
             long LTTime = System.currentTimeMillis() / 1000L;
             //String LTToken = MD5Util.md5Decode("POST" + options.getLtAppId() + LTTime + options.getLtAppKey());
             String LTToken = "1";
@@ -79,6 +81,7 @@ public class LoginRealizeManager {
             params.put("bind_id", bindID);
             params.put("account", account);
             params.put("username", userName);
+            params.put("access_token", access_token);
             map.put("data", params);
             String baseUrl = "";
             if (options.getISServerTest()) {
@@ -165,17 +168,19 @@ public class LoginRealizeManager {
      * @param bindID    facebook返回的id
      * @param account   facebook的账号
      * @param userName  facebook返回的昵称
+     * @param access_token  facebook返回的token
      * @param mListener 接口回调
      */
     public static void facebookLogin(final Context context, String bindID,
-                                     String account, String userName,
+                                     String account, String userName,String access_token,
                                      final OnLoginStateListener mListener) {
         LTGameOptions options = LTGameCommon.options();
         if (!TextUtils.isEmpty(options.getLtAppId()) &&
                 !TextUtils.isEmpty(options.getAdID()) &&
                 !TextUtils.isEmpty(bindID) &&
                 !TextUtils.isEmpty(account) &&
-                !TextUtils.isEmpty(userName)) {
+                !TextUtils.isEmpty(userName) &&
+                !TextUtils.isEmpty(access_token)) {
             long LTTime = System.currentTimeMillis() / 1000L;
             //String LTToken = MD5Util.md5Decode("POST" + options.getLtAppId() + LTTime + options.getLtAppKey());
             String LTToken = "1";
@@ -194,6 +199,7 @@ public class LoginRealizeManager {
             params.put("bind_id", bindID);
             params.put("account", account);
             params.put("username", userName);
+            params.put("access_token", access_token);
             map.put("data", params);
             String baseUrl = "";
             if (options.getISServerTest()) {
@@ -1163,10 +1169,11 @@ public class LoginRealizeManager {
      * @param bindID    google返回的ID
      * @param account   google的账户
      * @param userName  google返回的昵称
+     * @param access_token  google返回的token
      * @param mListener 接口回调
      */
     public static void bindGoogle(final Context context, String bindID,
-                                  String account, String userName,
+                                  String account, String userName,String access_token,
                                   final OnLoginStateListener mListener) {
         LTGameOptions options = LTGameCommon.options();
         if (!TextUtils.isEmpty(options.getLtAppId()) &&
@@ -1174,6 +1181,7 @@ public class LoginRealizeManager {
                 !TextUtils.isEmpty(bindID) &&
                 !TextUtils.isEmpty(account) &&
                 !TextUtils.isEmpty(userName) &&
+                !TextUtils.isEmpty(access_token) &&
                 !TextUtils.isEmpty(PreferencesUtils.getString(context, Constants.USER_LT_UID_KEY))) {
             long LTTime = System.currentTimeMillis() / 1000L;
             //String LTToken = MD5Util.md5Decode("POST" + options.getLtAppId() + LTTime + options.getLtAppKey());
@@ -1189,6 +1197,7 @@ public class LoginRealizeManager {
             params.put("bind_id", bindID);
             params.put("account", account);
             params.put("username", userName);
+            params.put("access_token", access_token);
             map.put("data", params);
             String baseUrl = "";
             if (options.getISServerTest()) {
@@ -1267,10 +1276,11 @@ public class LoginRealizeManager {
      * @param bindID    Facebook返回的ID
      * @param account   Facebook的账户
      * @param userName  Facebook返回的昵称
+     * @param access_token  Facebook返回的token
      * @param mListener 接口回调
      */
     public static void bindFB(final Context context, String bindID,
-                              String account, String userName,
+                              String account, String userName,String access_token,
                               final OnLoginStateListener mListener) {
         LTGameOptions options = LTGameCommon.options();
         if (!TextUtils.isEmpty(options.getLtAppId()) &&
@@ -1278,6 +1288,7 @@ public class LoginRealizeManager {
                 !TextUtils.isEmpty(bindID) &&
                 !TextUtils.isEmpty(account) &&
                 !TextUtils.isEmpty(userName) &&
+                !TextUtils.isEmpty(access_token) &&
                 !TextUtils.isEmpty(PreferencesUtils.getString(context, Constants.USER_LT_UID_KEY))) {
             long LTTime = System.currentTimeMillis() / 1000L;
             //String LTToken = MD5Util.md5Decode("POST" + options.getLtAppId() + LTTime + options.getLtAppKey());
@@ -1293,6 +1304,7 @@ public class LoginRealizeManager {
             params.put("bind_id", bindID);
             params.put("account", account);
             params.put("username", userName);
+            params.put("access_token", access_token);
             map.put("data", params);
             String baseUrl = "";
             if (options.getISServerTest()) {

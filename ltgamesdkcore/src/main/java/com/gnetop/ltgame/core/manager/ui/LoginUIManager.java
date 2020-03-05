@@ -280,32 +280,32 @@ public class LoginUIManager {
      * Google登录
      */
     public void googleLogin(Activity activity, String bindID,
-                            String account, String userName, OnLoginStateListener mListener) {
-        LoginRealizeManager.googleLogin(activity, bindID, account, userName, mListener);
+                            String account, String userName,String accessToken, OnLoginStateListener mListener) {
+        LoginRealizeManager.googleLogin(activity, bindID, account, userName,accessToken, mListener);
     }
 
     /**
      * facebook登录
      */
     public void fbLogin(Activity activity, String bindID,
-                        String account, String userName, OnLoginStateListener mListener) {
-        LoginRealizeManager.facebookLogin(activity, bindID, account, userName, mListener);
+                        String account, String userName,String accessToken, OnLoginStateListener mListener) {
+        LoginRealizeManager.facebookLogin(activity, bindID, account, userName, accessToken,mListener);
     }
 
     /**
      * 绑定Google
      */
     public void googleBind(Activity activity, String bindID,
-                           String account, String userName, OnLoginStateListener mListener) {
-        LoginRealizeManager.bindGoogle(activity, bindID, account, userName, mListener);
+                           String account, String userName,String accessToken, OnLoginStateListener mListener) {
+        LoginRealizeManager.bindGoogle(activity, bindID, account, userName,accessToken, mListener);
     }
 
     /**
      * 绑定facebook
      */
     public void fbBind(Activity activity, String bindID,
-                       String account, String userName, OnLoginStateListener mListener) {
-        LoginRealizeManager.bindFB(activity, bindID, account, userName, mListener);
+                       String account, String userName, String accessToken,OnLoginStateListener mListener) {
+        LoginRealizeManager.bindFB(activity, bindID, account, userName,accessToken, mListener);
     }
 
 

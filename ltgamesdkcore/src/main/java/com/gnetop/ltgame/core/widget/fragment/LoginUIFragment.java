@@ -120,10 +120,12 @@ public class LoginUIFragment extends BaseFragment implements View.OnClickListene
                     case LTResultCode.STATE_GOOGLE_UI_TOKEN: //google获取信息
                         if (result.getResultModel() != null) {
                             showDialog(getResources().getString(R.string.text_loading));
-                            LoginUIManager.getInstance().googleLogin(mActivity,
+                            LoginUIManager.getInstance().googleLogin(
+                                    mActivity,
                                     result.getResultModel().getData().getId(),
                                     result.getResultModel().getData().getEmali(),
                                     result.getResultModel().getData().getNickName(),
+                                    result.getResultModel().getData().getAccessToken(),
                                     mListener);
                         }
 
@@ -135,6 +137,7 @@ public class LoginUIFragment extends BaseFragment implements View.OnClickListene
                                     result.getResultModel().getData().getId(),
                                     result.getResultModel().getData().getEmali(),
                                     result.getResultModel().getData().getNickName(),
+                                    result.getResultModel().getData().getAccessToken(),
                                     mListener);
                         }
 

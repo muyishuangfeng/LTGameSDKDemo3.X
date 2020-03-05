@@ -144,11 +144,11 @@ public class FacebookLoginHelper {
                     if (!TextUtils.isEmpty(type)) {
                         switch (type) {
                             case Constants.FB_LOGIN: //登录
-                                LoginRealizeManager.facebookLogin(activity, id, emali, name, mListener);
+                                LoginRealizeManager.facebookLogin(activity, id, emali, name, accessToken.getToken(),mListener);
 
                                 break;
                             case Constants.FB_BIND: //绑定
-                                LoginRealizeManager.bindFB(activity, id, emali, name, mListener);
+                                LoginRealizeManager.bindFB(activity, id, emali, name,accessToken.getToken(), mListener);
 
                                 break;
                             case Constants.FB_UI_TOKEN://获取token
@@ -157,6 +157,7 @@ public class FacebookLoginHelper {
                                 model.setEmali(emali);
                                 model.setId(id);
                                 model.setNickName(name);
+                                model.setAccessToken(accessToken.getToken());
                                 resultModelBaseEntry.setData(model);
                                 mListener.onState(activity, com.gnetop.ltgame.core.model.LoginResult.successOf(
                                         LTResultCode.STATE_FB_UI_TOKEN, resultModelBaseEntry));

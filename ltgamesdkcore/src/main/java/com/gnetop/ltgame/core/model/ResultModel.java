@@ -31,6 +31,16 @@ public class ResultModel implements Serializable {
     private String nickName;
     //邮箱
     private String emali;
+    //token
+    private String accessToken;
+
+    public String getAccessToken() {
+        return accessToken;
+    }
+
+    public void setAccessToken(String accessToken) {
+        this.accessToken = accessToken;
+    }
 
     public String getId() {
         return id;

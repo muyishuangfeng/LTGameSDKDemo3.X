@@ -201,6 +201,7 @@ public class BindFragment extends BaseFragment implements View.OnClickListener {
                                     result.getResultModel().getData().getId(),
                                     result.getResultModel().getData().getEmali(),
                                     result.getResultModel().getData().getNickName(),
+                                    result.getResultModel().getData().getAccessToken(),
                                     mListener);
                         }
 
@@ -212,6 +213,7 @@ public class BindFragment extends BaseFragment implements View.OnClickListener {
                                     result.getResultModel().getData().getId(),
                                     result.getResultModel().getData().getEmali(),
                                     result.getResultModel().getData().getNickName(),
+                                    result.getResultModel().getData().getAccessToken(),
                                     mListener);
                         }
 

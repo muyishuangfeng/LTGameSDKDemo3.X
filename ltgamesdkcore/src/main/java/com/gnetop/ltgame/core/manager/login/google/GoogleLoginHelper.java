@@ -89,11 +89,11 @@ public class GoogleLoginHelper {
                     switch (type) {
                         case Constants.GOOGLE_LOGIN: //登录
                             LoginRealizeManager.googleLogin(mActivityRef.get(), account.getId(),
-                                    account.getEmail(), account.getDisplayName(), mListener);
+                                    account.getEmail(), account.getDisplayName(), account.getIdToken(),mListener);
                             break;
                         case Constants.GOOGLE_BIND: //绑定
                             LoginRealizeManager.bindGoogle(mActivityRef.get(), account.getId(),
-                                    account.getEmail(), account.getDisplayName(), mListener);
+                                    account.getEmail(), account.getDisplayName(),account.getIdToken(), mListener);
                             break;
                         case Constants.GOOGLE_UI_TOKEN: //获取token
                             BaseEntry<ResultModel> resultModelBaseEntry = new BaseEntry<>();
@@ -101,6 +101,7 @@ public class GoogleLoginHelper {
                             model.setEmali(account.getEmail());
                             model.setId(account.getId());
                             model.setNickName(account.getDisplayName());
+                            model.setAccessToken(account.getIdToken());
                             resultModelBaseEntry.setData(model);
                             mListener.onState(mActivityRef.get(), LoginResult.successOf(
                                     LTResultCode.STATE_GOOGLE_UI_TOKEN, resultModelBaseEntry));
