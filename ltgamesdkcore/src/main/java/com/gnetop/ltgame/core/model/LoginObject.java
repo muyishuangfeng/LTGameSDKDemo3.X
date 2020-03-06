@@ -17,7 +17,6 @@ public class LoginObject implements Serializable {
     private String LTAppID;//乐推AppID
     private String mAdID;//唯一标识
     private String mGoogleClient;//GoogleClientID
-    private int selfRequestCode;//请求码
     private String facebookAppID;//facebook AppID
     private boolean loginOut;//退出登录
     private String mPhone;//手机号
@@ -246,13 +245,7 @@ public class LoginObject implements Serializable {
         this.mGoogleClient = mGoogleClient;
     }
 
-    public int getSelfRequestCode() {
-        return selfRequestCode;
-    }
 
-    public void setSelfRequestCode(int selfRequestCode) {
-        this.selfRequestCode = selfRequestCode;
-    }
 
 
     public String getFacebookAppID() {

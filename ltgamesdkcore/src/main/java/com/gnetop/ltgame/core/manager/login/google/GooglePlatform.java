@@ -67,14 +67,13 @@ public class GooglePlatform extends AbsPlatform {
     @Override
     public void onActivityResult(BaseActionActivity activity, int requestCode, int resultCode, Intent data) {
         super.onActivityResult(activity, requestCode, resultCode, data);
-        mGoogleHelper.onActivityResult(requestCode, data, mGoogleHelper.selfRequestCode);
+        mGoogleHelper.onActivityResult(requestCode, data);
     }
 
 
     @Override
     public void login(Activity activity, int target, LoginObject object, OnLoginStateListener listener) {
-        mGoogleHelper = new GoogleLoginHelper(activity, object.getmGoogleClient(),
-                object.getType(), object.getSelfRequestCode(), listener);
+        mGoogleHelper = new GoogleLoginHelper(activity, object.getmGoogleClient(), object.getType(),  listener);
         mGoogleHelper.loginAction(object.getmGoogleClient());
 
 

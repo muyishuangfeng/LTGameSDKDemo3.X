@@ -50,16 +50,12 @@ public class UIActivity extends AppCompatActivity {
         PreferencesUtils.init(this);
         Log.e("TAG", "ukey===" + PreferencesUtils.getString(this, Constants.USER_LT_UID_KEY));
         mResult = new LoginObject();
-        mResult.setEmail(EMAIL);
         mResult.setFacebookAppID(mFacebookId);
         mResult.setmGoogleClient(mAuthID);
         mResult.setLTAppID(mLtAppID);
         mResult.setPrivacyUrl(mProvacyUrl);
         mResult.setAgreementUrl(mAgreementUrl);
-        mResult.setGPPublicKey(mGPPublicKey);
-        mResult.setSelfRequestCode(REQUEST_CODE);
         mResult.setLoginOut(false);
-        mResult.setQqAppID(QQ_APP_ID);
         mResult.setLoginType(Constants.UI_LOGIN);
         LTGameSDK.getDefaultInstance().init(this, true, true, mResult);
 
@@ -70,8 +66,7 @@ public class UIActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 mResult.setLoginType(Constants.UI_LOGIN);
-                LTGameSDK.getDefaultInstance().login(UIActivity.this, true,
-                        true, mResult, mOnLoginListener);
+                LTGameSDK.getDefaultInstance().login(UIActivity.this,  mResult, mOnLoginListener);
             }
         });
         mBtnLoginOut = findViewById(R.id.btn_loginOut);
@@ -81,8 +76,7 @@ public class UIActivity extends AppCompatActivity {
                 mResult = new LoginObject();
                 mResult.setmGoogleClient(mAuthID);
                 mResult.setLoginType(Constants.UI_LOGIN_OUT);
-                LTGameSDK.getDefaultInstance().login(UIActivity.this, true,
-                        true, mResult, mOnLoginListener);
+                LTGameSDK.getDefaultInstance().login(UIActivity.this,  mResult, mOnLoginListener);
 
             }
         });
@@ -187,6 +181,9 @@ public class UIActivity extends AppCompatActivity {
                     break;
                 case LTResultCode.STATE_EMAIL_LOGIN_FAILED:
                     Log.e("TAGUI", "STATE_EMAIL_LOGIN_FAILED==========");
+                    break;
+                case LTResultCode.STATE_CODE_PARAMETERS_ERROR:
+                    Log.e("TAG", "STATE_CODE_PARAMETERS_ERROR==========");
                     break;
             }
         }

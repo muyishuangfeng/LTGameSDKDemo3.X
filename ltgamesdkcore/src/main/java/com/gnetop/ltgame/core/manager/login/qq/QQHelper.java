@@ -36,7 +36,7 @@ class QQHelper {
     private LoginUIListener mLoginListener;
 
 
-    QQHelper(Activity activity, String mTencentID, String type, boolean mIsLoginOut, int mLoginTarget,
+    QQHelper(Activity activity, String mTencentID, String type, boolean mIsLoginOut,
              OnLoginStateListener mListener) {
         this.mActivityRef = new WeakReference<>(activity);
         this.mTencentID = mTencentID;

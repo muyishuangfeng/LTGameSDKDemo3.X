@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
-    Button mBtnGoogle, mBtnFB, mBtnGP, mBtnGuest, mBtnQQ, mBtnPhone, mBtnOneStore, mBtnUI, mBtnDevice,mBtnGpInit;
+    Button mBtnGoogle, mBtnFB, mBtnGP, mBtnGuest,  mBtnUI, mBtnEmail;
     TextView mTxtResult;
 
     @Override
@@ -55,28 +55,14 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(MainActivity.this, GooglePlayActivity.class));
             }
         });
-        mBtnOneStore = findViewById(R.id.btn_onestore);
-        mBtnOneStore.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, OneStoreActivity.class));
-            }
-        });
-        mBtnPhone = findViewById(R.id.btn_phone);
-        mBtnPhone.setOnClickListener(new View.OnClickListener() {
+        mBtnEmail = findViewById(R.id.btn_email);
+        mBtnEmail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MainActivity.this, EmailActivity.class));
             }
         });
-        mBtnQQ = findViewById(R.id.btn_QQ);
-        mBtnQQ.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, QQActivity.class));
 
-            }
-        });
         mBtnUI = findViewById(R.id.btn_ui);
         mBtnUI.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -84,21 +70,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(MainActivity.this, UIActivity.class));
             }
         });
-        mBtnDevice = findViewById(R.id.btn_device);
-        mBtnDevice.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //TODO:新增获取手机信息方法
-            }
-        });
-        mBtnGpInit = findViewById(R.id.btn_gp_init);
-        mBtnGpInit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-
-            }
-        });
 
 
     }

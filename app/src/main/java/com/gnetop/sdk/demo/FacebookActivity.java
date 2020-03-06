@@ -50,12 +50,9 @@ public class FacebookActivity extends AppCompatActivity {
 
     private void initView() {
         mResult = new LoginObject();
-        mResult.setEmail(EMAIL);
         mResult.setFacebookAppID(mFacebookId);
         mResult.setmGoogleClient(mAuthID);
         mResult.setLTAppID(mLtAppID);
-        mResult.setGPPublicKey(mGPPublicKey);
-        mResult.setQqAppID(QQ_APP_ID);
         mResult.setLoginType(Constants.FB_LOGIN);
         mResult.setType(Constants.FB_LOGIN);
         LTGameSDK.getDefaultInstance().init(this, true, true, mResult);
@@ -69,7 +66,7 @@ public class FacebookActivity extends AppCompatActivity {
             public void onClick(View v) {
                 mResult.setType(Constants.FB_LOGIN);
                 LTGameSDK.getDefaultInstance().login(
-                        FacebookActivity.this, true, true, mResult, mOnLoginListener);
+                        FacebookActivity.this,  mResult, mOnLoginListener);
 
             }
         });
@@ -78,7 +75,7 @@ public class FacebookActivity extends AppCompatActivity {
             public void onClick(View v) {
                 mResult.setType(Constants.FB_LOGIN_OUT);
                 LTGameSDK.getDefaultInstance().login(
-                        FacebookActivity.this, true, true, mResult, mOnLoginListener);
+                        FacebookActivity.this,  mResult, mOnLoginListener);
 
             }
         });
@@ -88,7 +85,7 @@ public class FacebookActivity extends AppCompatActivity {
             public void onClick(View v) {
                 mResult.setType(Constants.FB_BIND);
                 LTGameSDK.getDefaultInstance().login(
-                        FacebookActivity.this, true, true, mResult, mOnLoginListener);
+                        FacebookActivity.this,  mResult, mOnLoginListener);
 
             }
         });
@@ -125,7 +122,9 @@ public class FacebookActivity extends AppCompatActivity {
                         break;
                     case LTResultCode.STATE_FB_BIND_SUCCESS:
                         Log.e("TAG", "STATE_FB_BIND_SUCCESS==========");
-
+                        break;
+                    case LTResultCode.STATE_CODE_PARAMETERS_ERROR:
+                        Log.e("TAG", "STATE_CODE_PARAMETERS_ERROR==========");
                         break;
                 }
             }

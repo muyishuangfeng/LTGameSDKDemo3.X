@@ -47,12 +47,9 @@ public class GuestActivity extends AppCompatActivity {
 
     private void initView() {
         mResult = new LoginObject();
-        mResult.setEmail(EMAIL);
         mResult.setFacebookAppID(mFacebookId);
         mResult.setmGoogleClient(mAuthID);
         mResult.setLTAppID(mLtAppID);
-        mResult.setGPPublicKey(mGPPublicKey);
-        mResult.setQqAppID(QQ_APP_ID);
         mResult.setLoginType(Constants.GUEST_LOGIN);
         LTGameSDK.getDefaultInstance().init(this, true, true, mResult);
 
@@ -61,8 +58,7 @@ public class GuestActivity extends AppCompatActivity {
         mBtnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                LTGameSDK.getDefaultInstance().login(GuestActivity.this, true,
-                        true, mResult, mOnLoginListener);
+                LTGameSDK.getDefaultInstance().login(GuestActivity.this,  mResult, mOnLoginListener);
 
 
             }
@@ -103,6 +99,9 @@ public class GuestActivity extends AppCompatActivity {
                         break;
                     case LTResultCode.STATE_GUEST_LOGIN_FAILED:
                         Log.e("TAG", "STATE_GUEST_LOGIN_FAILED==========");
+                        break;
+                    case LTResultCode.STATE_CODE_PARAMETERS_ERROR:
+                        Log.e("TAG", "STATE_CODE_PARAMETERS_ERROR==========");
                         break;
                 }
             }

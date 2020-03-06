@@ -20,13 +20,6 @@
         android:textAllCaps="false"
         app:layout_constraintTop_toBottomOf="@+id/btn_google" />
 
-    <Button
-        android:id="@+id/btn_gp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Google Play"
-        android:textAllCaps="false"
-        app:layout_constraintTop_toBottomOf="@+id/btn_fb" />
 
     <Button
         android:id="@+id/btn_guest"
@@ -34,31 +27,16 @@
         android:layout_height="wrap_content"
         android:text="Guest"
         android:textAllCaps="false"
-        app:layout_constraintTop_toBottomOf="@+id/btn_gp" />
+        app:layout_constraintTop_toBottomOf="@+id/btn_fb" />
 
     <Button
-        android:id="@+id/btn_phone"
+        android:id="@+id/btn_email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Phone"
+        android:text="Email"
         android:textAllCaps="false"
         app:layout_constraintTop_toBottomOf="@+id/btn_guest" />
 
-    <Button
-        android:id="@+id/btn_QQ"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="QQ"
-        android:textAllCaps="false"
-        app:layout_constraintTop_toBottomOf="@+id/btn_phone" />
-
-    <Button
-        android:id="@+id/btn_onestore"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="OneStore"
-        android:textAllCaps="false"
-        app:layout_constraintTop_toBottomOf="@+id/btn_QQ" />
 
     <Button
         android:id="@+id/btn_ui"
@@ -66,22 +44,16 @@
         android:layout_height="wrap_content"
         android:text="UI"
         android:textAllCaps="false"
-        app:layout_constraintTop_toBottomOf="@+id/btn_onestore" />
+        app:layout_constraintTop_toBottomOf="@+id/btn_email" />
 
     <Button
-        android:id="@+id/btn_device"
+        android:id="@+id/btn_gp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Device"
+        android:text="Google Play"
         android:textAllCaps="false"
         app:layout_constraintTop_toBottomOf="@+id/btn_ui" />
-    <Button
-        android:id="@+id/btn_gp_init"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Device"
-        android:textAllCaps="false"
-        app:layout_constraintTop_toBottomOf="@+id/btn_device" />
+
 
     <TextView
         android:id="@+id/txt_result"
@@ -89,7 +61,7 @@
         android:layout_height="wrap_content"
         android:text="Result"
         android:textAllCaps="false"
-        app:layout_constraintTop_toBottomOf="@+id/btn_onestore" />
+        app:layout_constraintTop_toBottomOf="@+id/btn_gp" />
 
 
 </android.support.constraint.ConstraintLayout>

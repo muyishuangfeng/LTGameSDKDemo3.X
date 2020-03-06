@@ -180,7 +180,6 @@ public class LoginUIManager {
         LoginObject object = new LoginObject();
         object.setLTAppID(result.getLTAppID());
         object.setmGoogleClient(result.getmGoogleClient());
-        object.setSelfRequestCode(result.getSelfRequestCode());
         object.setType(Constants.GOOGLE_UI_TOKEN);
         LoginManager.login(context, Target.LOGIN_GOOGLE,
                 object, mOnLoginListener);
@@ -195,7 +194,6 @@ public class LoginUIManager {
         LoginObject object = new LoginObject();
         object.setLTAppID(result.getLTAppID());
         object.setFacebookAppID(result.getFacebookAppID());
-        object.setSelfRequestCode(result.getSelfRequestCode());
         object.setType(Constants.FB_UI_TOKEN);
         LoginManager.login(context, Target.LOGIN_FACEBOOK,
                 object, mOnLoginListener);

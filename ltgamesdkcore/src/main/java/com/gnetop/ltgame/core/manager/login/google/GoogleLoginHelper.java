@@ -32,14 +32,12 @@ public class GoogleLoginHelper {
     private WeakReference<Activity> mActivityRef;
     private OnLoginStateListener mListener;
     private String clientID;
-    int selfRequestCode;
     private String type;
 
     GoogleLoginHelper(Activity activity, String clientID, String type,
-                      int selfRequestCode, OnLoginStateListener listener) {
+                      OnLoginStateListener listener) {
         this.mActivityRef = new WeakReference<>(activity);
         this.clientID = clientID;
-        this.selfRequestCode = selfRequestCode;
         this.mListener = listener;
         this.type = type;
         this.mLoginTarget = Target.LOGIN_GOOGLE;
@@ -67,14 +65,14 @@ public class GoogleLoginHelper {
                 .build();
         GoogleSignInClient mGoogleSignInClient = GoogleSignIn.getClient(mActivityRef.get(), gso);
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
-        mActivityRef.get().startActivityForResult(signInIntent, selfRequestCode);
+        mActivityRef.get().startActivityForResult(signInIntent, LTResultCode.GOOGLE_SELF_REQUEST_CODE);
     }
 
     /**
      * 登录回调
      */
-    void onActivityResult(int requestCode, Intent data, int selfRequestCode) {
-        if (requestCode == selfRequestCode) {
+    void onActivityResult(int requestCode, Intent data) {
+        if (requestCode == LTResultCode.GOOGLE_SELF_REQUEST_CODE) {
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             handleSignInResult(task);
         }

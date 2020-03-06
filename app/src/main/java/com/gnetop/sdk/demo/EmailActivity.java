@@ -3,7 +3,6 @@ package com.gnetop.sdk.demo;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -57,14 +56,11 @@ public class EmailActivity extends AppCompatActivity {
         PreferencesUtils.init(this);
         Log.e("TAG", "ukey===" + PreferencesUtils.getString(this, Constants.USER_LT_UID_KEY));
         mResult = new LoginObject();
-        mResult.setEmail(EMAIL);
         mResult.setFacebookAppID(mFacebookId);
         mResult.setmGoogleClient(mAuthID);
         mResult.setLTAppID(mLtAppID);
-        mResult.setGPPublicKey(mGPPublicKey);
-        mResult.setQqAppID(QQ_APP_ID);
-        mResult.setLoginType("4");
-        mResult.setType("1");
+        mResult.setLoginType(Constants.EMAIL_LOGIN);
+        mResult.setType(Constants.EMAIL_LOGIN);
         LTGameSDK.getDefaultInstance().init(this, true, true, mResult);
 
 
@@ -74,20 +70,21 @@ public class EmailActivity extends AppCompatActivity {
         mBtnStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mResult.setLoginType("4");
-                mResult.setType("3");
-                LTGameSDK.getDefaultInstance().login(EmailActivity.this, true, true, mResult, mOnLoginListener);
+                mResult.setLoginType(Constants.EMAIL_LOGIN);
+                mResult.setType(Constants.EMAIL_GET_CODE);
+                mResult.setEmail(EMAIL);
+                LTGameSDK.getDefaultInstance().login(EmailActivity.this,  mResult, mOnLoginListener);
 
             }
         });
         mBtnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mResult.setLoginType("4");
-                mResult.setType("1");
+                mResult.setLoginType(Constants.EMAIL_LOGIN);
+                mResult.setType(Constants.EMAIL_LOGIN);
                 mResult.setAuthCode(mEdtEmail.getText().toString().trim());
                 Log.e("TAG",mEdtEmail.getText().toString());
-                LTGameSDK.getDefaultInstance().login(EmailActivity.this, true, true, mResult, mOnLoginListener);
+                LTGameSDK.getDefaultInstance().login(EmailActivity.this, mResult, mOnLoginListener);
 
             }
         });
@@ -96,10 +93,10 @@ public class EmailActivity extends AppCompatActivity {
         mBtnBind.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mResult.setLoginType("4");
-                mResult.setType("2");
+                mResult.setLoginType(Constants.EMAIL_LOGIN);
+                mResult.setType(Constants.EMAIL_BIND);
                 mResult.setAuthCode(mEdtEmail.getText().toString().trim());
-                LTGameSDK.getDefaultInstance().login(EmailActivity.this, true, true, mResult, mOnLoginListener);
+                LTGameSDK.getDefaultInstance().login(EmailActivity.this,  mResult, mOnLoginListener);
 
             }
         });
@@ -138,6 +135,15 @@ public class EmailActivity extends AppCompatActivity {
                         break;
                     case LTResultCode.STATE_EMAIL_LOGIN_FAILED:
                         Log.e("TAG", "STATE_EMAIL_LOGIN_FAILED==========");
+                        break;
+                    case LTResultCode.STATE_EMAIL_GET_CODE_FAILED:
+                        Log.e("TAG", "STATE_EMAIL_GET_CODE_FAILED==========");
+                        break;
+                    case LTResultCode.STATE_EMAIL_GET_CODE_SUCCESS:
+                        Log.e("TAG", "STATE_EMAIL_GET_CODE_SUCCESS==========");
+                        break;
+                    case LTResultCode.STATE_CODE_PARAMETERS_ERROR:
+                        Log.e("TAG", "STATE_CODE_PARAMETERS_ERROR==========");
                         break;
 
                 }

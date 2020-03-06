@@ -41,8 +41,6 @@ public class GooglePlayHelper {
     private String mPublicKey;
     private int mRechargeTarget;
     private OnRechargeStateListener mListener;
-    //请求码
-    int mRequestCode;
     //商品
     private String mSku;
     private int role_number;//  角色编号（游戏服务器用户ID）
@@ -54,8 +52,7 @@ public class GooglePlayHelper {
 
     GooglePlayHelper(Activity activity, String mPublicKey, int role_number,
                      int server_number, int goods_number, int mPayTest,
-                     String sku, int requestCode,
-                     OnRechargeStateListener mListener) {
+                     String sku, OnRechargeStateListener mListener) {
         this.mActivityRef = new WeakReference<>(activity);
         this.mPublicKey = mPublicKey;
         this.role_number = role_number;
@@ -63,7 +60,6 @@ public class GooglePlayHelper {
         this.goods_number = goods_number;
         this.mSku = sku;
         this.mPayTest = mPayTest;
-        this.mRequestCode = requestCode;
         this.mRechargeTarget = Target.RECHARGE_GOOGLE;
         this.mListener = mListener;
     }
@@ -262,7 +258,7 @@ public class GooglePlayHelper {
                                                                         //给用户一个提示,存在未完成的支付订单,是否完成支付
                                                                         consumeProduct(inv.getPurchase(mSku));
                                                                     } else {
-                                                                        getProduct(mRequestCode, mSku);
+                                                                        getProduct(LTResultCode.GP_SELF_REQUEST_CODE, mSku);
                                                                     }
                                                                 }
                                                             }
@@ -320,13 +316,12 @@ public class GooglePlayHelper {
      * @param requestCode     请求码
      * @param resultCode      结果码
      * @param data            数据
-     * @param selfRequestCode 自定义请求码
      */
-    void onActivityResult(int requestCode, int resultCode, Intent data, int selfRequestCode) {
+    void onActivityResult(int requestCode, int resultCode, Intent data) {
         //将回调交给帮助类来处理, 否则会出现支付正在进行的错误
         if (mHelper == null) return;
         mHelper.handleActivityResult(requestCode, resultCode, data);
-        if (requestCode == selfRequestCode) {
+        if (requestCode == LTResultCode.GP_SELF_REQUEST_CODE) {
             int responseCode = data.getIntExtra("RESPONSE_CODE", 0);
             //订单信息
             String purchaseData = data.getStringExtra("INAPP_PURCHASE_DATA");

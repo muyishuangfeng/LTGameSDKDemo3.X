@@ -16,8 +16,6 @@ public class RechargeObject {
     private String mAdID;
     //baseUrl
     private String baseUrl;
-    //请求码
-    private int selfRequestCode;
     private String fbAppID;
     //商品
     private String sku;
@@ -114,13 +112,7 @@ public class RechargeObject {
     }
 
 
-    public int getSelfRequestCode() {
-        return selfRequestCode;
-    }
 
-    public void setSelfRequestCode(int selfRequestCode) {
-        this.selfRequestCode = selfRequestCode;
-    }
 
     public String getBaseUrl() {
         return baseUrl;

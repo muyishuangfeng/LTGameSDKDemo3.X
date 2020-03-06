@@ -21,14 +21,10 @@ public class LTGameOptions {
     private String googleClientID;
     //乐推AppID
     private String ltAppId;
-    //邮箱
-    private String email;
     //广告ID（唯一）
     private String adID;
     //包名
     private String packageID;
-    //请求码
-    private int selfRequestCode;
     //是否沙盒测试
     private int mPayTest;
     //公钥
@@ -157,13 +153,6 @@ public class LTGameOptions {
         this.debug = debug;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
 
     public String getLtAppId() {
         return ltAppId;
@@ -185,10 +174,8 @@ public class LTGameOptions {
                 ", wxAppId='" + wxAppId + '\'' +
                 ", googleClientID='" + googleClientID + '\'' +
                 ", ltAppId='" + ltAppId + '\'' +
-                ", email='" + email + '\'' +
                 ", adID='" + adID + '\'' +
                 ", packageID='" + packageID + '\'' +
-                ", selfRequestCode=" + selfRequestCode +
                 ", mPayTest=" + mPayTest +
                 ", mPublicKey='" + mPublicKey + '\'' +
                 ", mPhone='" + mPhone + '\'' +
@@ -209,9 +196,6 @@ public class LTGameOptions {
                 '}';
     }
 
-    public int getSelfRequestCode() {
-        return selfRequestCode;
-    }
 
     public String getFBAppID() {
         return fbAppID;
@@ -249,7 +233,6 @@ public class LTGameOptions {
         this.ltAppId = builder.ltAppId;
         this.adID = builder.adID;
         this.packageID = builder.packageID;
-        this.selfRequestCode = builder.selfRequestCode;
         this.fbAppID = builder.fbAppID;
         this.mPayTest = builder.mPayTest;
         this.wxSecretKey = builder.wxSecretKey;
@@ -259,7 +242,6 @@ public class LTGameOptions {
         this.wxSecretKey = builder.wxSecretKey;
         this.cacheDir = builder.cacheDir;
         this.mISServerTest = builder.mISServerTest;
-        this.email = builder.email;
         this.isEmailEnable=builder.isEmailEnable;
         this.isFBEnable=builder.isFBEnable;
         this.isQQEnable=builder.isQQEnable;
@@ -309,8 +291,6 @@ public class LTGameOptions {
         private String adID;
         //包名
         private String packageID;
-        //请求码
-        private int selfRequestCode;
         //facebook  AppID
         private String fbAppID;
         //是否沙盒测试
@@ -325,8 +305,7 @@ public class LTGameOptions {
         private boolean mISServerTest;
         private String wxSecretKey;
         private Context context;
-        //邮箱
-        private String email;
+
 
         public Builder(Context context) {
             this.context = context;
@@ -338,8 +317,7 @@ public class LTGameOptions {
             this.isFBEnable=true;
             return this;
         }
-        public Builder setEmail(String email) {
-            this.email = email;
+        public Builder emailEnable() {
             this.isEmailEnable=true;
             return this;
         }
@@ -384,12 +362,6 @@ public class LTGameOptions {
             return this;
         }
 
-
-
-        public Builder requestCode(int selfRequestCode) {
-            this.selfRequestCode = selfRequestCode;
-            return this;
-        }
 
         public Builder setAdID(String adID) {
             this.adID = adID;

@@ -34,8 +34,7 @@ public class QQPlatform extends AbsPlatform {
 
     @Override
     public void login(Activity activity, int target, LoginObject object, OnLoginStateListener listener) {
-        mHelper = new QQHelper(activity, object.getQqAppID(), object.getmAdID(), object.isLoginOut(),
-                target, listener);
+        mHelper = new QQHelper(activity, object.getQqAppID(), object.getmAdID(), object.isLoginOut(), listener);
         mHelper.loginAction();
     }
 

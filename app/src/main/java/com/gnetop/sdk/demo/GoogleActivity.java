@@ -54,12 +54,9 @@ public class GoogleActivity extends AppCompatActivity {
         PreferencesUtils.init(this);
         Log.e("TAG", "ukey===" + PreferencesUtils.getString(this, Constants.USER_LT_UID_KEY));
         mResult = new LoginObject();
-        mResult.setEmail(EMAIL);
         mResult.setFacebookAppID(mFacebookId);
         mResult.setmGoogleClient(mAuthID);
         mResult.setLTAppID(mLtAppID);
-        mResult.setGPPublicKey(mGPPublicKey);
-        mResult.setQqAppID(QQ_APP_ID);
         mResult.setLoginType(Constants.GOOGLE_LOGIN);
         mResult.setType(Constants.GOOGLE_LOGIN);
         LTGameSDK.getDefaultInstance().init(this, true, true, mResult);
@@ -72,7 +69,7 @@ public class GoogleActivity extends AppCompatActivity {
             public void onClick(View v) {
                 mResult.setType(Constants.GOOGLE_LOGIN);
                 LTGameSDK.getDefaultInstance().login(GoogleActivity.this,
-                        true, true, mResult, mOnLoginListener);
+                         mResult, mOnLoginListener);
 
             }
         });
@@ -81,7 +78,7 @@ public class GoogleActivity extends AppCompatActivity {
             public void onClick(View v) {
                 mResult.setType(Constants.GOOGLE_LOGIN_OUT);
                 LTGameSDK.getDefaultInstance().login(GoogleActivity.this,
-                        true, true, mResult, mOnLoginListener);
+                         mResult, mOnLoginListener);
 
             }
         });
@@ -96,8 +93,7 @@ public class GoogleActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 mResult.setType(Constants.GOOGLE_BIND);
-                LTGameSDK.getDefaultInstance().login(GoogleActivity.this, true,
-                        true, mResult, mOnLoginListener);
+                LTGameSDK.getDefaultInstance().login(GoogleActivity.this, mResult, mOnLoginListener);
 
             }
         });
@@ -143,7 +139,9 @@ public class GoogleActivity extends AppCompatActivity {
                     case LTResultCode.STATE_GOOGLE_LOGIN_FAILED:
                         Log.e("TAG", "STATE_GOOGLE_LOGIN_FAILED==========");
                         break;
-
+                    case LTResultCode.STATE_CODE_PARAMETERS_ERROR:
+                        Log.e("TAG", "STATE_CODE_PARAMETERS_ERROR==========");
+                        break;
                 }
 
 

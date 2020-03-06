@@ -204,7 +204,17 @@ public class LTResultCode {
     public static final int STATE_FB_UI_TOKEN = BASE_CODE + 76;
     //获取Google的信息
     public static final int STATE_GOOGLE_UI_TOKEN = BASE_CODE + 77;
-
+    //==========================请求码==============================//
+    //==========================请求码==============================//
+    //==========================请求码==============================//
+    //Facebook请求码
+    public static final int FB_SELF_REQUEST_CODE = BASE_CODE + 78;
+    //Google请求码
+    public static final int GOOGLE_SELF_REQUEST_CODE = BASE_CODE + 79;
+    //oneStore请求码
+    public static final int ONE_STORE_SELF_REQUEST_CODE = BASE_CODE + 80;
+    //googlePlay请求码
+    public static final int GP_SELF_REQUEST_CODE = BASE_CODE + 81;
 
     //成功信息
     public static final String MSG_STATE_SUCCESS = "SUCCESS";

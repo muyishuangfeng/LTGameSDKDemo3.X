@@ -56,7 +56,7 @@ public class LTGameSDK {
     /**
      * 登录
      */
-    public void login(Activity context, boolean debug, boolean isServerTest,
+    public void login(Activity context,
                       LoginObject result, OnLoginStateListener mOnLoginListener) {
         if (result != null) {
             switch (result.getLoginType()) {
@@ -130,11 +130,11 @@ public class LTGameSDK {
                                 .isServerTest(isServerTest)
                                 .setFBiD(result.getFacebookAppID())
                                 .setGoogle(result.getmGoogleClient())
-                                .setGP(result.getGPPublicKey())
+                                //.setGP(result.getGPPublicKey())
                                 .setGuest()
                                 //.setOneStore(result.getOneStorePublicKey())
                                 .appID(result.getLTAppID())
-                                .setEmail(result.getEmail())
+                                .emailEnable()
                                 .setAdID(mAdID)
                                 .build();
                         LTGameCommon.init(options);
@@ -236,16 +236,11 @@ public class LTGameSDK {
         object.setmAdID(mAdID);
         object.setType(result.getType());
         object.setEmail(result.getEmail());
-        if (result.getType().equals("3")) {
-            if (!TextUtils.isEmpty(result.getAuthCode())) {
-                object.setAuthCode(result.getAuthCode());
-            } else {
-                object.setAuthCode("");
-            }
-        } else {
+        if (!TextUtils.isEmpty(result.getAuthCode())) {
             object.setAuthCode(result.getAuthCode());
+        } else {
+            object.setAuthCode("");
         }
-
         LoginManager.login(context, Target.LOGIN_EMAIL,
                 object, mOnLoginListener);
     }
