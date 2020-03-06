@@ -38,7 +38,7 @@ public class FacebookActivity extends AppCompatActivity {
 
     String mLtToken;
     int mLtId;
-    LoginObject mResult;
+    LoginObject mRequest;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,13 +49,13 @@ public class FacebookActivity extends AppCompatActivity {
     }
 
     private void initView() {
-        mResult = new LoginObject();
-        mResult.setFacebookAppID(mFacebookId);
-        mResult.setmGoogleClient(mAuthID);
-        mResult.setLTAppID(mLtAppID);
-        mResult.setLoginType(Constants.FB_LOGIN);
-        mResult.setType(Constants.FB_LOGIN);
-        LTGameSDK.getDefaultInstance().init(this, true, true, mResult);
+        mRequest = new LoginObject();
+        mRequest.setFacebookAppID(mFacebookId);
+        mRequest.setmGoogleClient(mAuthID);
+        mRequest.setLTAppID(mLtAppID);
+        mRequest.setLoginType(Constants.FB_LOGIN);
+        mRequest.setType(Constants.FB_LOGIN);
+        LTGameSDK.getDefaultInstance().init(this, true, true, mRequest);
 
 
         mTxtResult = findViewById(R.id.txt_result);
@@ -64,18 +64,18 @@ public class FacebookActivity extends AppCompatActivity {
         mBtnStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mResult.setType(Constants.FB_LOGIN);
+                mRequest.setType(Constants.FB_LOGIN);
                 LTGameSDK.getDefaultInstance().login(
-                        FacebookActivity.this,  mResult, mOnLoginListener);
+                        FacebookActivity.this,  mRequest, mOnLoginListener);
 
             }
         });
         mBtnLoginOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mResult.setType(Constants.FB_LOGIN_OUT);
+                mRequest.setType(Constants.FB_LOGIN_OUT);
                 LTGameSDK.getDefaultInstance().login(
-                        FacebookActivity.this,  mResult, mOnLoginListener);
+                        FacebookActivity.this,  mRequest, mOnLoginListener);
 
             }
         });
@@ -83,9 +83,9 @@ public class FacebookActivity extends AppCompatActivity {
         mBtnBind.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mResult.setType(Constants.FB_BIND);
+                mRequest.setType(Constants.FB_BIND);
                 LTGameSDK.getDefaultInstance().login(
-                        FacebookActivity.this,  mResult, mOnLoginListener);
+                        FacebookActivity.this,  mRequest, mOnLoginListener);
 
             }
         });

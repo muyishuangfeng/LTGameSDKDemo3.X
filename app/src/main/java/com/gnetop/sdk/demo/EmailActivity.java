@@ -40,7 +40,7 @@ public class EmailActivity extends AppCompatActivity {
     private OnLoginStateListener mOnLoginListener;
     String mLtToken;
     int mLtId;
-    LoginObject mResult;
+    LoginObject mRequest;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,13 +55,13 @@ public class EmailActivity extends AppCompatActivity {
 
         PreferencesUtils.init(this);
         Log.e("TAG", "ukey===" + PreferencesUtils.getString(this, Constants.USER_LT_UID_KEY));
-        mResult = new LoginObject();
-        mResult.setFacebookAppID(mFacebookId);
-        mResult.setmGoogleClient(mAuthID);
-        mResult.setLTAppID(mLtAppID);
-        mResult.setLoginType(Constants.EMAIL_LOGIN);
-        mResult.setType(Constants.EMAIL_LOGIN);
-        LTGameSDK.getDefaultInstance().init(this, true, true, mResult);
+        mRequest = new LoginObject();
+        mRequest.setFacebookAppID(mFacebookId);
+        mRequest.setmGoogleClient(mAuthID);
+        mRequest.setLTAppID(mLtAppID);
+        mRequest.setLoginType(Constants.EMAIL_LOGIN);
+        mRequest.setType(Constants.EMAIL_LOGIN);
+        LTGameSDK.getDefaultInstance().init(this, true, true, mRequest);
 
 
         mTxtResult = findViewById(R.id.txt_result);
@@ -70,21 +70,21 @@ public class EmailActivity extends AppCompatActivity {
         mBtnStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mResult.setLoginType(Constants.EMAIL_LOGIN);
-                mResult.setType(Constants.EMAIL_GET_CODE);
-                mResult.setEmail(EMAIL);
-                LTGameSDK.getDefaultInstance().login(EmailActivity.this,  mResult, mOnLoginListener);
+                mRequest.setLoginType(Constants.EMAIL_LOGIN);
+                mRequest.setType(Constants.EMAIL_GET_CODE);
+                mRequest.setEmail(EMAIL);
+                LTGameSDK.getDefaultInstance().login(EmailActivity.this,  mRequest, mOnLoginListener);
 
             }
         });
         mBtnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mResult.setLoginType(Constants.EMAIL_LOGIN);
-                mResult.setType(Constants.EMAIL_LOGIN);
-                mResult.setAuthCode(mEdtEmail.getText().toString().trim());
+                mRequest.setLoginType(Constants.EMAIL_LOGIN);
+                mRequest.setType(Constants.EMAIL_LOGIN);
+                mRequest.setAuthCode(mEdtEmail.getText().toString().trim());
                 Log.e("TAG",mEdtEmail.getText().toString());
-                LTGameSDK.getDefaultInstance().login(EmailActivity.this, mResult, mOnLoginListener);
+                LTGameSDK.getDefaultInstance().login(EmailActivity.this, mRequest, mOnLoginListener);
 
             }
         });
@@ -93,10 +93,10 @@ public class EmailActivity extends AppCompatActivity {
         mBtnBind.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mResult.setLoginType(Constants.EMAIL_LOGIN);
-                mResult.setType(Constants.EMAIL_BIND);
-                mResult.setAuthCode(mEdtEmail.getText().toString().trim());
-                LTGameSDK.getDefaultInstance().login(EmailActivity.this,  mResult, mOnLoginListener);
+                mRequest.setLoginType(Constants.EMAIL_LOGIN);
+                mRequest.setType(Constants.EMAIL_BIND);
+                mRequest.setAuthCode(mEdtEmail.getText().toString().trim());
+                LTGameSDK.getDefaultInstance().login(EmailActivity.this,  mRequest, mOnLoginListener);
 
             }
         });

@@ -40,7 +40,7 @@ public class GoogleActivity extends AppCompatActivity {
     private OnLoginStateListener mOnLoginListener;
     String mLtToken;
     int mLtId;
-    LoginObject mResult;
+    LoginObject mRequest;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,13 +53,13 @@ public class GoogleActivity extends AppCompatActivity {
     private void initView() {
         PreferencesUtils.init(this);
         Log.e("TAG", "ukey===" + PreferencesUtils.getString(this, Constants.USER_LT_UID_KEY));
-        mResult = new LoginObject();
-        mResult.setFacebookAppID(mFacebookId);
-        mResult.setmGoogleClient(mAuthID);
-        mResult.setLTAppID(mLtAppID);
-        mResult.setLoginType(Constants.GOOGLE_LOGIN);
-        mResult.setType(Constants.GOOGLE_LOGIN);
-        LTGameSDK.getDefaultInstance().init(this, true, true, mResult);
+        mRequest = new LoginObject();
+        mRequest.setFacebookAppID(mFacebookId);
+        mRequest.setmGoogleClient(mAuthID);
+        mRequest.setLTAppID(mLtAppID);
+        mRequest.setLoginType(Constants.GOOGLE_LOGIN);
+        mRequest.setType(Constants.GOOGLE_LOGIN);
+        LTGameSDK.getDefaultInstance().init(this, true, true, mRequest);
         mTxtResult = findViewById(R.id.txt_result);
         mBtnStart = findViewById(R.id.btn_start);
         mBtnAuto = findViewById(R.id.btn_auto);
@@ -67,18 +67,18 @@ public class GoogleActivity extends AppCompatActivity {
         mBtnStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mResult.setType(Constants.GOOGLE_LOGIN);
+                mRequest.setType(Constants.GOOGLE_LOGIN);
                 LTGameSDK.getDefaultInstance().login(GoogleActivity.this,
-                         mResult, mOnLoginListener);
+                         mRequest, mOnLoginListener);
 
             }
         });
         mBtnLoginOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mResult.setType(Constants.GOOGLE_LOGIN_OUT);
+                mRequest.setType(Constants.GOOGLE_LOGIN_OUT);
                 LTGameSDK.getDefaultInstance().login(GoogleActivity.this,
-                         mResult, mOnLoginListener);
+                         mRequest, mOnLoginListener);
 
             }
         });
@@ -92,8 +92,8 @@ public class GoogleActivity extends AppCompatActivity {
         mBtnBind.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mResult.setType(Constants.GOOGLE_BIND);
-                LTGameSDK.getDefaultInstance().login(GoogleActivity.this, mResult, mOnLoginListener);
+                mRequest.setType(Constants.GOOGLE_BIND);
+                LTGameSDK.getDefaultInstance().login(GoogleActivity.this, mRequest, mOnLoginListener);
 
             }
         });

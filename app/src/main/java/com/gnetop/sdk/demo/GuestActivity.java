@@ -34,7 +34,7 @@ public class GuestActivity extends AppCompatActivity {
     private static final String mONEPublicKey = "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCu9RPDbvVqM8XWqVc75JXccIXN1VS8XViRZzATUq62kkFIXCeo52LKzBCh3iWFQIvX3jqDhim4ESqHMezEx8CxaTq8NpNoQXutBNmOEl+/7HTUsZxI93wgn9+7pFMyoFlasqmVjCcM7zbbAx5G0bySsm98TFxTu16OGmO01JGonQIDAQAB";
     private static final String QQ_APP_ID = "1108097616";
     private static final String EMAIL = "yangkemuyi@sina.com";
-    LoginObject mResult;
+    LoginObject mRequest;
 
 
     @Override
@@ -46,19 +46,19 @@ public class GuestActivity extends AppCompatActivity {
     }
 
     private void initView() {
-        mResult = new LoginObject();
-        mResult.setFacebookAppID(mFacebookId);
-        mResult.setmGoogleClient(mAuthID);
-        mResult.setLTAppID(mLtAppID);
-        mResult.setLoginType(Constants.GUEST_LOGIN);
-        LTGameSDK.getDefaultInstance().init(this, true, true, mResult);
+        mRequest = new LoginObject();
+        mRequest.setFacebookAppID(mFacebookId);
+        mRequest.setmGoogleClient(mAuthID);
+        mRequest.setLTAppID(mLtAppID);
+        mRequest.setLoginType(Constants.GUEST_LOGIN);
+        LTGameSDK.getDefaultInstance().init(this, true, true, mRequest);
 
         mTxtResult = findViewById(R.id.txt_result);
         mBtnLogin = findViewById(R.id.btn_login);
         mBtnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                LTGameSDK.getDefaultInstance().login(GuestActivity.this,  mResult, mOnLoginListener);
+                LTGameSDK.getDefaultInstance().login(GuestActivity.this,  mRequest, mOnLoginListener);
 
 
             }

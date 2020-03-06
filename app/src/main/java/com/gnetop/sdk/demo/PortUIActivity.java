@@ -35,7 +35,7 @@ public class PortUIActivity extends AppCompatActivity {
     private static final String EMAIL = "yangkemuyi@sina.com";
     String mLtToken;
     int mLtId;
-    LoginObject mResult;
+    LoginObject mRequest;
 
 
     @Override
@@ -49,15 +49,15 @@ public class PortUIActivity extends AppCompatActivity {
     protected void initView() {
         PreferencesUtils.init(this);
         Log.e("TAG", "ukey===" + PreferencesUtils.getString(this, Constants.USER_LT_UID_KEY));
-        mResult = new LoginObject();
-        mResult.setFacebookAppID(mFacebookId);
-        mResult.setmGoogleClient(mAuthID);
-        mResult.setLTAppID(mLtAppID);
-        mResult.setPrivacyUrl(mProvacyUrl);
-        mResult.setAgreementUrl(mAgreementUrl);
-        mResult.setLoginOut(false);
-        mResult.setLoginType(Constants.UI_LOGIN);
-        LTGameSDK.getDefaultInstance().init(this, true, true, mResult);
+        mRequest = new LoginObject();
+        mRequest.setFacebookAppID(mFacebookId);
+        mRequest.setmGoogleClient(mAuthID);
+        mRequest.setLTAppID(mLtAppID);
+        mRequest.setPrivacyUrl(mProvacyUrl);
+        mRequest.setAgreementUrl(mAgreementUrl);
+        mRequest.setLoginOut(false);
+        mRequest.setLoginType(Constants.UI_LOGIN);
+        LTGameSDK.getDefaultInstance().init(this, true, true, mRequest);
 
 
         mTxtResult = findViewById(R.id.txt_result);
@@ -65,18 +65,18 @@ public class PortUIActivity extends AppCompatActivity {
         mBtnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mResult.setLoginType(Constants.UI_LOGIN);
-                LTGameSDK.getDefaultInstance().login(PortUIActivity.this,  mResult, mOnLoginListener);
+                mRequest.setLoginType(Constants.UI_LOGIN);
+                LTGameSDK.getDefaultInstance().login(PortUIActivity.this,  mRequest, mOnLoginListener);
             }
         });
         mBtnLoginOut = findViewById(R.id.btn_loginOut);
         mBtnLoginOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mResult = new LoginObject();
-                mResult.setmGoogleClient(mAuthID);
-                mResult.setLoginType(Constants.UI_LOGIN_OUT);
-                LTGameSDK.getDefaultInstance().login(PortUIActivity.this,  mResult, mOnLoginListener);
+                mRequest = new LoginObject();
+                mRequest.setmGoogleClient(mAuthID);
+                mRequest.setLoginType(Constants.UI_LOGIN_OUT);
+                LTGameSDK.getDefaultInstance().login(PortUIActivity.this,  mRequest, mOnLoginListener);
 
             }
         });
