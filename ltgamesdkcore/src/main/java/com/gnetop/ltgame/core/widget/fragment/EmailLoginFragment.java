@@ -34,7 +34,7 @@ public class EmailLoginFragment extends BaseFragment implements View.OnClickList
     String googleClientID;
     String LTAppID;
     String mAdID;
-    boolean mServerTest;
+    String mServerTest;
     String mFacebookID;
     boolean mIsLoginOut;
     EditText mEdtEmail, mEdtCode;
@@ -101,7 +101,7 @@ public class EmailLoginFragment extends BaseFragment implements View.OnClickList
                 googleClientID = mData.getmGoogleClient();
                 LTAppID = mData.getLTAppID();
                 mAdID = mData.getmAdID();
-                mFacebookID = mData.getFacebookAppID();
+                mFacebookID = mData.getFBAppID();
                 mServerTest = mData.isServerTest();
                 mIsLoginOut = mData.isLoginOut();
                 mEmailType = mData.getEmailType();
@@ -252,7 +252,7 @@ public class EmailLoginFragment extends BaseFragment implements View.OnClickList
         data.setmGoogleClient(googleClientID);
         data.setmAdID(mAdID);
         data.setServerTest(mServerTest);
-        data.setFacebookAppID(mFacebookID);
+        data.setFBAppID(mFacebookID);
         data.setLoginOut(mIsLoginOut);
         data.setBind(true);
         getProxyActivity().addFragment(LoginFailedFragment.newInstance(data),
@@ -286,7 +286,7 @@ public class EmailLoginFragment extends BaseFragment implements View.OnClickList
         data.setLTAppID(LTAppID);
         data.setmGoogleClient(googleClientID);
         data.setmAdID(mAdID);
-        data.setFacebookAppID(mFacebookID);
+        data.setFBAppID(mFacebookID);
         data.setServerTest(mServerTest);
         data.setLoginOut(mIsLoginOut);
         getProxyActivity().addFragment(LoginUIFragment.newInstance(data),
@@ -308,7 +308,7 @@ public class EmailLoginFragment extends BaseFragment implements View.OnClickList
         data.setmGoogleClient(googleClientID);
         data.setmAdID(mAdID);
         data.setServerTest(mServerTest);
-        data.setFacebookAppID(mFacebookID);
+        data.setFBAppID(mFacebookID);
         data.setLoginOut(mIsLoginOut);
         data.setBind(false);
         getProxyActivity().addFragment(LoginFailedFragment.newInstance(data),

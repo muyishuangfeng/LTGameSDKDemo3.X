@@ -17,7 +17,7 @@ public class LoginObject implements Serializable {
     private String LTAppID;//乐推AppID
     private String mAdID;//唯一标识
     private String mGoogleClient;//GoogleClientID
-    private String facebookAppID;//facebook AppID
+    private String fbAppID;//facebook AppID
     private boolean loginOut;//退出登录
     private String mPhone;//手机号
     private String mPassword;//密码
@@ -31,7 +31,7 @@ public class LoginObject implements Serializable {
     private String loginType;//登录类型
     private String mAgreementUrl;//用户协议
     private String mPrivacyUrl;//隐私政策
-    private boolean isServerTest;//是否是测试服
+    private String isServerTest;//是否是测试服
     private String mGPPublicKey;//google支付公钥
     private String mOneStorePublicKey;//onestore支付公钥
     private boolean mBind;//是否绑定过
@@ -42,7 +42,16 @@ public class LoginObject implements Serializable {
     private String role_level;//      角色等级
     private long role_create_time;// 角色创建时间
     private int server_number;//   服务器编号
+    private boolean debug;//   是否是debug模式
 
+
+    public boolean isDebug() {
+        return debug;
+    }
+
+    public void setDebug(boolean debug) {
+        this.debug = debug;
+    }
 
     public int getRole_number() {
         return role_number;
@@ -124,11 +133,11 @@ public class LoginObject implements Serializable {
         this.mOneStorePublicKey = mOneStorePublicKey;
     }
 
-    public boolean isServerTest() {
+    public String isServerTest() {
         return isServerTest;
     }
 
-    public void setServerTest(boolean serverTest) {
+    public void setServerTest(String serverTest) {
         isServerTest = serverTest;
     }
 
@@ -248,12 +257,12 @@ public class LoginObject implements Serializable {
 
 
 
-    public String getFacebookAppID() {
-        return facebookAppID;
+    public String getFBAppID() {
+        return fbAppID;
     }
 
-    public void setFacebookAppID(String facebookAppID) {
-        this.facebookAppID = facebookAppID;
+    public void setFBAppID(String facebookAppID) {
+        this.fbAppID = facebookAppID;
     }
 
     public boolean isLoginOut() {

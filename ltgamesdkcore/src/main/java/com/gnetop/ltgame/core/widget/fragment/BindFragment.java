@@ -28,7 +28,7 @@ public class BindFragment extends BaseFragment implements View.OnClickListener {
     String googleClientID;
     String LTAppID;
     String mAdID;
-    boolean mServerTest;
+    String mServerTest;
     String mFacebookID;
     boolean mIsLoginOut;
     LoginObject mData;
@@ -78,7 +78,7 @@ public class BindFragment extends BaseFragment implements View.OnClickListener {
                 googleClientID = mData.getmGoogleClient();
                 LTAppID = mData.getLTAppID();
                 mAdID = mData.getmAdID();
-                mFacebookID = mData.getFacebookAppID();
+                mFacebookID = mData.getFBAppID();
                 mServerTest = mData.isServerTest();
                 mIsLoginOut = mData.isLoginOut();
 
@@ -111,7 +111,7 @@ public class BindFragment extends BaseFragment implements View.OnClickListener {
         data.setmGoogleClient(googleClientID);
         data.setmAdID(mAdID);
         data.setServerTest(mServerTest);
-        data.setFacebookAppID(mFacebookID);
+        data.setFBAppID(mFacebookID);
         data.setLoginOut(mIsLoginOut);
         data.setBind(false);
         getProxyActivity().addFragment(LoginFailedFragment.newInstance(data),
@@ -131,7 +131,7 @@ public class BindFragment extends BaseFragment implements View.OnClickListener {
         data.setmGoogleClient(googleClientID);
         data.setmAdID(mAdID);
         data.setServerTest(mServerTest);
-        data.setFacebookAppID(mFacebookID);
+        data.setFBAppID(mFacebookID);
         data.setLoginOut(mIsLoginOut);
         data.setBind(false);
         data.setEmailType(Constants.EMAIL_BIND_JUMP);
@@ -152,7 +152,7 @@ public class BindFragment extends BaseFragment implements View.OnClickListener {
         data.setmGoogleClient(googleClientID);
         data.setmAdID(mAdID);
         data.setServerTest(mServerTest);
-        data.setFacebookAppID(mFacebookID);
+        data.setFBAppID(mFacebookID);
         data.setLoginOut(mIsLoginOut);
         data.setBind(true);
         getProxyActivity().addFragment(LoginFailedFragment.newInstance(data),
@@ -173,7 +173,7 @@ public class BindFragment extends BaseFragment implements View.OnClickListener {
         data.setmGoogleClient(googleClientID);
         data.setmAdID(mAdID);
         data.setServerTest(mServerTest);
-        data.setFacebookAppID(mFacebookID);
+        data.setFBAppID(mFacebookID);
         data.setLoginOut(mIsLoginOut);
         GuestTurnFragment fragment = GuestTurnFragment.newInstance(data);
         getProxyActivity().addFragment(fragment,

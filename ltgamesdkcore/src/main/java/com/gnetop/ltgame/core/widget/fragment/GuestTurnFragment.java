@@ -24,7 +24,7 @@ public class GuestTurnFragment extends BaseFragment implements View.OnClickListe
     String googleClientID;
     String LTAppID;
     String mAdID;
-    boolean mServerTest;
+    String mServerTest;
     String mFacebookID;
     boolean mIsLoginOut;
     TextView mBtnSwitch, mBtnBind;
@@ -77,7 +77,7 @@ public class GuestTurnFragment extends BaseFragment implements View.OnClickListe
                 googleClientID = mData.getmGoogleClient();
                 LTAppID = mData.getLTAppID();
                 mAdID = mData.getmAdID();
-                mFacebookID = mData.getFacebookAppID();
+                mFacebookID = mData.getFBAppID();
                 mServerTest = mData.isServerTest();
                 mIsLoginOut = mData.isLoginOut();
 
@@ -110,7 +110,7 @@ public class GuestTurnFragment extends BaseFragment implements View.OnClickListe
         data.setLTAppID(LTAppID);
         data.setmGoogleClient(googleClientID);
         data.setmAdID(mAdID);
-        data.setFacebookAppID(mFacebookID);
+        data.setFBAppID(mFacebookID);
         data.setServerTest(mServerTest);
         data.setLoginOut(mIsLoginOut);
         getProxyActivity().addFragment(LoginUIFragment.newInstance(data),
@@ -130,7 +130,7 @@ public class GuestTurnFragment extends BaseFragment implements View.OnClickListe
         data.setmGoogleClient(googleClientID);
         data.setmAdID(mAdID);
         data.setServerTest(mServerTest);
-        data.setFacebookAppID(mFacebookID);
+        data.setFBAppID(mFacebookID);
         data.setLoginOut(mIsLoginOut);
         data.setBind(false);
         getProxyActivity().addFragment(LoginFailedFragment.newInstance(data),
@@ -149,7 +149,7 @@ public class GuestTurnFragment extends BaseFragment implements View.OnClickListe
         data.setmGoogleClient(googleClientID);
         data.setmAdID(mAdID);
         data.setServerTest(mServerTest);
-        data.setFacebookAppID(mFacebookID);
+        data.setFBAppID(mFacebookID);
         data.setLoginOut(mIsLoginOut);
         BindFragment fragment = BindFragment.newInstance(data);
         getProxyActivity().addFragment(fragment,

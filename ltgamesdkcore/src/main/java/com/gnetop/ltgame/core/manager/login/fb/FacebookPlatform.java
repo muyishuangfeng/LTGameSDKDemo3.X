@@ -3,12 +3,15 @@ package com.gnetop.ltgame.core.manager.login.fb;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.text.TextUtils;
 
 import com.gnetop.ltgame.core.base.BaseActionActivity;
+import com.gnetop.ltgame.core.common.Constants;
 import com.gnetop.ltgame.core.common.LTGameCommon;
 import com.gnetop.ltgame.core.common.LTGameOptions;
 import com.gnetop.ltgame.core.impl.OnLoginStateListener;
 import com.gnetop.ltgame.core.impl.OnRechargeStateListener;
+import com.gnetop.ltgame.core.util.PreferencesUtils;
 import com.gnetop.ltgame.core.widget.activity.FacebookActionActivity;
 import com.gnetop.ltgame.core.model.LoginObject;
 import com.gnetop.ltgame.core.model.RechargeObject;
@@ -24,7 +27,7 @@ public class FacebookPlatform extends AbsPlatform {
     private FacebookLoginHelper mLoginHelper;
 
 
-    private FacebookPlatform(Context context, String appId,  int target) {
+    private FacebookPlatform(Context context, String appId, int target) {
         super(context, appId, target);
     }
 
@@ -36,7 +39,7 @@ public class FacebookPlatform extends AbsPlatform {
             IPlatform platform = null;
             LTGameOptions options = LTGameCommon.options();
             if (!LTGameUtil.isAnyEmpty(options.getLtAppId())) {
-                platform = new FacebookPlatform(context, options.getLtAppId(),  target);
+                platform = new FacebookPlatform(context, options.getLtAppId(), target);
             }
             return platform;
         }
@@ -70,8 +73,14 @@ public class FacebookPlatform extends AbsPlatform {
 
     @Override
     public void login(Activity activity, int target, LoginObject object, OnLoginStateListener listener) {
-        mLoginHelper = new FacebookLoginHelper(activity, object.getType(),listener, target);
-        mLoginHelper.login(object.getFacebookAppID(), activity);
+        mLoginHelper = new FacebookLoginHelper(activity, object.getType(), listener, target);
+        String mAppID = "";
+        if (!TextUtils.isEmpty(object.getFBAppID())) {
+            mAppID = object.getFBAppID();
+        } else if (!TextUtils.isEmpty(PreferencesUtils.getString(activity, Constants.LT_SDK_FB_APP_ID))) {
+            mAppID = PreferencesUtils.getString(activity, Constants.LT_SDK_FB_APP_ID);
+        }
+        mLoginHelper.login(mAppID, activity);
 
     }
 

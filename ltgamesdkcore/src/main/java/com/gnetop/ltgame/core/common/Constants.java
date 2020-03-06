@@ -79,6 +79,38 @@ public class Constants {
     public static final String GP_RECHARGE = "GP_RECHARGE";
     //oneStore支付
     public static final String ONE_STORE_RECHARGE = "ONE_STORE_RECHARGE";
+    //===============================公共参数==============================================//
+//===============================公共参数==============================================//
+//===============================公共参数==============================================//
+//===============================公共参数==============================================//
+    //乐推平台的游戏的AppID
+    public static final String LT_SDK_APP_ID = "LT_SDK_APP_ID";
+    //Facebook平台申请的AppID
+    public static final String LT_SDK_FB_APP_ID = "LT_SDK_FB_APP_ID";
+    //QQ平台申请的AppID
+    public static final String LT_SDK_QQ_APP_ID = "LT_SDK_QQ_APP_ID";
+    //Google平台申请的web版的clientID
+    public static final String LT_SDK_GOOGLE_CLIENT_ID = "LT_SDK_GOOGLE_CLIENT_ID";
+    //Google支付公钥
+    public static final String LT_SDK_GP_PUBLIC_KEY = "LT_SDK_GP_PUBLIC_KEY";
+    //onestore支付公钥
+    public static final String LT_SDK_ONE_PUBLIC_KEY = "LT_SDK_ONE_PUBLIC_KEY";
+    //隐私政策
+    public static final String LT_SDK_PROVACY_URL = "LT_SDK_PROVACY_URL";
+    //用户协议
+    public static final String LT_SDK_AGREEMENT_URL = "LT_SDK_AGREEMENT_URL";
+    //退出登录标记
+    public static final String LT_SDK_LOGIN_OUT_TAG = "LT_SDK_LOGIN_OUT_TAG";
+    //debug标记
+    public static final String LT_SDK_DEBUG_TAG = "LT_SDK_DEBUG_TAG";
+    //测试服标记
+    public static final String LT_SDK_SERVER_TEST_TAG = "LT_SDK_SERVER_TEST_TAG";
+    //广告标识符
+    public static final String LT_SDK_DEVICE_ADID = "LT_SDK_DEVICE_ADID";
+    //测试服
+    public static final String LT_SERVER_TEST = "LT_SERVER_TEST";
+    //正式服
+    public static final String LT_SERVER_OFFICIAL = "LT_SERVER_OFFICIAL";
 
 
 }

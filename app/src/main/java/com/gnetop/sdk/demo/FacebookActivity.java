@@ -50,12 +50,12 @@ public class FacebookActivity extends AppCompatActivity {
 
     private void initView() {
         mRequest = new LoginObject();
-        mRequest.setFacebookAppID(mFacebookId);
+        mRequest.setFBAppID(mFacebookId);
         mRequest.setmGoogleClient(mAuthID);
         mRequest.setLTAppID(mLtAppID);
         mRequest.setLoginType(Constants.FB_LOGIN);
         mRequest.setType(Constants.FB_LOGIN);
-        LTGameSDK.getDefaultInstance().init(this, true, true, mRequest);
+        LTGameSDK.getDefaultInstance().init(this,  mRequest);
 
 
         mTxtResult = findViewById(R.id.txt_result);

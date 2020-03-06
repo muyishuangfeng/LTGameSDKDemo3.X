@@ -11,10 +11,8 @@ import android.widget.Toast;
 
 import com.gnetop.ltgame.core.common.Constants;
 import com.gnetop.ltgame.core.exception.LTResultCode;
-import com.gnetop.ltgame.core.impl.OnAutoCheckLoginListener;
 import com.gnetop.ltgame.core.impl.OnLoginStateListener;
 import com.gnetop.ltgame.core.manager.lt.LTGameSDK;
-import com.gnetop.ltgame.core.manager.lt.LoginRealizeManager;
 import com.gnetop.ltgame.core.model.LoginObject;
 import com.gnetop.ltgame.core.model.LoginResult;
 import com.gnetop.ltgame.core.util.PreferencesUtils;
@@ -25,18 +23,6 @@ public class GoogleActivity extends AppCompatActivity {
     //当前包名
     Button mBtnStart, mBtnLoginOut, mBtnAuto, mBtnBind;
     TextView mTxtResult;
-    private String mLtAppID = "1";
-    private String mAuthID = "443503959733-nlr4ofibakk0j2dqkkomdqu3uta50pbe.apps.googleusercontent.com";
-    private String mFacebookId = "2717734461592670";
-    private static final String mAgreementUrl = "http://www.baidu.com";
-    private static final String mProvacyUrl = "http://www.baidu.com";
-    private static final int REQUEST_CODE = 0X01;
-    private static final String mGPPublicKey = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAleVlYQtKhvo+lb83j73kXGH8xAMhHcaAZoS22Bo3Jdujix9Ou5DjtUW3i6MIFqWEbnb9da50iH5IrxkkdJCcqzeYDdLk2Y3Gc+kyaw5ch4I//hjC2hh8nHgo8eWfrxSFce/DpNBeS1j4mWcjWZhYJtxheEUk8iTyXIVWHC8dCyifibs7z8wCXMhy3Q66Zym5GarAYjpuQsXTxHuOYUXakLWCwIXG8d8ihoRxweI7PtLpVyNU5FKgse42uouMRz6TgVotgu+NdamNyTH/CutQMPGeNXUj6FpHUDEWQhsRp27k0KsA8YWJDJBj4R9bJ5GDqD8XJo2y5V7/vy1OH4afkQIDAQAB";
-    private static final String mONEPublicKey = "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCu9RPDbvVqM8XWqVc75JXccIXN1VS8XViRZzATUq62kkFIXCeo52LKzBCh3iWFQIvX3jqDhim4ESqHMezEx8CxaTq8NpNoQXutBNmOEl+/7HTUsZxI93wgn9+7pFMyoFlasqmVjCcM7zbbAx5G0bySsm98TFxTu16OGmO01JGonQIDAQAB";
-    private static final String QQ_APP_ID = "1108097616";
-    private static final String EMAIL = "yangkemuyi@sina.com";
-
-
     private OnLoginStateListener mOnLoginListener;
     String mLtToken;
     int mLtId;
@@ -53,13 +39,7 @@ public class GoogleActivity extends AppCompatActivity {
     private void initView() {
         PreferencesUtils.init(this);
         Log.e("TAG", "ukey===" + PreferencesUtils.getString(this, Constants.USER_LT_UID_KEY));
-        mRequest = new LoginObject();
-        mRequest.setFacebookAppID(mFacebookId);
-        mRequest.setmGoogleClient(mAuthID);
-        mRequest.setLTAppID(mLtAppID);
-        mRequest.setLoginType(Constants.GOOGLE_LOGIN);
-        mRequest.setType(Constants.GOOGLE_LOGIN);
-        LTGameSDK.getDefaultInstance().init(this, true, true, mRequest);
+
         mTxtResult = findViewById(R.id.txt_result);
         mBtnStart = findViewById(R.id.btn_start);
         mBtnAuto = findViewById(R.id.btn_auto);
@@ -85,6 +65,7 @@ public class GoogleActivity extends AppCompatActivity {
         mBtnAuto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                LTGameSDK.getDefaultInstance().autoLogin(GoogleActivity.this,mOnLoginListener);
             }
         });
 
@@ -141,6 +122,12 @@ public class GoogleActivity extends AppCompatActivity {
                         break;
                     case LTResultCode.STATE_CODE_PARAMETERS_ERROR:
                         Log.e("TAG", "STATE_CODE_PARAMETERS_ERROR==========");
+                        break;
+                    case LTResultCode.STATE_AUTO_LOGIN_SUCCESS:
+                        Log.e("TAG", "STATE_AUTO_LOGIN_SUCCESS==========");
+                        break;
+                    case LTResultCode.STATE_AUTO_LOGIN_FAILED:
+                        Log.e("TAG", "STATE_AUTO_LOGIN_FAILED==========");
                         break;
                 }
 

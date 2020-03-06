@@ -31,7 +31,7 @@ public class AgreementFragment extends BaseFragment implements View.OnClickListe
     String mAdID;
     String mFacebookID;
     boolean mIsLoginOut;
-    boolean mServerTest;
+    String mServerTest;
 
 
     public static AgreementFragment newInstance(LoginObject data) {
@@ -79,7 +79,7 @@ public class AgreementFragment extends BaseFragment implements View.OnClickListe
                 googleClientID = mData.getmGoogleClient();
                 LTAppID = mData.getLTAppID();
                 mAdID = mData.getmAdID();
-                mFacebookID = mData.getFacebookAppID();
+                mFacebookID = mData.getFBAppID();
                 mServerTest = mData.isServerTest();
                 mIsLoginOut = mData.isLoginOut();
             }
@@ -142,7 +142,7 @@ public class AgreementFragment extends BaseFragment implements View.OnClickListe
         data.setmGoogleClient(googleClientID);
         data.setmAdID(mAdID);
         data.setServerTest(mServerTest);
-        data.setFacebookAppID(mFacebookID);
+        data.setFBAppID(mFacebookID);
         data.setLoginOut(mIsLoginOut);
         getProxyActivity().addFragment(LoginUIFragment.newInstance(data),
                 false,

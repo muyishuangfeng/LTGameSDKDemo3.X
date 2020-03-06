@@ -31,13 +31,11 @@ public class GoogleLoginHelper {
     private int mLoginTarget;
     private WeakReference<Activity> mActivityRef;
     private OnLoginStateListener mListener;
-    private String clientID;
     private String type;
 
-    GoogleLoginHelper(Activity activity, String clientID, String type,
+    GoogleLoginHelper(Activity activity,  String type,
                       OnLoginStateListener listener) {
         this.mActivityRef = new WeakReference<>(activity);
-        this.clientID = clientID;
         this.mListener = listener;
         this.type = type;
         this.mLoginTarget = Target.LOGIN_GOOGLE;
@@ -49,7 +47,7 @@ public class GoogleLoginHelper {
             if (type.equals(Constants.GOOGLE_LOGIN_OUT)) {
                 loginOut(mActivityRef.get(), clientID);
             } else {
-                login();
+                login(clientID);
             }
         }
     }
@@ -58,7 +56,7 @@ public class GoogleLoginHelper {
     /**
      * 登录
      */
-    private void login() {
+    private void login(String clientID) {
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(clientID)
                 .requestEmail()

@@ -11,6 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_margin="20dp"
+        android:hint="请输入验证码"
         android:textAllCaps="false" />
     <Button
         android:id="@+id/btn_start"

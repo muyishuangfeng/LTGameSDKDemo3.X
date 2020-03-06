@@ -28,7 +28,7 @@ public class GuestFragment extends BaseFragment implements View.OnClickListener 
     String googleClientID;
     String LTAppID;
     String mAdID;
-    boolean mServerTest;
+    String mServerTest;
     String mFacebookID;
     boolean mIsLoginOut;
     Button mBtnSure, mBtnCancel;
@@ -81,7 +81,7 @@ public class GuestFragment extends BaseFragment implements View.OnClickListener 
                 googleClientID = mData.getmGoogleClient();
                 LTAppID = mData.getLTAppID();
                 mAdID = mData.getmAdID();
-                mFacebookID = mData.getFacebookAppID();
+                mFacebookID = mData.getFBAppID();
                 mServerTest = mData.isServerTest();
                 mIsLoginOut = mData.isLoginOut();
 
@@ -113,7 +113,7 @@ public class GuestFragment extends BaseFragment implements View.OnClickListener 
         data.setLTAppID(LTAppID);
         data.setmGoogleClient(googleClientID);
         data.setmAdID(mAdID);
-        data.setFacebookAppID(mFacebookID);
+        data.setFBAppID(mFacebookID);
         data.setServerTest(mServerTest);
         data.setLoginOut(mIsLoginOut);
         getProxyActivity().addFragment(LoginUIFragment.newInstance(data),
@@ -136,7 +136,7 @@ public class GuestFragment extends BaseFragment implements View.OnClickListener 
         data.setmGoogleClient(googleClientID);
         data.setmAdID(mAdID);
         data.setServerTest(mServerTest);
-        data.setFacebookAppID(mFacebookID);
+        data.setFBAppID(mFacebookID);
         data.setLoginOut(mIsLoginOut);
         data.setBind(false);
         getProxyActivity().addFragment(LoginFailedFragment.newInstance(data),

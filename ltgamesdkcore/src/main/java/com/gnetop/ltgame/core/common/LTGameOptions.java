@@ -34,7 +34,7 @@ public class LTGameOptions {
     //密码
     private String mPassword;
     //是否是测试服务器
-    private boolean mISServerTest;
+    private String mISServerTest;
     //QQ平台的AppID
     private String qqAppId;
     //Facebook平台的AppID
@@ -58,6 +58,8 @@ public class LTGameOptions {
     private boolean isGuestEnable;
     //是否支持OneStore支付
     private boolean isOneStoreEnable;
+    private String mAgreementUrl;//用户协议
+    private String mPrivacyUrl;//隐私政策
 
     public boolean isEmailEnable() {
         return isEmailEnable;
@@ -124,11 +126,11 @@ public class LTGameOptions {
         isOneStoreEnable = oneStoreEnable;
     }
 
-    public boolean getISServerTest() {
+    public String getISServerTest() {
         return mISServerTest;
     }
 
-    public void setISServerTest(boolean mISServerTest) {
+    public void setISServerTest(String mISServerTest) {
         this.mISServerTest = mISServerTest;
     }
 
@@ -242,14 +244,16 @@ public class LTGameOptions {
         this.wxSecretKey = builder.wxSecretKey;
         this.cacheDir = builder.cacheDir;
         this.mISServerTest = builder.mISServerTest;
-        this.isEmailEnable=builder.isEmailEnable;
-        this.isFBEnable=builder.isFBEnable;
-        this.isQQEnable=builder.isQQEnable;
-        this.isGoogleEnable=builder.isGoogleEnable;
-        this.isGuestEnable=builder.isGuestEnable;
-        this.isWeChatEnable=builder.isWeChatEnable;
-        this.isGPEnable=builder.isGPEnable;
-        this.isOneStoreEnable=builder.isOneStoreEnable;
+        this.isEmailEnable = builder.isEmailEnable;
+        this.isFBEnable = builder.isFBEnable;
+        this.mAgreementUrl = builder.mAgreementUrl;
+        this.mPrivacyUrl = builder.mPrivacyUrl;
+        this.isQQEnable = builder.isQQEnable;
+        this.isGoogleEnable = builder.isGoogleEnable;
+        this.isGuestEnable = builder.isGuestEnable;
+        this.isWeChatEnable = builder.isWeChatEnable;
+        this.isGPEnable = builder.isGPEnable;
+        this.isOneStoreEnable = builder.isOneStoreEnable;
     }
 
 
@@ -284,6 +288,8 @@ public class LTGameOptions {
         private String qqAppId;
         // google配置
         private String googleClientID;
+        private String mAgreementUrl;//用户协议
+        private String mPrivacyUrl;//隐私政策
 
         //乐推AppID
         private String ltAppId;
@@ -301,8 +307,8 @@ public class LTGameOptions {
         private String mPhone;
         //密码
         private String mPassword;
-        //是否是测试服务器
-        private boolean mISServerTest;
+        //是否是测试服务器:0是，1，不是
+        private String mISServerTest;
         private String wxSecretKey;
         private Context context;
 
@@ -314,25 +320,26 @@ public class LTGameOptions {
 
         public Builder setFBiD(String facebookAppID) {
             this.fbAppID = facebookAppID;
-            this.isFBEnable=true;
+            this.isFBEnable = true;
             return this;
         }
+
         public Builder emailEnable() {
-            this.isEmailEnable=true;
+            this.isEmailEnable = true;
             return this;
         }
 
 
         public Builder setQQ(String qqAppId) {
             this.qqAppId = qqAppId;
-            this.isQQEnable=true;
+            this.isQQEnable = true;
             return this;
         }
 
         public Builder setWX(String wxAppId, String wxSecretKey) {
             this.wxAppId = wxAppId;
             this.wxSecretKey = wxSecretKey;
-            this.isWeChatEnable=true;
+            this.isWeChatEnable = true;
             return this;
         }
 
@@ -341,13 +348,13 @@ public class LTGameOptions {
             this.wxOnlyAuthCode = wxOnlyAuthCode;
             this.wxSecretKey = wxSecretKey;
             this.wxAppId = wxAppId;
-            this.isWeChatEnable=true;
+            this.isWeChatEnable = true;
             return this;
         }
 
         public Builder setGoogle(String googleClientID) {
             this.googleClientID = googleClientID;
-            this.isGoogleEnable=true;
+            this.isGoogleEnable = true;
             return this;
         }
 
@@ -359,6 +366,16 @@ public class LTGameOptions {
 
         public Builder appID(String ltAppId) {
             this.ltAppId = ltAppId;
+            return this;
+        }
+
+        public Builder setAgreementUrl(String mAgreementUrl) {
+            this.mAgreementUrl = mAgreementUrl;
+            return this;
+        }
+
+        public Builder setPrivacyUrl(String mPrivacyUrl) {
+            this.mPrivacyUrl = mPrivacyUrl;
             return this;
         }
 
@@ -375,17 +392,18 @@ public class LTGameOptions {
 
         public Builder setOneStore(String publicKey) {
             this.mPublicKey = publicKey;
-            this.isOneStoreEnable=true;
-            return this;
-        }
-        public Builder setGuest() {
-            this.isGuestEnable=true;
+            this.isOneStoreEnable = true;
             return this;
         }
 
-        public Builder setGP(String mPublicKey){
-            this.mPublicKey=mPublicKey;
-            this.isGPEnable=true;
+        public Builder setGuest() {
+            this.isGuestEnable = true;
+            return this;
+        }
+
+        public Builder setGP(String mPublicKey) {
+            this.mPublicKey = mPublicKey;
+            this.isGPEnable = true;
             return this;
         }
 
@@ -402,7 +420,7 @@ public class LTGameOptions {
         }
 
 
-        public Builder isServerTest(boolean mISServerTest) {
+        public Builder isServerTest(String mISServerTest) {
             this.mISServerTest = mISServerTest;
             return this;
         }

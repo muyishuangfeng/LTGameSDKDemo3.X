@@ -18,7 +18,7 @@ public class LoginUIActivity extends BaseAppActivity {
     String mPrivacyUrl;
     String googleClientID;
     String LTAppID;
-    boolean mServerTest;
+    String mServerTest;
     String mFacebookID;
     boolean mIsLoginOut;
     String mOrientation;
@@ -34,12 +34,13 @@ public class LoginUIActivity extends BaseAppActivity {
      * 初始化控件
      */
     @Override
-    protected void initView() {Bundle bundle = getIntent().getBundleExtra("bundleData");
+    protected void initView() {
+        Bundle bundle = getIntent().getBundleExtra("bundleData");
         mAgreementUrl = bundle.getString("mAgreementUrl");
         mPrivacyUrl = bundle.getString("mPrivacyUrl");
         googleClientID = bundle.getString("googleClientID");
         LTAppID = bundle.getString("LTAppID");
-        mServerTest = bundle.getBoolean("mServerTest");
+        mServerTest = bundle.getString("mServerTest");
         mFacebookID = bundle.getString("mFacebookID");
         mIsLoginOut = bundle.getBoolean("mIsLoginOut");
         mOrientation = bundle.getString("orientation");
@@ -50,7 +51,7 @@ public class LoginUIActivity extends BaseAppActivity {
         data.setmGoogleClient(googleClientID);
         data.setLTAppID(LTAppID);
         data.setServerTest(mServerTest);
-        data.setFacebookAppID(mFacebookID);
+        data.setFBAppID(mFacebookID);
         data.setLoginOut(mIsLoginOut);
 
         if (!TextUtils.isEmpty(mAgreementUrl) &&

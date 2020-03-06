@@ -50,14 +50,14 @@ public class UIActivity extends AppCompatActivity {
         PreferencesUtils.init(this);
         Log.e("TAG", "ukey===" + PreferencesUtils.getString(this, Constants.USER_LT_UID_KEY));
         mRequest = new LoginObject();
-        mRequest.setFacebookAppID(mFacebookId);
+        mRequest.setFBAppID(mFacebookId);
         mRequest.setmGoogleClient(mAuthID);
         mRequest.setLTAppID(mLtAppID);
         mRequest.setPrivacyUrl(mProvacyUrl);
         mRequest.setAgreementUrl(mAgreementUrl);
         mRequest.setLoginOut(false);
         mRequest.setLoginType(Constants.UI_LOGIN);
-        LTGameSDK.getDefaultInstance().init(this, true, true, mRequest);
+        LTGameSDK.getDefaultInstance().init(this,  mRequest);
 
 
         mTxtResult = findViewById(R.id.txt_result);

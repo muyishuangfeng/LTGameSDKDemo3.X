@@ -52,16 +52,14 @@ public class EmailActivity extends AppCompatActivity {
 
     private void initView() {
         mEdtEmail = findViewById(R.id.edt_email);
-
         PreferencesUtils.init(this);
-        Log.e("TAG", "ukey===" + PreferencesUtils.getString(this, Constants.USER_LT_UID_KEY));
         mRequest = new LoginObject();
-        mRequest.setFacebookAppID(mFacebookId);
+        mRequest.setFBAppID(mFacebookId);
         mRequest.setmGoogleClient(mAuthID);
         mRequest.setLTAppID(mLtAppID);
         mRequest.setLoginType(Constants.EMAIL_LOGIN);
         mRequest.setType(Constants.EMAIL_LOGIN);
-        LTGameSDK.getDefaultInstance().init(this, true, true, mRequest);
+        LTGameSDK.getDefaultInstance().init(this,  mRequest);
 
 
         mTxtResult = findViewById(R.id.txt_result);

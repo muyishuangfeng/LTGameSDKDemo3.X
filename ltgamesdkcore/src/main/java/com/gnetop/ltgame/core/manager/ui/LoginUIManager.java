@@ -84,7 +84,7 @@ public class LoginUIManager {
                                     break;
                                 }
                                 case LTResultCode.STATE_AUTO_LOGIN_FAILED: {//失败
-                                    loginOut(activity, object, mListener);
+                                    login(activity, object, mListener);
                                     break;
                                 }
                             }
@@ -110,11 +110,18 @@ public class LoginUIManager {
      */
     public void loginOut(Activity activity,
                          LoginObject result, OnLoginStateListener mListener) {
+        PreferencesUtils.init(activity);
         PreferencesUtils.remove(Constants.USER_LT_UID);
         PreferencesUtils.remove(Constants.USER_LT_UID_KEY);
         com.facebook.login.LoginManager.getInstance().logOut();
+        String mAppID = "";
+        if (!TextUtils.isEmpty(result.getmGoogleClient())) {
+            mAppID = result.getmGoogleClient();
+        } else if (!TextUtils.isEmpty(PreferencesUtils.getString(activity, Constants.LT_SDK_GOOGLE_CLIENT_ID))) {
+            mAppID = PreferencesUtils.getString(activity, Constants.LT_SDK_GOOGLE_CLIENT_ID);
+        }
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken(result.getmGoogleClient())
+                .requestIdToken(mAppID)
                 .requestEmail()
                 .build();
         GoogleSignInClient mGoogleSignInClient = GoogleSignIn.getClient(activity, gso);
@@ -143,15 +150,58 @@ public class LoginUIManager {
      */
     private void login(Activity activity, LoginObject result, OnLoginStateListener listener) {
         this.mListener = listener;
+        PreferencesUtils.init(activity);
         Intent intent = new Intent(activity, LoginUIActivity.class);
         Bundle bundle = new Bundle();
-        bundle.putBoolean("mServerTest", result.isServerTest());
-        bundle.putString("mFacebookID", result.getFacebookAppID());
-        bundle.putString("mAgreementUrl", result.getAgreementUrl());
-        bundle.putString("mPrivacyUrl", result.getPrivacyUrl());
-        bundle.putString("googleClientID", result.getmGoogleClient());
-        bundle.putString("LTAppID", result.getQqAppID());
-        bundle.putBoolean("mIsLoginOut", result.isLoginOut());
+        String mGoogleAppID = "";
+        String mFBAppID = "";
+        String mPrivacyUrl = "";
+        String mAgreementUrl = "";
+        String mServerTest = "";
+        String LTAppID = "";
+        boolean mIsLoginOut = false;
+        if (!TextUtils.isEmpty(result.getFBAppID())) {
+            mFBAppID = result.getFBAppID();
+        } else if (!TextUtils.isEmpty(PreferencesUtils.getString(activity, Constants.LT_SDK_FB_APP_ID))) {
+            mFBAppID = PreferencesUtils.getString(activity, Constants.LT_SDK_FB_APP_ID);
+        }
+        if (!TextUtils.isEmpty(result.getPrivacyUrl())) {
+            mPrivacyUrl = result.getPrivacyUrl();
+        } else if (!TextUtils.isEmpty(PreferencesUtils.getString(activity, Constants.LT_SDK_PROVACY_URL))) {
+            mPrivacyUrl = PreferencesUtils.getString(activity, Constants.LT_SDK_PROVACY_URL);
+        }
+        if (!TextUtils.isEmpty(result.getAgreementUrl())) {
+            mAgreementUrl = result.getAgreementUrl();
+        } else if (!TextUtils.isEmpty(PreferencesUtils.getString(activity, Constants.LT_SDK_AGREEMENT_URL))) {
+            mAgreementUrl = PreferencesUtils.getString(activity, Constants.LT_SDK_AGREEMENT_URL);
+        }
+        if (!TextUtils.isEmpty(result.isServerTest())) {
+            mServerTest = result.isServerTest();
+        } else if (!TextUtils.isEmpty(PreferencesUtils.getString(activity, Constants.LT_SDK_SERVER_TEST_TAG))) {
+            mServerTest = PreferencesUtils.getString(activity, Constants.LT_SDK_SERVER_TEST_TAG);
+        }
+        if (!TextUtils.isEmpty(result.getmGoogleClient())) {
+            mGoogleAppID = result.getmGoogleClient();
+        } else if (!TextUtils.isEmpty(PreferencesUtils.getString(activity, Constants.LT_SDK_GOOGLE_CLIENT_ID))) {
+            mGoogleAppID = PreferencesUtils.getString(activity, Constants.LT_SDK_GOOGLE_CLIENT_ID);
+        }
+        if (!TextUtils.isEmpty(result.getLTAppID())) {
+            LTAppID = result.getLTAppID();
+        } else if (!TextUtils.isEmpty(PreferencesUtils.getString(activity, Constants.LT_SDK_APP_ID))) {
+            LTAppID = PreferencesUtils.getString(activity, Constants.LT_SDK_APP_ID);
+        }
+        if (PreferencesUtils.getBoolean(activity, Constants.LT_SDK_LOGIN_OUT_TAG, false)) {
+            mIsLoginOut = PreferencesUtils.getBoolean(activity, Constants.LT_SDK_LOGIN_OUT_TAG);
+        }
+
+
+        bundle.putString("mServerTest", mServerTest);
+        bundle.putString("mFacebookID", mFBAppID);
+        bundle.putString("mAgreementUrl", mAgreementUrl);
+        bundle.putString("mPrivacyUrl", mPrivacyUrl);
+        bundle.putString("googleClientID", mGoogleAppID);
+        bundle.putString("LTAppID", LTAppID);
+        bundle.putBoolean("mIsLoginOut", mIsLoginOut);
         intent.putExtra("bundleData", bundle);
         activity.startActivity(intent);
     }
@@ -178,8 +228,14 @@ public class LoginUIManager {
     public void getGoogleInfo(Activity context,
                               LoginObject result, OnLoginStateListener mOnLoginListener) {
         LoginObject object = new LoginObject();
-        object.setLTAppID(result.getLTAppID());
-        object.setmGoogleClient(result.getmGoogleClient());
+        PreferencesUtils.init(context);
+        String mAppID = "";
+        if (!TextUtils.isEmpty(result.getFBAppID())) {
+            mAppID = result.getFBAppID();
+        } else if (!TextUtils.isEmpty(PreferencesUtils.getString(context, Constants.LT_SDK_GOOGLE_CLIENT_ID))) {
+            mAppID = PreferencesUtils.getString(context, Constants.LT_SDK_GOOGLE_CLIENT_ID);
+        }
+        object.setmGoogleClient(mAppID);
         object.setType(Constants.GOOGLE_UI_TOKEN);
         LoginManager.login(context, Target.LOGIN_GOOGLE,
                 object, mOnLoginListener);
@@ -192,8 +248,14 @@ public class LoginUIManager {
     public void getFBInfo(Activity context,
                           LoginObject result, OnLoginStateListener mOnLoginListener) {
         LoginObject object = new LoginObject();
-        object.setLTAppID(result.getLTAppID());
-        object.setFacebookAppID(result.getFacebookAppID());
+        PreferencesUtils.init(context);
+        String mAppID = "";
+        if (!TextUtils.isEmpty(result.getFBAppID())) {
+            mAppID = result.getFBAppID();
+        } else if (!TextUtils.isEmpty(PreferencesUtils.getString(context, Constants.LT_SDK_FB_APP_ID))) {
+            mAppID = PreferencesUtils.getString(context, Constants.LT_SDK_FB_APP_ID);
+        }
+        object.setFBAppID(mAppID);
         object.setType(Constants.FB_UI_TOKEN);
         LoginManager.login(context, Target.LOGIN_FACEBOOK,
                 object, mOnLoginListener);
@@ -207,7 +269,14 @@ public class LoginUIManager {
     public void guestLogin(Activity context,
                            LoginObject result, OnLoginStateListener mOnLoginListener) {
         LoginObject object = new LoginObject();
-        object.setLTAppID(result.getLTAppID());
+        PreferencesUtils.init(context);
+        String mAppID = "";
+        if (!TextUtils.isEmpty(result.getLTAppID())) {
+            mAppID = result.getLTAppID();
+        } else if (!TextUtils.isEmpty(PreferencesUtils.getString(context, Constants.LT_SDK_APP_ID))) {
+            mAppID = PreferencesUtils.getString(context, Constants.LT_SDK_APP_ID);
+        }
+        object.setLTAppID(mAppID);
         LoginManager.login(context, Target.LOGIN_GUEST,
                 object, mOnLoginListener);
     }
@@ -219,7 +288,14 @@ public class LoginUIManager {
     public void emailLogin(Activity context,
                            LoginObject result, OnLoginStateListener mOnLoginListener) {
         LoginObject object = new LoginObject();
-        object.setLTAppID(result.getLTAppID());
+        PreferencesUtils.init(context);
+        String mAppID = "";
+        if (!TextUtils.isEmpty(result.getLTAppID())) {
+            mAppID = result.getLTAppID();
+        } else if (!TextUtils.isEmpty(PreferencesUtils.getString(context, Constants.LT_SDK_APP_ID))) {
+            mAppID = PreferencesUtils.getString(context, Constants.LT_SDK_APP_ID);
+        }
+        object.setLTAppID(mAppID);
         object.setType(Constants.EMAIL_LOGIN);
         object.setEmail(result.getEmail());
         object.setAuthCode(result.getAuthCode());
@@ -233,7 +309,14 @@ public class LoginUIManager {
     public void bindEmail(Activity context,
                           LoginObject result, OnLoginStateListener mOnLoginListener) {
         LoginObject object = new LoginObject();
-        object.setLTAppID(result.getLTAppID());
+        PreferencesUtils.init(context);
+        String mAppID = "";
+        if (!TextUtils.isEmpty(result.getLTAppID())) {
+            mAppID = result.getLTAppID();
+        } else if (!TextUtils.isEmpty(PreferencesUtils.getString(context, Constants.LT_SDK_APP_ID))) {
+            mAppID = PreferencesUtils.getString(context, Constants.LT_SDK_APP_ID);
+        }
+        object.setLTAppID(mAppID);
         object.setType(Constants.EMAIL_BIND);
         object.setEmail(result.getEmail());
         object.setAuthCode(result.getAuthCode());
@@ -278,32 +361,32 @@ public class LoginUIManager {
      * Google登录
      */
     public void googleLogin(Activity activity, String bindID,
-                            String account, String userName,String accessToken, OnLoginStateListener mListener) {
-        LoginRealizeManager.googleLogin(activity, bindID, account, userName,accessToken, mListener);
+                            String account, String userName, String accessToken, OnLoginStateListener mListener) {
+        LoginRealizeManager.googleLogin(activity, bindID, account, userName, accessToken, mListener);
     }
 
     /**
      * facebook登录
      */
     public void fbLogin(Activity activity, String bindID,
-                        String account, String userName,String accessToken, OnLoginStateListener mListener) {
-        LoginRealizeManager.facebookLogin(activity, bindID, account, userName, accessToken,mListener);
+                        String account, String userName, String accessToken, OnLoginStateListener mListener) {
+        LoginRealizeManager.facebookLogin(activity, bindID, account, userName, accessToken, mListener);
     }
 
     /**
      * 绑定Google
      */
     public void googleBind(Activity activity, String bindID,
-                           String account, String userName,String accessToken, OnLoginStateListener mListener) {
-        LoginRealizeManager.bindGoogle(activity, bindID, account, userName,accessToken, mListener);
+                           String account, String userName, String accessToken, OnLoginStateListener mListener) {
+        LoginRealizeManager.bindGoogle(activity, bindID, account, userName, accessToken, mListener);
     }
 
     /**
      * 绑定facebook
      */
     public void fbBind(Activity activity, String bindID,
-                       String account, String userName, String accessToken,OnLoginStateListener mListener) {
-        LoginRealizeManager.bindFB(activity, bindID, account, userName,accessToken, mListener);
+                       String account, String userName, String accessToken, OnLoginStateListener mListener) {
+        LoginRealizeManager.bindFB(activity, bindID, account, userName, accessToken, mListener);
     }
 
 

@@ -30,7 +30,7 @@ public class LoginUIFragment extends BaseFragment implements View.OnClickListene
     String mAdID;
     String mFacebookID;
     boolean mIsLoginOut;
-    boolean mServerTest;
+    String mServerTest;
     LoginObject mData;
     private OnLoginStateListener mListener;
     GeneralCenterDialog mDialog;
@@ -80,7 +80,7 @@ public class LoginUIFragment extends BaseFragment implements View.OnClickListene
                 googleClientID = mData.getmGoogleClient();
                 LTAppID = mData.getLTAppID();
                 mAdID = mData.getmAdID();
-                mFacebookID = mData.getFacebookAppID();
+                mFacebookID = mData.getFBAppID();
                 mServerTest = mData.isServerTest();
                 mIsLoginOut = mData.isLoginOut();
             }
@@ -218,7 +218,7 @@ public class LoginUIFragment extends BaseFragment implements View.OnClickListene
         data.setmGoogleClient(googleClientID);
         data.setmAdID(mAdID);
         data.setServerTest(mServerTest);
-        data.setFacebookAppID(mFacebookID);
+        data.setFBAppID(mFacebookID);
         data.setLoginOut(mIsLoginOut);
         data.setBind(false);
         getProxyActivity().addFragment(LoginFailedFragment.newInstance(data),
@@ -237,7 +237,7 @@ public class LoginUIFragment extends BaseFragment implements View.OnClickListene
         data.setmGoogleClient(googleClientID);
         data.setmAdID(mAdID);
         data.setServerTest(mServerTest);
-        data.setFacebookAppID(mFacebookID);
+        data.setFBAppID(mFacebookID);
         data.setLoginOut(mIsLoginOut);
         data.setEmailType(Constants.EMAIL_LOGIN_JUMP);
         EmailLoginFragment fragment = EmailLoginFragment.newInstance(data);
@@ -258,7 +258,7 @@ public class LoginUIFragment extends BaseFragment implements View.OnClickListene
         data.setmGoogleClient(googleClientID);
         data.setmAdID(mAdID);
         data.setServerTest(mServerTest);
-        data.setFacebookAppID(mFacebookID);
+        data.setFBAppID(mFacebookID);
         data.setLoginOut(mIsLoginOut);
         GuestFragment fragment = GuestFragment.newInstance(data);
         getProxyActivity().addFragment(fragment,
@@ -277,7 +277,7 @@ public class LoginUIFragment extends BaseFragment implements View.OnClickListene
         data.setmGoogleClient(googleClientID);
         data.setmAdID(mAdID);
         data.setServerTest(mServerTest);
-        data.setFacebookAppID(mFacebookID);
+        data.setFBAppID(mFacebookID);
         data.setLoginOut(mIsLoginOut);
         GuestTurnFragment fragment = GuestTurnFragment.newInstance(data);
         getProxyActivity().addFragment(fragment,

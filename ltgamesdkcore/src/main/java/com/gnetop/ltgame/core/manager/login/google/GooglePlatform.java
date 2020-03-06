@@ -3,12 +3,15 @@ package com.gnetop.ltgame.core.manager.login.google;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.text.TextUtils;
 
 import com.gnetop.ltgame.core.base.BaseActionActivity;
+import com.gnetop.ltgame.core.common.Constants;
 import com.gnetop.ltgame.core.common.LTGameCommon;
 import com.gnetop.ltgame.core.common.LTGameOptions;
 import com.gnetop.ltgame.core.impl.OnLoginStateListener;
 import com.gnetop.ltgame.core.impl.OnRechargeStateListener;
+import com.gnetop.ltgame.core.util.PreferencesUtils;
 import com.gnetop.ltgame.core.widget.activity.GoogleLoginActivity;
 import com.gnetop.ltgame.core.model.LoginObject;
 import com.gnetop.ltgame.core.model.RechargeObject;
@@ -73,8 +76,14 @@ public class GooglePlatform extends AbsPlatform {
 
     @Override
     public void login(Activity activity, int target, LoginObject object, OnLoginStateListener listener) {
-        mGoogleHelper = new GoogleLoginHelper(activity, object.getmGoogleClient(), object.getType(),  listener);
-        mGoogleHelper.loginAction(object.getmGoogleClient());
+        mGoogleHelper = new GoogleLoginHelper(activity, object.getType(), listener);
+        String mClientID = "";
+        if (!TextUtils.isEmpty(object.getmGoogleClient())) {
+            mClientID = object.getmGoogleClient();
+        } else if (!TextUtils.isEmpty(PreferencesUtils.getString(activity, Constants.LT_SDK_GOOGLE_CLIENT_ID))) {
+            mClientID = PreferencesUtils.getString(activity, Constants.LT_SDK_GOOGLE_CLIENT_ID);
+        }
+        mGoogleHelper.loginAction(mClientID);
 
 
     }

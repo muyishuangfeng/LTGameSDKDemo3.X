@@ -47,11 +47,11 @@ public class GuestActivity extends AppCompatActivity {
 
     private void initView() {
         mRequest = new LoginObject();
-        mRequest.setFacebookAppID(mFacebookId);
+        mRequest.setFBAppID(mFacebookId);
         mRequest.setmGoogleClient(mAuthID);
         mRequest.setLTAppID(mLtAppID);
         mRequest.setLoginType(Constants.GUEST_LOGIN);
-        LTGameSDK.getDefaultInstance().init(this, true, true, mRequest);
+        LTGameSDK.getDefaultInstance().init(this,  mRequest);
 
         mTxtResult = findViewById(R.id.txt_result);
         mBtnLogin = findViewById(R.id.btn_login);

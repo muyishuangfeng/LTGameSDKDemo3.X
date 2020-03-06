@@ -18,10 +18,8 @@ import com.gnetop.ltgame.core.manager.ui.LoginUIManager;
 import com.gnetop.ltgame.core.model.LoginObject;
 import com.gnetop.ltgame.core.model.LoginResult;
 import com.gnetop.ltgame.core.model.RechargeObject;
-import com.gnetop.ltgame.core.model.RechargeResult;
 import com.gnetop.ltgame.core.platform.Target;
 import com.gnetop.ltgame.core.util.DeviceUtils;
-import com.gnetop.ltgame.core.util.LTGameUtil;
 import com.gnetop.ltgame.core.util.PreferencesUtils;
 
 import java.util.concurrent.Executors;
@@ -95,7 +93,7 @@ public class LTGameSDK {
     /**
      * 支付
      */
-    public void recharge(Activity context, boolean debug, boolean isServerTest,
+    public void recharge(Activity context, boolean debug, String isServerTest,
                          RechargeObject result, OnRechargeStateListener mOnLoginListener) {
         if (result != null) {
             initRecharge(context, debug, isServerTest, result);
@@ -115,9 +113,9 @@ public class LTGameSDK {
     /**
      * 初始化登录
      */
-    public void init(Context context, boolean debug, boolean isServerTest,
+    public void init(Context context,
                      LoginObject result) {
-        FacebookEventManager.getInstance().start(context, result.getFacebookAppID());
+        FacebookEventManager.getInstance().start(context, result.getFBAppID());
         PreferencesUtils.init(context);
         Executors.newSingleThreadExecutor().execute(new Runnable() {
             @Override
@@ -126,17 +124,29 @@ public class LTGameSDK {
                     mAdID = DeviceUtils.getGoogleAdId(context.getApplicationContext());
                     if (!TextUtils.isEmpty(mAdID)) {
                         LTGameOptions options = new LTGameOptions.Builder(context)
-                                .debug(debug)
-                                .isServerTest(isServerTest)
-                                .setFBiD(result.getFacebookAppID())
+                                .debug(result.isDebug())
+                                .isServerTest(result.isServerTest())
+                                .setFBiD(result.getFBAppID())
                                 .setGoogle(result.getmGoogleClient())
-                                //.setGP(result.getGPPublicKey())
+                                .setGP(result.getGPPublicKey())
                                 .setGuest()
+                                .setAgreementUrl(result.getAgreementUrl())
+                                .setPrivacyUrl(result.getPrivacyUrl())
                                 //.setOneStore(result.getOneStorePublicKey())
                                 .appID(result.getLTAppID())
                                 .emailEnable()
                                 .setAdID(mAdID)
                                 .build();
+                        PreferencesUtils.putString(context, Constants.LT_SDK_APP_ID, result.getLTAppID());
+                        PreferencesUtils.putString(context, Constants.LT_SDK_FB_APP_ID, result.getFBAppID());
+                        PreferencesUtils.putString(context, Constants.LT_SDK_GOOGLE_CLIENT_ID, result.getmGoogleClient());
+                        PreferencesUtils.putString(context, Constants.LT_SDK_GP_PUBLIC_KEY, result.getGPPublicKey());
+                        PreferencesUtils.putString(context, Constants.LT_SDK_PROVACY_URL, result.getPrivacyUrl());
+                        PreferencesUtils.putString(context, Constants.LT_SDK_AGREEMENT_URL, result.getAgreementUrl());
+                        PreferencesUtils.putString(context, Constants.LT_SDK_DEVICE_ADID, mAdID);
+                        PreferencesUtils.putString(context, Constants.LT_SDK_SERVER_TEST_TAG, result.isServerTest());
+                        PreferencesUtils.putBoolean(Constants.LT_SDK_DEBUG_TAG, result.isDebug());
+                        PreferencesUtils.putBoolean(Constants.LT_SDK_LOGIN_OUT_TAG, result.isLoginOut());
                         LTGameCommon.init(options);
 //                        CrashHandler.getInstance().init(context, LTGameCommon.options().getCacheDir() +
 //                                "/Crash/log/");
@@ -151,7 +161,7 @@ public class LTGameSDK {
     /**
      * 初始化支付
      */
-    private void initRecharge(Context context, boolean debug, boolean isServerTest,
+    private void initRecharge(Context context, boolean debug, String isServerTest,
                               RechargeObject result) {
         FacebookEventManager.getInstance().start(context, result.getFbAppID());
         CrashHandler.getInstance().init(context, LTGameCommon.options().getCacheDir() +
@@ -187,9 +197,14 @@ public class LTGameSDK {
     private void googleLogin(Activity context,
                              LoginObject result, OnLoginStateListener mOnLoginListener) {
         LoginObject object = new LoginObject();
-        object.setLTAppID(result.getLTAppID());
-        object.setmGoogleClient(result.getmGoogleClient());
-        object.setmAdID(mAdID);
+        PreferencesUtils.init(context);
+        String mAppID = "";
+        if (!TextUtils.isEmpty(object.getmGoogleClient())) {
+            mAppID = object.getmGoogleClient();
+        } else if (!TextUtils.isEmpty(PreferencesUtils.getString(context, Constants.LT_SDK_GOOGLE_CLIENT_ID))) {
+            mAppID = PreferencesUtils.getString(context, Constants.LT_SDK_GOOGLE_CLIENT_ID);
+        }
+        object.setmGoogleClient(mAppID);
         object.setType(result.getType());
         LoginManager.login(context, Target.LOGIN_GOOGLE,
                 object, mOnLoginListener);
@@ -202,9 +217,14 @@ public class LTGameSDK {
     private void fbLogin(Activity context,
                          LoginObject result, OnLoginStateListener mOnLoginListener) {
         LoginObject object = new LoginObject();
-        object.setLTAppID(result.getLTAppID());
-        object.setFacebookAppID(result.getFacebookAppID());
-        object.setmAdID(mAdID);
+        PreferencesUtils.init(context);
+        String mAppID = "";
+        if (!TextUtils.isEmpty(object.getFBAppID())) {
+            mAppID = object.getFBAppID();
+        } else if (!TextUtils.isEmpty(PreferencesUtils.getString(context, Constants.LT_SDK_FB_APP_ID))) {
+            mAppID = PreferencesUtils.getString(context, Constants.LT_SDK_FB_APP_ID);
+        }
+        object.setFBAppID(mAppID);
         object.setType(result.getType());
         LoginManager.login(context, Target.LOGIN_FACEBOOK,
                 object, mOnLoginListener);
@@ -218,8 +238,6 @@ public class LTGameSDK {
     private void guestLogin(Activity context,
                             LoginObject result, OnLoginStateListener mOnLoginListener) {
         LoginObject object = new LoginObject();
-        object.setLTAppID(result.getLTAppID());
-        object.setmAdID(mAdID);
         object.setType(result.getType());
         LoginManager.login(context, Target.LOGIN_GUEST,
                 object, mOnLoginListener);
@@ -232,8 +250,6 @@ public class LTGameSDK {
     private void emailLogin(Activity context,
                             LoginObject result, OnLoginStateListener mOnLoginListener) {
         LoginObject object = new LoginObject();
-        object.setLTAppID(result.getLTAppID());
-        object.setmAdID(mAdID);
         object.setType(result.getType());
         object.setEmail(result.getEmail());
         if (!TextUtils.isEmpty(result.getAuthCode())) {
@@ -252,10 +268,15 @@ public class LTGameSDK {
     private void qqLogin(Activity context,
                          LoginObject result, OnLoginStateListener mOnLoginListener) {
         LoginObject object = new LoginObject();
-        object.setLTAppID(result.getLTAppID());
-        object.setmAdID(mAdID);
+        PreferencesUtils.init(context);
+        String mAppID = "";
+        if (!TextUtils.isEmpty(object.getQqAppID())) {
+            mAppID = object.getQqAppID();
+        } else if (!TextUtils.isEmpty(PreferencesUtils.getString(context, Constants.LT_SDK_QQ_APP_ID))) {
+            mAppID = PreferencesUtils.getString(context, Constants.LT_SDK_QQ_APP_ID);
+        }
         object.setType(result.getType());
-        object.setEmail(result.getQqAppID());
+        object.setQqAppID(mAppID);
         LoginManager.login(context, Target.LOGIN_QQ,
                 object, mOnLoginListener);
     }
@@ -315,5 +336,11 @@ public class LTGameSDK {
                 result.getServer_number(), mOnLoginListener);
     }
 
+    /**
+     * 自动登录验证
+     */
+    public void autoLogin(Activity activity, OnLoginStateListener mListener) {
+        LoginRealizeManager.autoLogin(activity, mListener);
+    }
 
 }
