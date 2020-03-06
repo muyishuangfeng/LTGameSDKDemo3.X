@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
-    Button mBtnGoogle, mBtnFB, mBtnGP, mBtnGuest,  mBtnUI, mBtnEmail;
+    Button mBtnGoogle, mBtnFB, mBtnGP, mBtnGuest,  mBtnUI, mBtnEmail,mBtnPortUI;
     TextView mTxtResult;
 
     @Override
@@ -68,6 +68,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MainActivity.this, UIActivity.class));
+            }
+        });
+        mBtnPortUI = findViewById(R.id.btn_ui_port);
+        mBtnPortUI.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, PortUIActivity.class));
             }
         });
 

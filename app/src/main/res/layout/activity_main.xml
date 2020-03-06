@@ -42,9 +42,17 @@
         android:id="@+id/btn_ui"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="UI"
+        android:text="UI(横屏)"
         android:textAllCaps="false"
         app:layout_constraintTop_toBottomOf="@+id/btn_email" />
+
+    <Button
+        android:id="@+id/btn_ui_port"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="UI（竖屏）"
+        android:textAllCaps="false"
+        app:layout_constraintTop_toBottomOf="@+id/btn_ui" />
 
     <Button
         android:id="@+id/btn_gp"
@@ -52,7 +60,7 @@
         android:layout_height="wrap_content"
         android:text="Google Play"
         android:textAllCaps="false"
-        app:layout_constraintTop_toBottomOf="@+id/btn_ui" />
+        app:layout_constraintTop_toBottomOf="@+id/btn_ui_port" />
 
 
     <TextView

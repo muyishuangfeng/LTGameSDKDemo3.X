@@ -384,12 +384,11 @@ public class LoginRealizeManager {
     /**
      * 邮箱登录
      */
-    public static void emailLogin(final Context context, String code,
+    public static void emailLogin(final Context context,String email, String code,
                                   final OnLoginStateListener mListener) {
         LTGameOptions options = LTGameCommon.options();
         if (!TextUtils.isEmpty(options.getLtAppId()) &&
-                !TextUtils.isEmpty(options.getEmail()) &&
-                !TextUtils.isEmpty(options.getEmail()) &&
+                !TextUtils.isEmpty(email) &&
                 !TextUtils.isEmpty(code)) {
             long LTTime = System.currentTimeMillis() / 1000L;
             // String LTToken = MD5Util.md5Decode("POST" + options.getLtAppId() + LTTime + options.getLtAppKey());
@@ -406,7 +405,7 @@ public class LoginRealizeManager {
                 map.put("ukey", "");
             }
             WeakHashMap<String, Object> params = new WeakHashMap<>();
-            params.put("email", options.getEmail());
+            params.put("email",email);
             params.put("code", code);
             map.put("data", params);
             String baseUrl = "";
@@ -960,7 +959,7 @@ public class LoginRealizeManager {
                 map.put("ukey", "");
             }
             WeakHashMap<String, Object> params = new WeakHashMap<>();
-            params.put("email", options.getEmail());
+            params.put("email", mEmail);
             map.put("data", params);
             String baseUrl = "";
             if (options.getISServerTest()) {

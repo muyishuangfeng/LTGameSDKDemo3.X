@@ -90,7 +90,7 @@ public class EmailHelper {
      * 邮箱登录
      */
     private void emailLogin() {
-        LoginRealizeManager.emailLogin(mActivityRef.get(), code, new OnLoginStateListener() {
+        LoginRealizeManager.emailLogin(mActivityRef.get(), email,code, new OnLoginStateListener() {
             @Override
             public void onState(Activity activity, LoginResult result) {
                 switch (result.state) {

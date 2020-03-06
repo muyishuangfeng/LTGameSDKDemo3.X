@@ -287,7 +287,6 @@ public class LTGameSDK {
         result.setGPPublicKey(object.getGPPublicKey());
         result.setRole_number(object.getRole_number());
         result.setServer_number(object.getServer_number());
-        result.setSelfRequestCode(object.getSelfRequestCode());
         RechargeManager.recharge(activity, Target.RECHARGE_GOOGLE, object, mListener);
     }
 
@@ -303,7 +302,6 @@ public class LTGameSDK {
         result.setGPPublicKey(object.getOnePublicKey());
         result.setRole_number(object.getRole_number());
         result.setServer_number(object.getServer_number());
-        result.setSelfRequestCode(object.getSelfRequestCode());
         RechargeManager.recharge(activity, Target.RECHARGE_ONE_STORE, object, mListener);
     }
 
