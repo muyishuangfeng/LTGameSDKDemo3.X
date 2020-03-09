@@ -108,12 +108,6 @@ public class GoogleActivity extends AppCompatActivity {
                             mTxtResult.setText(mLtId + "====" + mLtToken);
                         }
                         break;
-                    case LoginResult.STATE_LOGIN_OUT:
-                        if (result.getError().getMsg() != null) {
-                            Toast.makeText(GoogleActivity.this, result.getError().getMsg(), Toast.LENGTH_SHORT).show();
-                            mTxtResult.setText(result.getError().getMsg());
-                        }
-                        break;
                     case LTResultCode.STATE_GOOGLE_ALREADY_BIND:
                         Log.e("TAG", "STATE_GOOGLE_ALREADY_BIND==========");
                         break;

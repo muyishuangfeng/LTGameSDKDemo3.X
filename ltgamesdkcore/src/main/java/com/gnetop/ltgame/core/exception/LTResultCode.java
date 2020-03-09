@@ -99,8 +99,8 @@ public class LTResultCode {
     public static final int STATE_GP_RESPONSE_RESULT_ITEM_NOT_OWNED = BASE_CODE + 37;
     /***用户取消支付*/
     public static final int STATE_GP_RESPONSE_RESULT_USER_CANCELED = BASE_CODE + 38;
-    /***支付成功*/
-    public static final int STATE_GP_RESPONSE_RESULT_SUCCESS = BASE_CODE + 39;
+    /***支付失败*/
+    public static final int STATE_GP_RESPONSE_RESULT_FAILED = BASE_CODE + 39;
 
 
     //==========================通用错误码==============================//

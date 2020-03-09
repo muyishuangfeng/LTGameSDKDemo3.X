@@ -864,7 +864,7 @@ public class LoginRealizeManager {
                 !TextUtils.isEmpty(goods_number) &&
                 !TextUtils.isEmpty(PreferencesUtils.getString(context, Constants.USER_LT_UID_KEY)) &&
                 role_number != 0 &&
-                server_number != 0 ) {
+                server_number != 0) {
             long LTTime = System.currentTimeMillis() / 1000L;
             //String LTToken = MD5Util.md5Decode("POST" + options.getLtAppId() + LTTime + options.getLtAppKey());
             String LTToken = "1";
@@ -994,7 +994,12 @@ public class LoginRealizeManager {
                         @Override
                         public void onNext(BaseEntry<ResultModel> result) {
                             if (result != null) {
-                                mListener.onState((Activity) context, RechargeResult.successOf(result));
+                                if (result.getCode() == 0) {
+                                    mListener.onState((Activity) context, RechargeResult.successOf(result));
+                                } else {
+                                    mListener.onState((Activity) context, RechargeResult.failOf(
+                                            LTResultCode.STATE_GP_RESPONSE_RESULT_FAILED, result.getMsg()));
+                                }
                             }
                         }
 

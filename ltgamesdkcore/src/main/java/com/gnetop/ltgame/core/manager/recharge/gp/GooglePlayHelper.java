@@ -313,9 +313,9 @@ public class GooglePlayHelper {
     /**
      * 回调
      *
-     * @param requestCode     请求码
-     * @param resultCode      结果码
-     * @param data            数据
+     * @param requestCode 请求码
+     * @param resultCode  结果码
+     * @param data        数据
      */
     void onActivityResult(int requestCode, int resultCode, Intent data) {
         //将回调交给帮助类来处理, 否则会出现支付正在进行的错误
@@ -338,35 +338,43 @@ public class GooglePlayHelper {
                 }
                 break;
                 case 1: {//取消
-                    mListener.onState(mActivityRef.get(), RechargeResult.failOf("1"));
+                    mListener.onState(mActivityRef.get(), RechargeResult.failOf(
+                            LTResultCode.STATE_GP_RESPONSE_RESULT_USER_CANCELED, "GP Cancel"));
                 }
                 break;
                 case 2: {//网络异常
-                    mListener.onState(mActivityRef.get(), RechargeResult.failOf("2"));
+                    mListener.onState(mActivityRef.get(), RechargeResult.failOf(
+                            LTResultCode.STATE_GP_RESPONSE_RESULT_SERVICE_UNAVAILABLE, "GP NetWork Error"));
                 }
                 break;
                 case 3: {//不支持购买
-                    mListener.onState(mActivityRef.get(), RechargeResult.failOf("3"));
+                    mListener.onState(mActivityRef.get(), RechargeResult.failOf(
+                            LTResultCode.STATE_GP_RESPONSE_RESULT_BILLING_UNAVAILABLE, "GP Billing UnAvailable"));
                 }
                 break;
                 case 4: {//商品不可购买
-                    mListener.onState(mActivityRef.get(), RechargeResult.failOf("4"));
+                    mListener.onState(mActivityRef.get(), RechargeResult.failOf(
+                            LTResultCode.STATE_GP_RESPONSE_RESULT_ITEM_UNAVAILABLE, "GP Item UnAvailable"));
                 }
                 break;
                 case 5: {//提供给 API 的无效参数
-                    mListener.onState(mActivityRef.get(), RechargeResult.failOf("5"));
+                    mListener.onState(mActivityRef.get(), RechargeResult.failOf(
+                            LTResultCode.STATE_GP_RESPONSE_RESULT_DEVELOPER_ERROR, "GP Developer Error"));
                 }
                 break;
                 case 6: {//错误
-                    mListener.onState(mActivityRef.get(), RechargeResult.failOf("6"));
+                    mListener.onState(mActivityRef.get(), RechargeResult.failOf(
+                            LTResultCode.STATE_GP_RESPONSE_RESULT_ERROR, "GP Error"));
                 }
                 break;
                 case 7: {//未消耗掉
-                    mListener.onState(mActivityRef.get(), RechargeResult.failOf("7"));
+                    mListener.onState(mActivityRef.get(), RechargeResult.failOf(
+                            LTResultCode.STATE_GP_RESPONSE_RESULT_ITEM_ALREADY_OWNED, "GP Item Already owen"));
                 }
                 break;
                 case 8: {//不可购买
-                    mListener.onState(mActivityRef.get(), RechargeResult.failOf("8"));
+                    mListener.onState(mActivityRef.get(), RechargeResult.failOf(
+                            LTResultCode.STATE_GP_RESPONSE_RESULT_ITEM_NOT_OWNED, "GP Item Not Owen"));
                 }
                 break;
             }
