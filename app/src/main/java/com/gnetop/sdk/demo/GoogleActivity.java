@@ -37,9 +37,6 @@ public class GoogleActivity extends AppCompatActivity {
     }
 
     private void initView() {
-        PreferencesUtils.init(this);
-        Log.e("TAG", "ukey===" + PreferencesUtils.getString(this, Constants.USER_LT_UID_KEY));
-
         mTxtResult = findViewById(R.id.txt_result);
         mBtnStart = findViewById(R.id.btn_start);
         mBtnAuto = findViewById(R.id.btn_auto);
@@ -47,6 +44,8 @@ public class GoogleActivity extends AppCompatActivity {
         mBtnStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mRequest=MainActivity.mRequest;
+                mRequest.setLoginType(Constants.GOOGLE_LOGIN);
                 mRequest.setType(Constants.GOOGLE_LOGIN);
                 LTGameSDK.getDefaultInstance().login(GoogleActivity.this,
                          mRequest, mOnLoginListener);
@@ -56,6 +55,8 @@ public class GoogleActivity extends AppCompatActivity {
         mBtnLoginOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mRequest=MainActivity.mRequest;
+                mRequest.setLoginType(Constants.GOOGLE_LOGIN);
                 mRequest.setType(Constants.GOOGLE_LOGIN_OUT);
                 LTGameSDK.getDefaultInstance().login(GoogleActivity.this,
                          mRequest, mOnLoginListener);
@@ -73,6 +74,8 @@ public class GoogleActivity extends AppCompatActivity {
         mBtnBind.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mRequest=MainActivity.mRequest;
+                mRequest.setLoginType(Constants.GOOGLE_LOGIN);
                 mRequest.setType(Constants.GOOGLE_BIND);
                 LTGameSDK.getDefaultInstance().login(GoogleActivity.this, mRequest, mOnLoginListener);
 

@@ -366,7 +366,6 @@ public class LoginRealizeManager {
             } else if (mServerTest.equals(Constants.LT_SERVER_OFFICIAL)) {
                 baseUrl = Api.FORMAL_SERVER_URL + mLtAppID + Api.FORMAL_SERVER_DOMAIN;
             }
-
             Api.getInstance((Activity) context, baseUrl)
                     .guestLogin(AppUtil.getLanguage(), LTToken, (int) LTTime, mLtAppID, map)
                     .subscribeOn(Schedulers.io())
@@ -465,8 +464,6 @@ public class LoginRealizeManager {
         } else if (!TextUtils.isEmpty(PreferencesUtils.getString(context, Constants.LT_SDK_SERVER_TEST_TAG))) {
             mServerTest = PreferencesUtils.getString(context, Constants.LT_SDK_SERVER_TEST_TAG);
         }
-
-
         if (!TextUtils.isEmpty(mLtAppID) &&
                 !TextUtils.isEmpty(mADID) &&
                 !TextUtils.isEmpty(email) &&

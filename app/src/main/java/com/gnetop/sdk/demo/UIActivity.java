@@ -23,16 +23,6 @@ public class UIActivity extends AppCompatActivity {
 
     Button mBtnLogin, mBtnLoginOut;
     TextView mTxtResult;
-    private String mLtAppID = "1";
-    private String mAuthID = "443503959733-nlr4ofibakk0j2dqkkomdqu3uta50pbe.apps.googleusercontent.com";
-    private String mFacebookId = "2717734461592670";
-    private static final String mAgreementUrl = "http://www.baidu.com";
-    private static final String mProvacyUrl = "http://www.baidu.com";
-    private static final int REQUEST_CODE = 0X01;
-    private static final String mGPPublicKey = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAleVlYQtKhvo+lb83j73kXGH8xAMhHcaAZoS22Bo3Jdujix9Ou5DjtUW3i6MIFqWEbnb9da50iH5IrxkkdJCcqzeYDdLk2Y3Gc+kyaw5ch4I//hjC2hh8nHgo8eWfrxSFce/DpNBeS1j4mWcjWZhYJtxheEUk8iTyXIVWHC8dCyifibs7z8wCXMhy3Q66Zym5GarAYjpuQsXTxHuOYUXakLWCwIXG8d8ihoRxweI7PtLpVyNU5FKgse42uouMRz6TgVotgu+NdamNyTH/CutQMPGeNXUj6FpHUDEWQhsRp27k0KsA8YWJDJBj4R9bJ5GDqD8XJo2y5V7/vy1OH4afkQIDAQAB";
-    private static final String mONEPublicKey = "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCu9RPDbvVqM8XWqVc75JXccIXN1VS8XViRZzATUq62kkFIXCeo52LKzBCh3iWFQIvX3jqDhim4ESqHMezEx8CxaTq8NpNoQXutBNmOEl+/7HTUsZxI93wgn9+7pFMyoFlasqmVjCcM7zbbAx5G0bySsm98TFxTu16OGmO01JGonQIDAQAB";
-    private static final String QQ_APP_ID = "1108097616";
-    private static final String EMAIL = "yangkemuyi@sina.com";
     String mLtToken;
     int mLtId;
     LoginObject mRequest;
@@ -47,24 +37,13 @@ public class UIActivity extends AppCompatActivity {
 
 
     protected void initView() {
-        PreferencesUtils.init(this);
-        Log.e("TAG", "ukey===" + PreferencesUtils.getString(this, Constants.USER_LT_UID_KEY));
-        mRequest = new LoginObject();
-        mRequest.setFBAppID(mFacebookId);
-        mRequest.setmGoogleClient(mAuthID);
-        mRequest.setLTAppID(mLtAppID);
-        mRequest.setPrivacyUrl(mProvacyUrl);
-        mRequest.setAgreementUrl(mAgreementUrl);
-        mRequest.setLoginOut(false);
-        mRequest.setLoginType(Constants.UI_LOGIN);
-        LTGameSDK.getDefaultInstance().init(this,  mRequest);
-
 
         mTxtResult = findViewById(R.id.txt_result);
         mBtnLogin = findViewById(R.id.btn_login);
         mBtnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mRequest=MainActivity.mRequest;
                 mRequest.setLoginType(Constants.UI_LOGIN);
                 LTGameSDK.getDefaultInstance().login(UIActivity.this,  mRequest, mOnLoginListener);
             }
@@ -73,8 +52,7 @@ public class UIActivity extends AppCompatActivity {
         mBtnLoginOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mRequest = new LoginObject();
-                mRequest.setmGoogleClient(mAuthID);
+                mRequest=MainActivity.mRequest;
                 mRequest.setLoginType(Constants.UI_LOGIN_OUT);
                 LTGameSDK.getDefaultInstance().login(UIActivity.this,  mRequest, mOnLoginListener);
 
