@@ -244,7 +244,7 @@ public interface RetrofitService {
      */
     @Headers({"Content-Type:application/json",
             "Accept-Charset:utf-8"})
-    @POST("/v1/user/email/bind")
+    @POST("/v1/order/store")
     Observable<BaseEntry<ResultModel>> createOrder(@Header("language") String LTAppID,
                                                    @Header("token") String LTToken,
                                                    @Header("tsp") int LTTime,

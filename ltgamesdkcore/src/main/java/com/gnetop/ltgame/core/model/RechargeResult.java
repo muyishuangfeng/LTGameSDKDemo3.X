@@ -67,6 +67,13 @@ public class RechargeResult extends Result {
 
     }
 
+    public static RechargeResult successOf(int code, BaseEntry<ResultModel> resultModel) {
+        RechargeResult result = new RechargeResult(code, resultModel);
+        result.resultModel = resultModel;
+        return result;
+
+    }
+
 
     public static RechargeResult failOf(BaseEntry<ResultModel> resultModel) {
         RechargeResult result = new RechargeResult(LTResultCode.STATE_RECHARGE_FAILED_CODE, resultModel);

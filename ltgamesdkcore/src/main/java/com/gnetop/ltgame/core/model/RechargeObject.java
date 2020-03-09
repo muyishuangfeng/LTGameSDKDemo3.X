@@ -37,7 +37,7 @@ public class RechargeObject {
     private boolean mStats;
     private int role_number;//  角色编号（游戏服务器用户ID）
     private int server_number;// 服务器编号（游戏提供）
-    private int goods_number;//  商品ID，游戏提供
+    private String goods_number;//  商品ID，游戏提供
 
     public String getFbAppID() {
         return fbAppID;
@@ -71,11 +71,11 @@ public class RechargeObject {
         this.server_number = server_number;
     }
 
-    public int getGoods_number() {
+    public String getGoods_number() {
         return goods_number;
     }
 
-    public void setGoods_number(int goods_number) {
+    public void setGoods_number(String goods_number) {
         this.goods_number = goods_number;
     }
 

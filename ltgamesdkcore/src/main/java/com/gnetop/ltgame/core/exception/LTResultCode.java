@@ -191,8 +191,6 @@ public class LTResultCode {
     public static final int STATE_UI_LOGIN_SUCCESS = BASE_CODE + 71;
     //登录失败
     public static final int STATE_UI_LOGIN_FAILED = BASE_CODE + 72;
-    //google创建订单失败
-    public static final int STATE_GP_CREATE_ORDER_FAILED = BASE_CODE + 73;
     //==========================角色信息==============================//
     //==========================角色信息==============================//
     //==========================角色信息==============================//
@@ -215,6 +213,11 @@ public class LTResultCode {
     public static final int ONE_STORE_SELF_REQUEST_CODE = BASE_CODE + 80;
     //googlePlay请求码
     public static final int GP_SELF_REQUEST_CODE = BASE_CODE + 81;
+
+    //google创建订单失败
+    public static final int STATE_GP_CREATE_ORDER_FAILED = BASE_CODE + 73;
+    //google创建订单成功
+    public static final int STATE_GP_CREATE_ORDER_SUCCESS = BASE_CODE + 82;
 
     //成功信息
     public static final String MSG_STATE_SUCCESS = "SUCCESS";

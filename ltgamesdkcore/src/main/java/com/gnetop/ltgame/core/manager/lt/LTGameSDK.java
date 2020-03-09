@@ -14,6 +14,7 @@ import com.gnetop.ltgame.core.impl.OnRechargeStateListener;
 import com.gnetop.ltgame.core.manager.LoginManager;
 import com.gnetop.ltgame.core.manager.RechargeManager;
 import com.gnetop.ltgame.core.manager.login.fb.FacebookEventManager;
+import com.gnetop.ltgame.core.manager.recharge.gp.GooglePlayHelper;
 import com.gnetop.ltgame.core.manager.ui.LoginUIManager;
 import com.gnetop.ltgame.core.model.LoginObject;
 import com.gnetop.ltgame.core.model.LoginResult;
@@ -93,10 +94,10 @@ public class LTGameSDK {
     /**
      * 支付
      */
-    public void recharge(Activity context, boolean debug, String isServerTest,
+    public void recharge(Activity context,
                          RechargeObject result, OnRechargeStateListener mOnLoginListener) {
         if (result != null) {
-            initRecharge(context, debug, isServerTest, result);
+            //initRecharge(context, debug, isServerTest, result);
             switch (result.getRechargeType()) {
                 case Constants.GP_RECHARGE: {//google支付
                     gpRecharge(context, result, mOnLoginListener);
@@ -137,6 +138,7 @@ public class LTGameSDK {
                                 .emailEnable()
                                 .setAdID(mAdID)
                                 .build();
+                        addOrder((Activity) context, result.getGPPublicKey());
                         PreferencesUtils.putString(context, Constants.LT_SDK_APP_ID, result.getLTAppID());
                         PreferencesUtils.putString(context, Constants.LT_SDK_FB_APP_ID, result.getFBAppID());
                         PreferencesUtils.putString(context, Constants.LT_SDK_GOOGLE_CLIENT_ID, result.getmGoogleClient());
@@ -158,38 +160,6 @@ public class LTGameSDK {
         });
     }
 
-    /**
-     * 初始化支付
-     */
-    private void initRecharge(Context context, boolean debug, String isServerTest,
-                              RechargeObject result) {
-        FacebookEventManager.getInstance().start(context, result.getFbAppID());
-        CrashHandler.getInstance().init(context, LTGameCommon.options().getCacheDir() +
-                "/Crash/log/");
-        PreferencesUtils.init(context);
-        Executors.newSingleThreadExecutor().execute(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    mAdID = DeviceUtils.getGoogleAdId(context.getApplicationContext());
-                    if (!TextUtils.isEmpty(mAdID)) {
-                        LTGameOptions options = new LTGameOptions.Builder(context)
-                                .debug(debug)
-                                .isServerTest(isServerTest)
-                                .setGP(result.getGPPublicKey())
-                                .setGuest()
-                                .setOneStore(result.getOnePublicKey())
-                                .appID(result.getLTAppID())
-                                .setAdID(mAdID)
-                                .build();
-                        LTGameCommon.init(options);
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
 
     /**
      * Google登录
@@ -302,7 +272,6 @@ public class LTGameSDK {
     private void gpRecharge(Activity activity, RechargeObject object, OnRechargeStateListener mListener) {
         RechargeObject result = new RechargeObject();
         result.setGoods_number(object.getGoods_number());
-        result.setLTAppID(object.getLTAppID());
         result.setPayTest(object.getPayTest());
         result.setSku(object.getSku());
         result.setGPPublicKey(object.getGPPublicKey());
@@ -312,12 +281,19 @@ public class LTGameSDK {
     }
 
     /**
+     * 补单操作
+     */
+    private void addOrder(Activity activity, String mPublicKey) {
+        GooglePlayHelper mHelper = new GooglePlayHelper(activity, mPublicKey);
+        mHelper.queryOrder();
+    }
+
+    /**
      * OneStore支付
      */
     private void oneStoreRecharge(Activity activity, RechargeObject object, OnRechargeStateListener mListener) {
         RechargeObject result = new RechargeObject();
         result.setGoods_number(object.getGoods_number());
-        result.setLTAppID(object.getLTAppID());
         result.setPayTest(object.getPayTest());
         result.setSku(object.getSku());
         result.setGPPublicKey(object.getOnePublicKey());

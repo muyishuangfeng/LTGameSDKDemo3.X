@@ -836,7 +836,7 @@ public class LoginRealizeManager {
      * @param mListener     接口
      */
     public static void createOrder(final Activity context, int role_number, int server_number,
-                                   int goods_number,
+                                   String goods_number,
                                    final OnRechargeStateListener mListener) {
         LTGameOptions options = LTGameCommon.options();
         String mLtAppID = "";
@@ -861,10 +861,10 @@ public class LoginRealizeManager {
 
         if (!TextUtils.isEmpty(mLtAppID) &&
                 !TextUtils.isEmpty(mADID) &&
+                !TextUtils.isEmpty(goods_number) &&
                 !TextUtils.isEmpty(PreferencesUtils.getString(context, Constants.USER_LT_UID_KEY)) &&
                 role_number != 0 &&
-                server_number != 0 &&
-                goods_number != 0) {
+                server_number != 0 ) {
             long LTTime = System.currentTimeMillis() / 1000L;
             //String LTToken = MD5Util.md5Decode("POST" + options.getLtAppId() + LTTime + options.getLtAppKey());
             String LTToken = "1";
@@ -902,7 +902,8 @@ public class LoginRealizeManager {
                             if (result != null) {
                                 if (result.getCode() == 0) {
                                     if (!TextUtils.isEmpty(result.getData().getOrder_number())) {
-                                        mListener.onState(context, RechargeResult.successOf(result));
+                                        mListener.onState(context, RechargeResult.successOf(
+                                                LTResultCode.STATE_GP_CREATE_ORDER_SUCCESS, result));
                                     }
                                 } else {
                                     mListener.onState(context, RechargeResult.failOf(LTGameError.make(

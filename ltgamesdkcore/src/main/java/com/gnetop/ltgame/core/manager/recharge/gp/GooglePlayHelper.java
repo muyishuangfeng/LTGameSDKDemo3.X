@@ -45,13 +45,13 @@ public class GooglePlayHelper {
     private String mSku;
     private int role_number;//  角色编号（游戏服务器用户ID）
     private int server_number;// 服务器编号（游戏提供）
-    private int goods_number;//  商品ID，游戏提供
+    private String goods_number;//  商品ID，游戏提供
     //是否是沙盒账号
     private int mPayTest;
 
 
     GooglePlayHelper(Activity activity, String mPublicKey, int role_number,
-                     int server_number, int goods_number, int mPayTest,
+                     int server_number, String goods_number, int mPayTest,
                      String sku, OnRechargeStateListener mListener) {
         this.mActivityRef = new WeakReference<>(activity);
         this.mPublicKey = mPublicKey;
