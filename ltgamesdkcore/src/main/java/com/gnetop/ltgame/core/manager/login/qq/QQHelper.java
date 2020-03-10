@@ -1,17 +1,23 @@
 package com.gnetop.ltgame.core.manager.login.qq;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.text.TextUtils;
+import android.util.Log;
 
 
 import com.gnetop.ltgame.core.exception.LTGameError;
 import com.gnetop.ltgame.core.exception.LTResultCode;
 import com.gnetop.ltgame.core.impl.OnLoginStateListener;
+import com.gnetop.ltgame.core.manager.login.qq.model.QQAccessToken;
 import com.gnetop.ltgame.core.manager.lt.LoginRealizeManager;
+import com.gnetop.ltgame.core.model.AccessToken;
 import com.gnetop.ltgame.core.model.LoginResult;
+import com.gnetop.ltgame.core.model.user.QQUser;
 import com.gnetop.ltgame.core.platform.Target;
 import com.gnetop.ltgame.core.util.PreferencesUtils;
+import com.google.gson.Gson;
 import com.tencent.connect.UserInfo;
 import com.tencent.connect.auth.QQToken;
 import com.tencent.connect.common.Constants;
@@ -52,27 +58,25 @@ class QQHelper {
      * 登录
      */
     void loginAction() {
-        if (mIsLoginOut) {
-            if (mTencent != null) {
+        if (mTencent != null) {
+            if (mIsLoginOut) {
                 mTencent.logout(mActivityRef.get());
                 login();
-                if (!TextUtils.isEmpty(PreferencesUtils.getString(mActivityRef.get(),
-                        com.gnetop.ltgame.core.common.Constants.QQ_ACCESS_TOKEN)) &&
-                        !TextUtils.isEmpty(PreferencesUtils.getString(mActivityRef.get(),
-                                com.gnetop.ltgame.core.common.Constants.QQ_OPEN_ID)) &&
-                        PreferencesUtils.getLong(mActivityRef.get(),
-                                com.gnetop.ltgame.core.common.Constants.QQ_TOKEN_TIMEOUT,
-                                0) != 0) {
-                    PreferencesUtils.remove(
-                            com.gnetop.ltgame.core.common.Constants.QQ_ACCESS_TOKEN);
-                    PreferencesUtils.remove(
-                            com.gnetop.ltgame.core.common.Constants.QQ_OPEN_ID);
-                    PreferencesUtils.remove(
-                            com.gnetop.ltgame.core.common.Constants.QQ_TOKEN_TIMEOUT);
-                }
+            } else {
+                mLoginListener = new LoginUIListener();
+                mTencent.login(mActivityRef.get(), "all", mLoginListener);
             }
-        } else {
-            login();
+        }
+    }
+
+    /**
+     * 回调
+     */
+    void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == Constants.REQUEST_LOGIN ||
+                requestCode == Constants.REQUEST_APPBAR) {
+            mLoginListener = new LoginUIListener();
+            Tencent.onActivityResultData(requestCode, resultCode, data, mLoginListener);
         }
     }
 
@@ -84,30 +88,29 @@ class QQHelper {
         @Override
         public void onComplete(Object object) {
             if (null == object) {
-                LTGameError error = LTGameError.make(LTResultCode.STATE_CODE_PARSE_ERROR, TAG + "#LoginUiListener#qq token is null"
-                );
-                mListener.onState(null, LoginResult.failOf(error));
+                mListener.onState(null, LoginResult.failOf(LTResultCode.STATE_CODE_PARSE_ERROR,
+                        TAG + "#LoginUiListener#qq token is null"));
                 return;
             }
             JSONObject jsonResponse = (JSONObject) object;
             if (jsonResponse.length() == 0) {
-                LTGameError error = LTGameError.make(LTResultCode.STATE_CODE_PARSE_ERROR,
-                        TAG + "#LoginUiListener#qq token is null ");
-                mListener.onState(null, LoginResult.failOf(error));
+                mListener.onState(null, LoginResult.failOf(LTResultCode.STATE_CODE_PARSE_ERROR,
+                        TAG + "#LoginUiListener#qq token is null "));
             } else {
                 try {
-                    String token = jsonResponse.getString(Constants.PARAM_ACCESS_TOKEN);
-                    String expires = jsonResponse.getString(Constants.PARAM_EXPIRES_IN);
-                    String openId = jsonResponse.getString(Constants.PARAM_OPEN_ID);
-                    if (!TextUtils.isEmpty(token) &&
-                            !TextUtils.isEmpty(expires)
-                            && !TextUtils.isEmpty(openId)) {
-                        long time = System.currentTimeMillis() + Long.parseLong(expires) * 1000;
-                        saveData(token, openId, time);
-                        mTencent.setAccessToken(token, expires);
-                        mTencent.setOpenId(openId);
-                        getUserInfo();
-
+                    QQAccessToken qqToken = new Gson().fromJson(jsonResponse.toString(), QQAccessToken.class);
+                    if (qqToken == null) {
+                        mListener.onState(mActivityRef.get(), LoginResult.failOf(LTResultCode.STATE_QQ_GET_TOKEN_FAILED));
+                        return;
+                    }
+                    if (qqToken.getRet() == 100030) {
+                        mTencent.reAuth(mActivityRef.get(), "all", mLoginListener);
+                    } else {
+                        // 保存token
+                        AccessToken.saveToken(getContext(), com.gnetop.ltgame.core.common.Constants.LT_QQ_TOKEN, qqToken);
+                        mTencent.setAccessToken(qqToken.getAccess_token(), qqToken.getExpires_in() + "");
+                        mTencent.setOpenId(qqToken.getOpenid());
+                        getUserInfo(qqToken);
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -134,93 +137,83 @@ class QQHelper {
      */
     private void login() {
         if (mTencent != null) {
-            long time = (PreferencesUtils.getLong(mActivityRef.get(),
-                    com.gnetop.ltgame.core.common.Constants.QQ_TOKEN_TIMEOUT)
-                    - System.currentTimeMillis()) / 1000;
-            if (time > 0) {
-                mTencent.setOpenId(PreferencesUtils.getString(mActivityRef.get(),
-                        com.gnetop.ltgame.core.common.Constants.QQ_OPEN_ID));
-                mTencent.setAccessToken(PreferencesUtils.getString(mActivityRef.get(),
-                        com.gnetop.ltgame.core.common.Constants.QQ_ACCESS_TOKEN),
-                        String.valueOf(time));
-                getUserInfo();
+            QQAccessToken qqToken = getToken();
+            if (qqToken != null) {
+                mTencent.setAccessToken(qqToken.getAccess_token(), String.valueOf(qqToken.getExpires_in()));
+                mTencent.setOpenId(qqToken.getOpenid());
+                if (mTencent.isSessionValid()) {
+                    getUserInfo(qqToken);
+                }
             } else {
                 mLoginListener = new LoginUIListener();
                 mTencent.login(mActivityRef.get(), "all", mLoginListener, true);
             }
-
         }
 
     }
 
+
     /**
-     * 保存数据
+     * 上下文
      */
-    private void saveData(String accessToken, String openID, long time) {
-        PreferencesUtils.putString(mActivityRef.get(),
-                com.gnetop.ltgame.core.common.Constants.QQ_ACCESS_TOKEN, accessToken);
-        PreferencesUtils.putString(mActivityRef.get(),
-                com.gnetop.ltgame.core.common.Constants.QQ_OPEN_ID, openID);
-        PreferencesUtils.putLong(
-                com.gnetop.ltgame.core.common.Constants.QQ_TOKEN_TIMEOUT, time);
+    private Context getContext() {
+        return mActivityRef.get().getApplicationContext();
     }
 
     /**
-     * 回调
+     * 获取token
      */
-    void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == Constants.REQUEST_LOGIN ||
-                requestCode == Constants.REQUEST_APPBAR) {
-            mLoginListener = new LoginUIListener();
-            Tencent.onActivityResultData(requestCode, resultCode, data, mLoginListener);
-        }
+    public QQAccessToken getToken() {
+        return AccessToken.getToken(getContext(), com.gnetop.ltgame.core.common.Constants.LT_QQ_TOKEN,
+                QQAccessToken.class);
     }
 
-    /**
-     * 获取用户信息
-     */
-    private void getUserInfo() {
-        QQToken token = mTencent.getQQToken();
-        UserInfo mInfo = new UserInfo(mActivityRef.get(), token);
-        mInfo.getUserInfo(new IUiListener() {
+
+    // 获取用户信息
+    private void getUserInfo(final QQAccessToken qqToken) {
+        UserInfo info = new UserInfo(getContext(), mTencent.getQQToken());
+        info.getUserInfo(new IUiListener() {
             @Override
             public void onComplete(Object object) {
-                JSONObject jb = (JSONObject) object;
-                try {
-                    String name = jb.getString("nickname");
+                QQUser qqUserInfo = new Gson().fromJson(object.toString(), QQUser.class);
+                if (qqUserInfo == null) {
+                    if (mListener != null) {
+                        mListener.onState(null, LoginResult.failOf(LTResultCode.STATE_CODE_PARSE_ERROR,
+                                "QQ Parse Error"));
+                    }
+                } else {
+                    qqUserInfo.setOpenId(mTencent.getOpenId());
+                    Log.e("TAG", qqToken + "===" + qqUserInfo.toString());
                     if (!TextUtils.isEmpty(type)) {
                         if (type.equals(com.gnetop.ltgame.core.common.Constants.QQ_LOGIN)) {//登录
                             LoginRealizeManager.qqLogin(mActivityRef.get(),
-                                    PreferencesUtils.getString(mActivityRef.get(),
-                                            com.gnetop.ltgame.core.common.Constants.QQ_OPEN_ID),
-                                    PreferencesUtils.getString(mActivityRef.get(),
-                                            com.gnetop.ltgame.core.common.Constants.QQ_USER_NAME),
-                                    PreferencesUtils.getString(mActivityRef.get(),
-                                            com.gnetop.ltgame.core.common.Constants.QQ_USER_NAME),
+                                    qqUserInfo.getOpenId(),
+                                    qqUserInfo.getUserId(),
+                                    qqUserInfo.getUserNickName(),
                                     mListener);
                         } else if (type.equals(com.gnetop.ltgame.core.common.Constants.QQ_BIND)) {//绑定
                             LoginRealizeManager.bindQQ(mActivityRef.get(),
-                                    PreferencesUtils.getString(mActivityRef.get(),
-                                            com.gnetop.ltgame.core.common.Constants.QQ_OPEN_ID),
-                                    PreferencesUtils.getString(mActivityRef.get(),
-                                            com.gnetop.ltgame.core.common.Constants.QQ_USER_NAME),
-                                    PreferencesUtils.getString(mActivityRef.get(),
-                                            com.gnetop.ltgame.core.common.Constants.QQ_USER_NAME), mListener);
+                                    qqUserInfo.getOpenId(),
+                                    qqUserInfo.getUserId(),
+                                    qqUserInfo.getUserNickName(),
+                                    mListener);
                         }
                     }
-                } catch (Exception e) {
-                    e.printStackTrace();
                 }
             }
 
             @Override
-            public void onError(UiError uiError) {
+            public void onError(UiError e) {
+                mListener.onState(null, LoginResult
+                        .failOf(LTResultCode.STATE_QQ_GET_USER_INFO_FAILED,
+                                "getUserInfo#qq获取用户信息失败"));
             }
 
             @Override
             public void onCancel() {
+                mListener.onState(null, LoginResult.cancelOf());
             }
         });
-
     }
+
 }

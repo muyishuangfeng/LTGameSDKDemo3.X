@@ -85,6 +85,7 @@ public class GooglePlayActivity extends AppCompatActivity {
                     Log.e(TAG, "STATE_GP_RESPONSE_RESULT_BILLING_UNAVAILABLE");
                     break;
                 case LTResultCode.STATE_GP_RESPONSE_RESULT_ITEM_UNAVAILABLE://商品不可购买
+
                     Log.e(TAG, "STATE_GP_RESPONSE_RESULT_ITEM_UNAVAILABLE");
                     break;
                 case LTResultCode.STATE_GP_RESPONSE_RESULT_DEVELOPER_ERROR://提供给 API 的无效参数

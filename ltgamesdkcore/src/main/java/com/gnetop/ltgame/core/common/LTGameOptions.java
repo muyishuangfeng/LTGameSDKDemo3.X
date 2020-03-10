@@ -60,6 +60,23 @@ public class LTGameOptions {
     private boolean isOneStoreEnable;
     private String mAgreementUrl;//用户协议
     private String mPrivacyUrl;//隐私政策
+    private long tokenExpiresHours;
+
+
+    public long getTokenExpiresHoursMs() {
+        if (tokenExpiresHours <= 0) {
+            return 0;
+        }
+        return tokenExpiresHours * 60 * 60 * 1000;
+    }
+
+    public long getTokenExpiresHours() {
+        if (tokenExpiresHours <= 0) {
+            return 0;
+        }
+        return tokenExpiresHours;
+
+    }
 
     public boolean isEmailEnable() {
         return isEmailEnable;
@@ -226,6 +243,9 @@ public class LTGameOptions {
         if (builder.wxOnlyAuthCode == null) {
             builder.wxOnlyAuthCode = false;
         }
+        if (builder.tokenExpiresHours < 0) {
+            builder.tokenExpiresHours = 0;
+        }
         this.debug = builder.debug;
         this.wxAppId = builder.wxAppId;
         // qq 配置
@@ -254,6 +274,7 @@ public class LTGameOptions {
         this.isWeChatEnable = builder.isWeChatEnable;
         this.isGPEnable = builder.isGPEnable;
         this.isOneStoreEnable = builder.isOneStoreEnable;
+        this.tokenExpiresHours = builder.tokenExpiresHours;
     }
 
 
@@ -290,6 +311,8 @@ public class LTGameOptions {
         private String googleClientID;
         private String mAgreementUrl;//用户协议
         private String mPrivacyUrl;//隐私政策
+        // token 失效时间，默认立刻失效
+        private int tokenExpiresHours = -1;
 
         //乐推AppID
         private String ltAppId;
@@ -355,6 +378,11 @@ public class LTGameOptions {
         public Builder setGoogle(String googleClientID) {
             this.googleClientID = googleClientID;
             this.isGoogleEnable = true;
+            return this;
+        }
+
+        public Builder setTokenTime(int time) {
+            this.tokenExpiresHours = time;
             return this;
         }
 

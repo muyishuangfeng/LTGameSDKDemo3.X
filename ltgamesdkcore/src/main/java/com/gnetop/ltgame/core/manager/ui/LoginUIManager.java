@@ -111,8 +111,14 @@ public class LoginUIManager {
     public void loginOut(Activity activity,
                          LoginObject result, OnLoginStateListener mListener) {
         PreferencesUtils.init(activity);
-        PreferencesUtils.remove(Constants.USER_LT_UID);
-        PreferencesUtils.remove(Constants.USER_LT_UID_KEY);
+        if (!TextUtils.isEmpty(PreferencesUtils.getString(activity,
+                Constants.USER_GUEST_FLAG))) {
+            if (PreferencesUtils.getString(activity,
+                    Constants.USER_GUEST_FLAG).equals("NO")) {//是否是游客
+                PreferencesUtils.remove(Constants.USER_LT_UID);
+                PreferencesUtils.remove(Constants.USER_LT_UID_KEY);
+            }
+        }
         com.facebook.login.LoginManager.getInstance().logOut();
         String mAppID = "";
         if (!TextUtils.isEmpty(result.getmGoogleClient())) {

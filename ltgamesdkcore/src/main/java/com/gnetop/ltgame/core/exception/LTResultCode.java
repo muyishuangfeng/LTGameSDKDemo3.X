@@ -145,12 +145,16 @@ public class LTResultCode {
     public static final int STATE_QQ_LOGIN_SUCCESS = BASE_CODE + 54;
     /***QQ登录失败*/
     public static final int STATE_QQ_LOGIN_FAILED = BASE_CODE + 55;
+    /***QQ获取token失败*/
+    public static final int STATE_QQ_GET_TOKEN_FAILED = BASE_CODE + 83;
     /***绑定QQ成功*/
     public static final int STATE_QQ_BIND_SUCCESS = BASE_CODE + 56;
     /***绑定QQ失败*/
     public static final int STATE_QQ_BIND_FAILED = BASE_CODE + 57;
     /***已经绑定*/
     public static final int STATE_QQ_ALREADY_BIND = BASE_CODE + 58;
+    /***QQ获取用户信息失败*/
+    public static final int STATE_QQ_GET_USER_INFO_FAILED = BASE_CODE + 84;
 
     //==========================微信错误码==============================//
     //==========================微信错误码==============================//

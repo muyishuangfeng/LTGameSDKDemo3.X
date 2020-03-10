@@ -41,7 +41,7 @@ import okhttp3.RequestBody;
 public class LoginRealizeManager {
 
     private static final int SDK_VERSION = 100;
-    private static final String SDK_TEST = "Demo";
+    private static final String SDK_TEST = "1";
 
 
     /**

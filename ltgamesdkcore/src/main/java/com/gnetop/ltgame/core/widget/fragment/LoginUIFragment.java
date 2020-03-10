@@ -3,6 +3,7 @@ package com.gnetop.ltgame.core.widget.fragment;
 import android.app.Activity;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -99,7 +100,7 @@ public class LoginUIFragment extends BaseFragment implements View.OnClickListene
         } else if (resID == R.id.txt_visitor) {//游客登录
             if (!TextUtils.isEmpty(PreferencesUtils.getString(mActivity, Constants.USER_BIND_FLAG)) &&
                     TextUtils.equals(PreferencesUtils.getString(mActivity, Constants.USER_BIND_FLAG), "YES")) {//游客登录过
-                guestTurn();
+                LoginUIManager.getInstance().guestLogin(mActivity, mData, mListener);
             } else {
                 guestLogin();
             }
@@ -173,6 +174,19 @@ public class LoginUIFragment extends BaseFragment implements View.OnClickListene
                             getProxyActivity().finish();
 
                         }
+                        break;
+                    case LTResultCode.STATE_GUEST_LOGIN_SUCCESS:
+                        if (result.getResultModel() != null) {
+                            PreferencesUtils.init(activity);
+                            PreferencesUtils.putString(activity,
+                                    Constants.USER_GUEST_FLAG,"YES");
+                            PreferencesUtils.putString(activity,
+                                    Constants.USER_BIND_FLAG,"YES");
+                            guestTurn();
+                        }
+                        break;
+                    case LTResultCode.STATE_GUEST_LOGIN_FAILED:
+                        Log.e("TAG","STATE_GUEST_LOGIN_FAILED==");
                         break;
                 }
             }

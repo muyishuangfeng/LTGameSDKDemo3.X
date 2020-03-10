@@ -111,6 +111,10 @@ public class Constants {
     public static final String LT_SERVER_TEST = "LT_SERVER_TEST";
     //正式服
     public static final String LT_SERVER_OFFICIAL = "LT_SERVER_OFFICIAL";
+    //QQ的token
+    public static final String LT_QQ_TOKEN = "LT_QQ_TOKEN";
+    //QQ的token时长
+    public static final String LT_QQ_TOKEN_TIME = "LT_QQ_TOKEN_TIME";
 
 
 }

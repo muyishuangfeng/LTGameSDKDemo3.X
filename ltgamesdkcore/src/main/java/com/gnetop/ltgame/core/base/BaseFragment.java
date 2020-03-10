@@ -3,7 +3,6 @@ package com.gnetop.ltgame.core.base;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -13,7 +12,6 @@ import android.view.ViewGroup;
 
 
 import com.gnetop.ltgame.core.ui.FadeInAnimator;
-import com.gnetop.ltgame.core.util.DensityUtils;
 
 import me.yokeyword.fragmentation.SupportFragment;
 import me.yokeyword.fragmentation.anim.FragmentAnimator;
@@ -41,19 +39,6 @@ public abstract class BaseFragment extends SupportFragment {
                              @Nullable Bundle savedInstanceState) {
         if (mRootView == null) {
             mRootView = inflater.inflate(getFragmentId(), container, false);
-//            ViewGroup.LayoutParams params = mRootView.getLayoutParams();
-//
-//            Configuration mConfiguration = this.getResources().getConfiguration(); //获取设置的配置信息
-//            int ori = mConfiguration.orientation; //获取屏幕方向
-//            if (ori == mConfiguration.ORIENTATION_LANDSCAPE) {
-//                //横屏
-//                params.width = DensityUtils.Dp2px(getContext(), 320);
-//            } else if (ori == mConfiguration.ORIENTATION_PORTRAIT) {
-//                //竖屏
-//                params.width = DensityUtils.Dp2px(getContext(), 270);
-//            }
-//            mRootView.setLayoutParams(params);
-
             initView(mRootView);
             isViewCreated = true;
         }

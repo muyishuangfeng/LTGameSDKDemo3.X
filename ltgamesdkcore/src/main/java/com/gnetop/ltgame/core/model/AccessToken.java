@@ -1,13 +1,26 @@
 package com.gnetop.ltgame.core.model;
 
 
+import android.content.Context;
+import android.text.TextUtils;
+
+import com.gnetop.ltgame.core.common.Constants;
+import com.gnetop.ltgame.core.common.LTGameCommon;
+import com.gnetop.ltgame.core.common.LTGameOptions;
+import com.gnetop.ltgame.core.model.user.QQUser;
 import com.gnetop.ltgame.core.platform.Target;
+import com.gnetop.ltgame.core.util.PreferencesUtils;
+import com.google.gson.Gson;
+
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * AccessToken基类
  */
 public abstract class AccessToken {
-
+    //线程池
+    private static ExecutorService sService;
     private String openid;//授权用户唯一标识。
     private String unionid;
     private String access_token;//接口调用凭证
@@ -75,4 +88,49 @@ public abstract class AccessToken {
                 '}';
     }
 
+    /**
+     * 保存Token
+     */
+    public static void saveToken(final Context context, final String key, final Object token) {
+        LTGameOptions opts = LTGameCommon.options();
+        if (opts.getTokenExpiresHoursMs() <= 0) {
+            return;
+        }
+        if (sService == null) {
+            sService = Executors.newSingleThreadExecutor();
+        }
+        sService.execute(() -> {
+            try {
+                PreferencesUtils.init(context);
+                if (token != null) {
+                    PreferencesUtils.putString(context, key, token + "");
+                    PreferencesUtils.putLong(Constants.LT_QQ_TOKEN_TIME, System.currentTimeMillis());
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+    }
+
+    /**
+     * Json解析
+     */
+    public static <T> T getToken(final Context context, String key, final Class<T> tokenClazz) {
+        LTGameOptions opts = LTGameCommon.options();
+        if (opts.getTokenExpiresHoursMs() <= 0) {
+            return null;
+        }
+        long time = PreferencesUtils.getLong(context, Constants.LT_QQ_TOKEN_TIME);
+        long currentTimeMillis = System.currentTimeMillis();
+        if (currentTimeMillis - time < opts.getTokenExpiresHoursMs()) {
+            T t = null;
+            if (!TextUtils.isEmpty(PreferencesUtils.getString(context, key))) {
+                t = new Gson().fromJson
+                        (PreferencesUtils.getString(context, key), tokenClazz);
+            }
+            return t;
+        } else {
+            return null;
+        }
+    }
 }

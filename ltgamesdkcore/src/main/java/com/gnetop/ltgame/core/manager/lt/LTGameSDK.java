@@ -136,6 +136,7 @@ public class LTGameSDK {
                                 //.setOneStore(result.getOneStorePublicKey())
                                 .appID(result.getLTAppID())
                                 .emailEnable()
+                                .setQQ(result.getQqAppID())
                                 .setAdID(mAdID)
                                 .build();
                         addOrder((Activity) context, result.getGPPublicKey());

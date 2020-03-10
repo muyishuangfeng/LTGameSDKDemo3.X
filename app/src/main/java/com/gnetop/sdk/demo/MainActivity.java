@@ -35,7 +35,6 @@ public class MainActivity extends AppCompatActivity {
     private static final String mProvacyUrl = "http://www.baidu.com";
     private static final String mGPPublicKey = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAleVlYQtKhvo+lb83j73kXGH8xAMhHcaAZoS22Bo3Jdujix9Ou5DjtUW3i6MIFqWEbnb9da50iH5IrxkkdJCcqzeYDdLk2Y3Gc+kyaw5ch4I//hjC2hh8nHgo8eWfrxSFce/DpNBeS1j4mWcjWZhYJtxheEUk8iTyXIVWHC8dCyifibs7z8wCXMhy3Q66Zym5GarAYjpuQsXTxHuOYUXakLWCwIXG8d8ihoRxweI7PtLpVyNU5FKgse42uouMRz6TgVotgu+NdamNyTH/CutQMPGeNXUj6FpHUDEWQhsRp27k0KsA8YWJDJBj4R9bJ5GDqD8XJo2y5V7/vy1OH4afkQIDAQAB";
     private static final String QQ_APP_ID = "1108097616";
-    private SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     static LoginObject mRequest;
     private boolean debug=true;
     private String isServerTest=Constants.LT_SERVER_TEST;
@@ -53,7 +52,6 @@ public class MainActivity extends AppCompatActivity {
      * 初始化控件
      */
     private void initView() {
-
         mRequest = new LoginObject();
         mRequest.setFBAppID(mFacebookId);
         mRequest.setServerTest(isServerTest);
@@ -124,7 +122,7 @@ public class MainActivity extends AppCompatActivity {
         mBtnPortUI.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, PortUIActivity.class));
+                startActivity(new Intent(MainActivity.this, QQActivity.class));
             }
         });
         mBtnUploadRole = findViewById(R.id.btn_upload);

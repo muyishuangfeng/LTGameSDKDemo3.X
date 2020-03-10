@@ -44,6 +44,10 @@ android {
                                     qq_app_id                 : "1108097616"]
         }
     }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 }
 
 dependencies {

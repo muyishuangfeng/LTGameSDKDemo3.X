@@ -36,6 +36,7 @@
             android:screenOrientation="portrait" />
 
         <activity android:name=".EmailActivity" />
+        <activity android:name=".QQActivity" />
 
     </application>
 
