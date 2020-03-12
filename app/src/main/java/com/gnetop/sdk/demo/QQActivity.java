@@ -52,7 +52,12 @@ public class QQActivity extends AppCompatActivity {
         mBtnFB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                mRequest = MainActivity.mRequest;
+                mRequest.setLoginType(Constants.QQ_LOGIN);
+                mRequest.setType(Constants.QQ_BIND);
+                mRequest.setLoginOut(false);
+                LTGameSDK.getDefaultInstance().login(QQActivity.this, mRequest,
+                        mOnLoginListener);
             }
         });
         mBtnBind = findViewById(R.id.btn_bind);

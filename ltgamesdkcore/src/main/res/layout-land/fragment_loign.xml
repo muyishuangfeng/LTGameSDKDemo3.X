@@ -76,7 +76,7 @@
             android:layout_height="@dimen/dp_24"
             android:layout_gravity="center"
             android:padding="@dimen/dp_2"
-            android:src="@drawable/facebook" />
+            android:src="@drawable/wechat" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -138,7 +138,7 @@
             android:layout_height="@dimen/dp_24"
             android:layout_gravity="center"
             android:padding="@dimen/dp_2"
-            android:src="@drawable/google" />
+            android:src="@drawable/qq" />
 
         <TextView
             android:layout_width="wrap_content"

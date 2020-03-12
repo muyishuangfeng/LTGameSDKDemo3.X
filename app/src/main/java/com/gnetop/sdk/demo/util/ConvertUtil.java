@@ -62,7 +62,7 @@ public class ConvertUtil {
      */
     private static String convertTo64(int[] input) {
         String base64_chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
-        String ret = "";
+        StringBuilder ret = new StringBuilder();
         int i = 0;
         int j = 0;
         int[] char_array_3 = new int[3];
@@ -79,7 +79,7 @@ public class ConvertUtil {
                 char_array_4[3] = char_array_3[2] & 0x3f;
 
                 for (i = 0; (i < 4); i++)
-                    ret += base64_chars.charAt(char_array_4[i]);
+                    ret.append(base64_chars.charAt(char_array_4[i]));
                 i = 0;
             }
         }
@@ -94,13 +94,13 @@ public class ConvertUtil {
             char_array_4[3] = char_array_3[2] & 0x3f;
 
             for (j = 0; (j < i + 1); j++)
-                ret += base64_chars.charAt(char_array_4[j]);
+                ret.append(base64_chars.charAt(char_array_4[j]));
 
             while ((i++ < 3))
-                ret += '=';
+                ret.append('=');
 
         }
-        return ret;
+        return ret.toString();
     }
 
 
