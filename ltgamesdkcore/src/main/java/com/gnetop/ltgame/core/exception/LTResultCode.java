@@ -146,82 +146,98 @@ public class LTResultCode {
     /***QQ登录失败*/
     public static final int STATE_QQ_LOGIN_FAILED = BASE_CODE + 55;
     /***QQ获取token失败*/
-    public static final int STATE_QQ_GET_TOKEN_FAILED = BASE_CODE + 83;
+    public static final int STATE_QQ_GET_TOKEN_FAILED = BASE_CODE + 56;
     /***绑定QQ成功*/
-    public static final int STATE_QQ_BIND_SUCCESS = BASE_CODE + 56;
+    public static final int STATE_QQ_BIND_SUCCESS = BASE_CODE + 57;
     /***绑定QQ失败*/
-    public static final int STATE_QQ_BIND_FAILED = BASE_CODE + 57;
+    public static final int STATE_QQ_BIND_FAILED = BASE_CODE + 58;
     /***已经绑定*/
-    public static final int STATE_QQ_ALREADY_BIND = BASE_CODE + 58;
+    public static final int STATE_QQ_ALREADY_BIND = BASE_CODE + 59;
     /***QQ获取用户信息失败*/
-    public static final int STATE_QQ_GET_USER_INFO_FAILED = BASE_CODE + 84;
+    public static final int STATE_QQ_GET_USER_INFO_FAILED = BASE_CODE + 60;
 
     //==========================微信错误码==============================//
     //==========================微信错误码==============================//
     //==========================微信错误码==============================//
+    /***微信扫码登录失败*/
+    public static final int STATE_WX_SCAN_FAILED = BASE_CODE + 61;
+    /***微信扫码登录成功*/
+    public static final int STATE_WX_SCAN_SUCCESS = BASE_CODE + 62;
     /***微信登录失败*/
-    public static final int STATE_WX_LOGIN_FAILED = BASE_CODE + 59;
+    public static final int STATE_WX_LOGIN_FAILED = BASE_CODE + 63;
     /***已经绑定*/
-    public static final int STATE_WX_ALREADY_BIND = BASE_CODE + 60;
+    public static final int STATE_WX_ALREADY_BIND = BASE_CODE + 64;
     /***微信登录成功*/
-    public static final int STATE_WX_LOGIN_SUCCESS = BASE_CODE + 61;
+    public static final int STATE_WX_LOGIN_SUCCESS = BASE_CODE + 65;
     /***绑定微信成功*/
-    public static final int STATE_WX_BIND_SUCCESS = BASE_CODE + 62;
+    public static final int STATE_WX_BIND_SUCCESS = BASE_CODE + 66;
     /***绑定微信失败*/
-    public static final int STATE_WX_BIND_FAILED = BASE_CODE + 63;
+    public static final int STATE_WX_BIND_FAILED = BASE_CODE + 67;
+    /***微信刷新token失败*/
+    public static final int STATE_WX_REFRESH_TOKEN_FAILED = BASE_CODE + 68;
+    /***微信AccessToken失败*/
+    public static final int STATE_WX_ACCESS_TOKEN_FAILED = BASE_CODE + 69;
+    /***微信检测AccessToken有效性失败*/
+    public static final int STATE_WX_CHECK_ACCESS_TOKEN_FAILED = BASE_CODE + 70;
+    /***获取微信用户信息失败*/
+    public static final int STATE_WX_INFO_FAILED = BASE_CODE + 71;
     //==========================发送异常信息==============================//
     //==========================发送异常信息==============================//
     //==========================发送异常信息==============================//
     /***发送异常信息失败*/
-    public static final int STATE_SEND_EXCEPTION_FAILED = BASE_CODE + 64;
+    public static final int STATE_SEND_EXCEPTION_FAILED = BASE_CODE + 72;
     /***发送异常信息成功*/
-    public static final int STATE_SEND_EXCEPTION_SUCCESS = BASE_CODE + 65;
+    public static final int STATE_SEND_EXCEPTION_SUCCESS = BASE_CODE + 73;
     //==========================自动登录信息==============================//
     //==========================自动登录信息==============================//
     //==========================自动登录信息==============================//
     /***自动登录失败*/
-    public static final int STATE_AUTO_LOGIN_FAILED = BASE_CODE + 66;
+    public static final int STATE_AUTO_LOGIN_FAILED = BASE_CODE + 74;
     /***自动登录成功*/
-    public static final int STATE_AUTO_LOGIN_SUCCESS = BASE_CODE + 67;
+    public static final int STATE_AUTO_LOGIN_SUCCESS = BASE_CODE + 75;
     //请求码
-    public static final int SELF_LOGIN_REQUEST_CODE = BASE_CODE + 68;
+    public static final int SELF_LOGIN_REQUEST_CODE = BASE_CODE + 76;
     //平台错误
-    public static final int SELF_PLATFORM_CODE = BASE_CODE + 69;
-    public static final int STATE_COMMON_ERROR = BASE_CODE + 70;
+    public static final int SELF_PLATFORM_CODE = BASE_CODE + 77;
+    public static final int STATE_COMMON_ERROR = BASE_CODE + 78;
     //==========================UI包信息==============================//
     //==========================UI包信息==============================//
     //==========================UI包信息==============================//
     //登录成功
-    public static final int STATE_UI_LOGIN_SUCCESS = BASE_CODE + 71;
+    public static final int STATE_UI_LOGIN_SUCCESS = BASE_CODE + 79;
     //登录失败
-    public static final int STATE_UI_LOGIN_FAILED = BASE_CODE + 72;
+    public static final int STATE_UI_LOGIN_FAILED = BASE_CODE + 80;
     //==========================角色信息==============================//
     //==========================角色信息==============================//
     //==========================角色信息==============================//
     //角色信息上传成功
-    public static final int STATE_ROLE_UPLOAD_SUCCESS = BASE_CODE + 74;
+    public static final int STATE_ROLE_UPLOAD_SUCCESS = BASE_CODE + 81;
     //角色信息上传失败
-    public static final int STATE_ROLE_UPLOAD_FAILED = BASE_CODE + 75;
+    public static final int STATE_ROLE_UPLOAD_FAILED = BASE_CODE + 82;
     //获取Facebook的信息
-    public static final int STATE_FB_UI_TOKEN = BASE_CODE + 76;
+    public static final int STATE_FB_UI_TOKEN = BASE_CODE + 83;
     //获取Google的信息
-    public static final int STATE_GOOGLE_UI_TOKEN = BASE_CODE + 77;
+    public static final int STATE_GOOGLE_UI_TOKEN = BASE_CODE + 84;
+    //获取QQ的信息
+    public static final int STATE_QQ_UI_TOKEN = BASE_CODE + 85;
+    //获取微信的信息
+    public static final int STATE_WX_UI_TOKEN = BASE_CODE + 86;
     //==========================请求码==============================//
     //==========================请求码==============================//
     //==========================请求码==============================//
     //Facebook请求码
-    public static final int FB_SELF_REQUEST_CODE = BASE_CODE + 78;
+    public static final int FB_SELF_REQUEST_CODE = BASE_CODE + 87;
     //Google请求码
-    public static final int GOOGLE_SELF_REQUEST_CODE = BASE_CODE + 79;
+    public static final int GOOGLE_SELF_REQUEST_CODE = BASE_CODE + 88;
     //oneStore请求码
-    public static final int ONE_STORE_SELF_REQUEST_CODE = BASE_CODE + 80;
+    public static final int ONE_STORE_SELF_REQUEST_CODE = BASE_CODE + 89;
     //googlePlay请求码
-    public static final int GP_SELF_REQUEST_CODE = BASE_CODE + 81;
+    public static final int GP_SELF_REQUEST_CODE = BASE_CODE + 90;
 
     //google创建订单失败
-    public static final int STATE_GP_CREATE_ORDER_FAILED = BASE_CODE + 73;
+    public static final int STATE_GP_CREATE_ORDER_FAILED = BASE_CODE + 91;
     //google创建订单成功
-    public static final int STATE_GP_CREATE_ORDER_SUCCESS = BASE_CODE + 82;
+    public static final int STATE_GP_CREATE_ORDER_SUCCESS = BASE_CODE + 92;
 
     //成功信息
     public static final String MSG_STATE_SUCCESS = "SUCCESS";

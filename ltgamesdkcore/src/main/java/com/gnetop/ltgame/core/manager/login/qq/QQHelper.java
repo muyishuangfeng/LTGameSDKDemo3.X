@@ -4,9 +4,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.text.TextUtils;
-import android.util.Log;
 
-
+import com.gnetop.ltgame.core.base.BaseEntry;
 import com.gnetop.ltgame.core.exception.LTGameError;
 import com.gnetop.ltgame.core.exception.LTResultCode;
 import com.gnetop.ltgame.core.impl.OnLoginStateListener;
@@ -14,12 +13,11 @@ import com.gnetop.ltgame.core.manager.login.qq.model.QQAccessToken;
 import com.gnetop.ltgame.core.manager.lt.LoginRealizeManager;
 import com.gnetop.ltgame.core.model.AccessToken;
 import com.gnetop.ltgame.core.model.LoginResult;
+import com.gnetop.ltgame.core.model.ResultModel;
 import com.gnetop.ltgame.core.model.user.QQUser;
 import com.gnetop.ltgame.core.platform.Target;
-import com.gnetop.ltgame.core.util.PreferencesUtils;
 import com.google.gson.Gson;
 import com.tencent.connect.UserInfo;
-import com.tencent.connect.auth.QQToken;
 import com.tencent.connect.common.Constants;
 import com.tencent.tauth.IUiListener;
 import com.tencent.tauth.Tencent;
@@ -183,21 +181,35 @@ class QQHelper {
                     }
                 } else {
                     qqUserInfo.setOpenId(mTencent.getOpenId());
-                    Log.e("TAG", qqToken + "===" + qqUserInfo.toString());
                     if (!TextUtils.isEmpty(type)) {
-                        if (type.equals(com.gnetop.ltgame.core.common.Constants.QQ_LOGIN)) {//登录
-                            LoginRealizeManager.qqLogin(mActivityRef.get(),
-                                    qqUserInfo.getOpenId(),
-                                    qqUserInfo.getUserId(),
-                                    qqUserInfo.getUserNickName(),
-                                    mListener);
-                        } else if (type.equals(com.gnetop.ltgame.core.common.Constants.QQ_BIND)) {//绑定
-                            LoginRealizeManager.bindQQ(mActivityRef.get(),
-                                    qqUserInfo.getOpenId(),
-                                    qqUserInfo.getUserId(),
-                                    qqUserInfo.getUserNickName(),
-                                    mListener);
+                        switch (type) {
+                            case com.gnetop.ltgame.core.common.Constants.QQ_LOGIN://QQ登录
+                                LoginRealizeManager.qqLogin(mActivityRef.get(),
+                                        qqUserInfo.getOpenId(),
+                                        qqUserInfo.getUserId(),
+                                        qqUserInfo.getUserNickName(),
+                                        mListener);
+                                break;
+                            case com.gnetop.ltgame.core.common.Constants.QQ_BIND://QQ绑定
+                                LoginRealizeManager.bindQQ(mActivityRef.get(),
+                                        qqUserInfo.getOpenId(),
+                                        qqUserInfo.getUserId(),
+                                        qqUserInfo.getUserNickName(),
+                                        mListener);
+                                break;
+
+                            case com.gnetop.ltgame.core.common.Constants.QQ_UI_TOKEN: //获取token
+                                BaseEntry<ResultModel> resultModelBaseEntry = new BaseEntry<>();
+                                ResultModel model = new ResultModel();
+                                model.setEmali(qqUserInfo.getUserId());
+                                model.setId(qqUserInfo.getOpenId());
+                                model.setNickName(qqUserInfo.getUserNickName());
+                                resultModelBaseEntry.setData(model);
+                                mListener.onState(mActivityRef.get(), LoginResult.successOf(
+                                        LTResultCode.STATE_QQ_UI_TOKEN, resultModelBaseEntry));
+                                break;
                         }
+
                     }
                 }
             }

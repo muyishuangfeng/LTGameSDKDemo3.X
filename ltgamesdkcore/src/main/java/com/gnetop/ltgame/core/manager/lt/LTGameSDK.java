@@ -7,8 +7,6 @@ import android.text.TextUtils;
 import com.gnetop.ltgame.core.common.Constants;
 import com.gnetop.ltgame.core.common.LTGameCommon;
 import com.gnetop.ltgame.core.common.LTGameOptions;
-import com.gnetop.ltgame.core.crashhandler.CrashHandler;
-import com.gnetop.ltgame.core.exception.LTResultCode;
 import com.gnetop.ltgame.core.impl.OnLoginStateListener;
 import com.gnetop.ltgame.core.impl.OnRechargeStateListener;
 import com.gnetop.ltgame.core.manager.LoginManager;
@@ -17,7 +15,6 @@ import com.gnetop.ltgame.core.manager.login.fb.FacebookEventManager;
 import com.gnetop.ltgame.core.manager.recharge.gp.GooglePlayHelper;
 import com.gnetop.ltgame.core.manager.ui.LoginUIManager;
 import com.gnetop.ltgame.core.model.LoginObject;
-import com.gnetop.ltgame.core.model.LoginResult;
 import com.gnetop.ltgame.core.model.RechargeObject;
 import com.gnetop.ltgame.core.platform.Target;
 import com.gnetop.ltgame.core.util.DeviceUtils;
@@ -87,6 +84,10 @@ public class LTGameSDK {
                     uiLoginOut(context, result, mOnLoginListener);
                     break;
                 }
+                case Constants.WX_LOGIN: {//微信登录
+                    wxLogin(context, result, mOnLoginListener);
+                    break;
+                }
             }
         }
     }
@@ -97,7 +98,6 @@ public class LTGameSDK {
     public void recharge(Activity context,
                          RechargeObject result, OnRechargeStateListener mOnLoginListener) {
         if (result != null) {
-            //initRecharge(context, debug, isServerTest, result);
             switch (result.getRechargeType()) {
                 case Constants.GP_RECHARGE: {//google支付
                     gpRecharge(context, result, mOnLoginListener);
@@ -131,15 +131,18 @@ public class LTGameSDK {
                                 .setGoogle(result.getmGoogleClient())
                                 .setGP(result.getGPPublicKey())
                                 .setGuest()
+                                .setCountryModel(result.getCountryModel())
                                 .setAgreementUrl(result.getAgreementUrl())
                                 .setPrivacyUrl(result.getPrivacyUrl())
                                 //.setOneStore(result.getOneStorePublicKey())
+                                .setWX(result.getWxAppID(),result.getAppSecret())
                                 .appID(result.getLTAppID())
                                 .emailEnable()
                                 .setQQ(result.getQqAppID())
                                 .setAdID(mAdID)
                                 .build();
                         addOrder((Activity) context, result.getGPPublicKey());
+
                         PreferencesUtils.putString(context, Constants.LT_SDK_APP_ID, result.getLTAppID());
                         PreferencesUtils.putString(context, Constants.LT_SDK_FB_APP_ID, result.getFBAppID());
                         PreferencesUtils.putString(context, Constants.LT_SDK_GOOGLE_CLIENT_ID, result.getmGoogleClient());
@@ -148,8 +151,12 @@ public class LTGameSDK {
                         PreferencesUtils.putString(context, Constants.LT_SDK_AGREEMENT_URL, result.getAgreementUrl());
                         PreferencesUtils.putString(context, Constants.LT_SDK_DEVICE_ADID, mAdID);
                         PreferencesUtils.putString(context, Constants.LT_SDK_SERVER_TEST_TAG, result.isServerTest());
+                        PreferencesUtils.putString(context, Constants.LT_SDK_QQ_APP_ID, result.getQqAppID());
                         PreferencesUtils.putBoolean(Constants.LT_SDK_DEBUG_TAG, result.isDebug());
                         PreferencesUtils.putBoolean(Constants.LT_SDK_LOGIN_OUT_TAG, result.isLoginOut());
+                        PreferencesUtils.putString(context, Constants.LT_SDK_WX_APP_ID, result.getWxAppID());
+                        PreferencesUtils.putString(context, Constants.LT_SDK_WX_SECRET_KEY, result.getAppSecret());
+                        PreferencesUtils.putString(context, Constants.LT_SDK_COUNTRY_MODEL, result.getCountryModel());
                         LTGameCommon.init(options);
 //                        CrashHandler.getInstance().init(context, LTGameCommon.options().getCacheDir() +
 //                                "/Crash/log/");
@@ -249,6 +256,32 @@ public class LTGameSDK {
         object.setType(result.getType());
         object.setQqAppID(mAppID);
         LoginManager.login(context, Target.LOGIN_QQ,
+                object, mOnLoginListener);
+    }
+
+    /**
+     * 微信登录
+     */
+    private void wxLogin(Activity context,
+                         LoginObject result, OnLoginStateListener mOnLoginListener) {
+        LoginObject object = new LoginObject();
+        PreferencesUtils.init(context);
+        String mAppID = "";
+        String mSecret = "";
+        if (!TextUtils.isEmpty(object.getWxAppID())) {
+            mAppID = object.getWxAppID();
+        } else if (!TextUtils.isEmpty(PreferencesUtils.getString(context, Constants.LT_SDK_WX_APP_ID))) {
+            mAppID = PreferencesUtils.getString(context, Constants.LT_SDK_WX_APP_ID);
+        }
+        if (!TextUtils.isEmpty(object.getAppSecret())) {
+            mSecret = object.getAppSecret();
+        } else if (!TextUtils.isEmpty(PreferencesUtils.getString(context, Constants.LT_SDK_WX_SECRET_KEY))) {
+            mSecret = PreferencesUtils.getString(context, Constants.LT_SDK_WX_SECRET_KEY);
+        }
+        object.setType(result.getType());
+        //object.setWxAppID(mAppID);
+        //object.setAppSecret(mSecret);
+        LoginManager.login(context, Target.LOGIN_WX ,
                 object, mOnLoginListener);
     }
 

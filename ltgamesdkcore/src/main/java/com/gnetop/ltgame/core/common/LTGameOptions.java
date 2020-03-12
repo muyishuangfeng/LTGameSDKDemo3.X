@@ -29,10 +29,6 @@ public class LTGameOptions {
     private int mPayTest;
     //公钥
     private String mPublicKey;
-    //手机号
-    private String mPhone;
-    //密码
-    private String mPassword;
     //是否是测试服务器
     private String mISServerTest;
     //QQ平台的AppID
@@ -58,10 +54,12 @@ public class LTGameOptions {
     private boolean isGuestEnable;
     //是否支持OneStore支付
     private boolean isOneStoreEnable;
+    private long tokenExpiresHours;
+    private boolean wxOnlyAuthCode;
+    //国内还是国外
+    private String mCountryModel;
     private String mAgreementUrl;//用户协议
     private String mPrivacyUrl;//隐私政策
-    private long tokenExpiresHours;
-
 
     public long getTokenExpiresHoursMs() {
         if (tokenExpiresHours <= 0) {
@@ -76,6 +74,14 @@ public class LTGameOptions {
         }
         return tokenExpiresHours;
 
+    }
+
+    public String getCountryModel() {
+        return mCountryModel;
+    }
+
+    public void setCountryModel(String mCountryModel) {
+        this.mCountryModel = mCountryModel;
     }
 
     public boolean isEmailEnable() {
@@ -151,6 +157,13 @@ public class LTGameOptions {
         this.mISServerTest = mISServerTest;
     }
 
+    public boolean isWxOnlyAuthCode() {
+        return wxOnlyAuthCode;
+    }
+
+    public String getWxSecretKey() {
+        return wxSecretKey;
+    }
 
     public String getWxAppId() {
         return wxAppId;
@@ -197,8 +210,6 @@ public class LTGameOptions {
                 ", packageID='" + packageID + '\'' +
                 ", mPayTest=" + mPayTest +
                 ", mPublicKey='" + mPublicKey + '\'' +
-                ", mPhone='" + mPhone + '\'' +
-                ", mPassword='" + mPassword + '\'' +
                 ", mISServerTest=" + mISServerTest +
                 ", qqAppId='" + qqAppId + '\'' +
                 ", fbAppID='" + fbAppID + '\'' +
@@ -210,6 +221,7 @@ public class LTGameOptions {
                 ", isGoogleEnable=" + isGoogleEnable +
                 ", isQQEnable=" + isQQEnable +
                 ", isWeChatEnable=" + isWeChatEnable +
+                ", mCountryModel=" + mCountryModel +
                 ", isGuestEnable=" + isGuestEnable +
                 ", isOneStoreEnable=" + isOneStoreEnable +
                 '}';
@@ -230,15 +242,6 @@ public class LTGameOptions {
     }
 
 
-    public String getPhone() {
-        return mPhone;
-    }
-
-    public String getPassword() {
-        return mPassword;
-    }
-
-
     private LTGameOptions(Builder builder) {
         if (builder.wxOnlyAuthCode == null) {
             builder.wxOnlyAuthCode = false;
@@ -254,20 +257,18 @@ public class LTGameOptions {
         //乐推
         this.ltAppId = builder.ltAppId;
         this.adID = builder.adID;
+        this.mCountryModel = builder.mCountryModel;
         this.packageID = builder.packageID;
+        this.mPrivacyUrl = builder.mPrivacyUrl;
+        this.mAgreementUrl = builder.mAgreementUrl;
         this.fbAppID = builder.fbAppID;
         this.mPayTest = builder.mPayTest;
         this.wxSecretKey = builder.wxSecretKey;
         this.mPublicKey = builder.mPublicKey;
-        this.mPhone = builder.mPhone;
-        this.mPassword = builder.mPassword;
-        this.wxSecretKey = builder.wxSecretKey;
         this.cacheDir = builder.cacheDir;
         this.mISServerTest = builder.mISServerTest;
         this.isEmailEnable = builder.isEmailEnable;
         this.isFBEnable = builder.isFBEnable;
-        this.mAgreementUrl = builder.mAgreementUrl;
-        this.mPrivacyUrl = builder.mPrivacyUrl;
         this.isQQEnable = builder.isQQEnable;
         this.isGoogleEnable = builder.isGoogleEnable;
         this.isGuestEnable = builder.isGuestEnable;
@@ -275,6 +276,7 @@ public class LTGameOptions {
         this.isGPEnable = builder.isGPEnable;
         this.isOneStoreEnable = builder.isOneStoreEnable;
         this.tokenExpiresHours = builder.tokenExpiresHours;
+        this.wxOnlyAuthCode = builder.wxOnlyAuthCode;
     }
 
 
@@ -282,6 +284,8 @@ public class LTGameOptions {
      * Builder
      */
     public static class Builder {
+        //国内还是国外
+        private String mCountryModel;
         //是否支持邮箱登录
         private boolean isEmailEnable;
         //是否支持Facebook登录
@@ -326,10 +330,6 @@ public class LTGameOptions {
         private int mPayTest;
         //公钥
         private String mPublicKey;
-        //手机号
-        private String mPhone;
-        //密码
-        private String mPassword;
         //是否是测试服务器:0是，1，不是
         private String mISServerTest;
         private String wxSecretKey;
@@ -386,9 +386,8 @@ public class LTGameOptions {
             return this;
         }
 
-        public Builder phoneAndPass(String phone, String password) {
-            this.mPhone = phone;
-            this.mPassword = password;
+        public Builder setCountryModel(String countryModel) {
+            this.mCountryModel = countryModel;
             return this;
         }
 

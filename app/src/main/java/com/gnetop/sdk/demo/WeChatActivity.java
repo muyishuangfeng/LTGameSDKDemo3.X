@@ -16,9 +16,9 @@ import com.gnetop.ltgame.core.model.LoginObject;
 import com.gnetop.ltgame.core.model.LoginResult;
 
 
-public class GuestActivity extends AppCompatActivity {
+public class WeChatActivity extends AppCompatActivity {
 
-    Button mBtnLogin, mBtnBind, mBtnFB;
+    Button mBtnLogin, mBtnBind;
     TextView mTxtResult;
     private OnLoginStateListener mOnLoginListener;
     LoginObject mRequest;
@@ -27,7 +27,7 @@ public class GuestActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_guest);
+        setContentView(R.layout.activity_wx);
         initView();
         initData();
     }
@@ -39,24 +39,24 @@ public class GuestActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 mRequest=MainActivity.mRequest;
-                mRequest.setLoginType(Constants.GUEST_LOGIN);
-                LTGameSDK.getDefaultInstance().login(GuestActivity.this,  mRequest, mOnLoginListener);
+                mRequest.setLoginType(Constants.WX_LOGIN);
+                mRequest.setType(Constants.WX_LOGIN);
+                LTGameSDK.getDefaultInstance().login(WeChatActivity.this,  mRequest,
+                        mOnLoginListener);
 
 
             }
         });
-        mBtnFB = findViewById(R.id.btn_bind_fb);
-        mBtnFB.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-            }
-        });
         mBtnBind = findViewById(R.id.btn_bind);
         mBtnBind.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                mRequest=MainActivity.mRequest;
+                mRequest.setLoginType(Constants.WX_LOGIN);
+                mRequest.setType(Constants.WX_BIND);
+                LTGameSDK.getDefaultInstance().login(WeChatActivity.this,  mRequest,
+                        mOnLoginListener);
             }
         });
 
@@ -70,7 +70,7 @@ public class GuestActivity extends AppCompatActivity {
             @Override
             public void onState(Activity activity, LoginResult result) {
                 switch (result.state) {
-                    case LTResultCode.STATE_GUEST_LOGIN_SUCCESS:
+                    case LTResultCode.STATE_WX_LOGIN_SUCCESS:
                         Log.e("TAG", "STATE_GUEST_LOGIN_SUCCESS==========");
                         if (result.getResultModel() != null) {
                             String mLtToken = result.getResultModel().getData().getUkey();
@@ -79,8 +79,35 @@ public class GuestActivity extends AppCompatActivity {
 
                         }
                         break;
-                    case LTResultCode.STATE_GUEST_LOGIN_FAILED:
+                    case LTResultCode.STATE_WX_LOGIN_FAILED:
                         Log.e("TAG", "STATE_GUEST_LOGIN_FAILED==========");
+                        break;
+                    case LTResultCode.STATE_WX_ACCESS_TOKEN_FAILED:
+                        Log.e("TAG", "STATE_WX_ACCESS_TOKEN_FAILED==========");
+                        break;
+                    case LTResultCode.STATE_WX_ALREADY_BIND:
+                        Log.e("TAG", "STATE_WX_ALREADY_BIND==========");
+                        break;
+                    case LTResultCode.STATE_WX_BIND_FAILED:
+                        Log.e("TAG", "STATE_WX_BIND_FAILED==========");
+                        break;
+                    case LTResultCode.STATE_WX_BIND_SUCCESS:
+                        Log.e("TAG", "STATE_WX_BIND_SUCCESS==========");
+                        break;
+                    case LTResultCode.STATE_WX_CHECK_ACCESS_TOKEN_FAILED:
+                        Log.e("TAG", "STATE_WX_CHECK_ACCESS_TOKEN_FAILED==========");
+                        break;
+                    case LTResultCode.STATE_WX_INFO_FAILED:
+                        Log.e("TAG", "STATE_WX_INFO_FAILED==========");
+                        break;
+                    case LTResultCode.STATE_WX_REFRESH_TOKEN_FAILED:
+                        Log.e("TAG", "STATE_WX_REFRESH_TOKEN_FAILED==========");
+                        break;
+                    case LTResultCode.STATE_WX_SCAN_FAILED:
+                        Log.e("TAG", "STATE_WX_SCAN_FAILED==========");
+                        break;
+                    case LTResultCode.STATE_WX_SCAN_SUCCESS:
+                        Log.e("TAG", "STATE_WX_SCAN_SUCCESS==========");
                         break;
                     case LTResultCode.STATE_CODE_PARAMETERS_ERROR:
                         Log.e("TAG", "STATE_CODE_PARAMETERS_ERROR==========");

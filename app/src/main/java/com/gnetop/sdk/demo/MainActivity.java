@@ -8,7 +8,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.gnetop.ltgame.core.common.Constants;
 import com.gnetop.ltgame.core.exception.LTResultCode;
@@ -19,13 +18,11 @@ import com.gnetop.ltgame.core.model.LoginResult;
 import com.gnetop.ltgame.core.util.PreferencesUtils;
 import com.gnetop.sdk.demo.util.DateUtil;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 
 public class MainActivity extends AppCompatActivity {
 
-    Button mBtnGoogle, mBtnFB, mBtnGP, mBtnGuest, mBtnUI, mBtnEmail, mBtnPortUI,mBtnUploadRole;
+    Button mBtnGoogle, mBtnFB, mBtnGP, mBtnGuest, mBtnUI, mBtnEmail, mBtnPortUI, mBtnUploadRole,
+            mBtnQQ,mBtnWX;
     TextView mTxtResult;
 
     private static final String mLtAppID = "1";
@@ -35,9 +32,12 @@ public class MainActivity extends AppCompatActivity {
     private static final String mProvacyUrl = "http://www.baidu.com";
     private static final String mGPPublicKey = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAleVlYQtKhvo+lb83j73kXGH8xAMhHcaAZoS22Bo3Jdujix9Ou5DjtUW3i6MIFqWEbnb9da50iH5IrxkkdJCcqzeYDdLk2Y3Gc+kyaw5ch4I//hjC2hh8nHgo8eWfrxSFce/DpNBeS1j4mWcjWZhYJtxheEUk8iTyXIVWHC8dCyifibs7z8wCXMhy3Q66Zym5GarAYjpuQsXTxHuOYUXakLWCwIXG8d8ihoRxweI7PtLpVyNU5FKgse42uouMRz6TgVotgu+NdamNyTH/CutQMPGeNXUj6FpHUDEWQhsRp27k0KsA8YWJDJBj4R9bJ5GDqD8XJo2y5V7/vy1OH4afkQIDAQAB";
     private static final String QQ_APP_ID = "1108097616";
+    private static final String wxAppID = "wx12163d2efc218137";
+    private static final String wxSecret = "55210ccc632b6273f7c9e995346dc211";
+    private static final String mCountryModel = Constants.LT_SDK_COUNTRY_HOME;
     static LoginObject mRequest;
-    private boolean debug=true;
-    private String isServerTest=Constants.LT_SERVER_TEST;
+    private boolean debug = true;
+    private String isServerTest = Constants.LT_SERVER_TEST;
     private OnLoginStateListener mOnStateListener;
 
     @Override
@@ -62,17 +62,24 @@ public class MainActivity extends AppCompatActivity {
         mRequest.setAgreementUrl(mAgreementUrl);
         mRequest.setGPPublicKey(mGPPublicKey);
         mRequest.setQqAppID(QQ_APP_ID);
+        mRequest.setWxAppID(wxAppID);
+        mRequest.setAppSecret(wxSecret);
+        mRequest.setCountryModel(mCountryModel);
         mRequest.setLoginOut(false);
         LTGameSDK.getDefaultInstance().init(this, mRequest);
 
-        Log.e("TSA", PreferencesUtils.getString(this,Constants.LT_SDK_APP_ID)+"=="+
-                PreferencesUtils.getString(this,Constants.LT_SDK_DEVICE_ADID)+"==="+
-                PreferencesUtils.getString(this,Constants.LT_SDK_SERVER_TEST_TAG)+"==="+
-                PreferencesUtils.getString(this,Constants.LT_SDK_FB_APP_ID)+"==="+
-                PreferencesUtils.getString(this,Constants.LT_SDK_GP_PUBLIC_KEY)+"==="+
-                PreferencesUtils.getString(this,Constants.LT_SDK_PROVACY_URL)+"==="+
-                PreferencesUtils.getString(this,Constants.LT_SDK_AGREEMENT_URL)+"==="+
-                PreferencesUtils.getString(this,Constants.LT_SDK_GOOGLE_CLIENT_ID));
+        Log.e("TSA", PreferencesUtils.getString(this, Constants.LT_SDK_APP_ID) + "==" +
+                PreferencesUtils.getString(this, Constants.LT_SDK_DEVICE_ADID) + "===" +
+                PreferencesUtils.getString(this, Constants.LT_SDK_SERVER_TEST_TAG) + "===" +
+                PreferencesUtils.getString(this, Constants.LT_SDK_FB_APP_ID) + "===" +
+                PreferencesUtils.getString(this, Constants.LT_SDK_GP_PUBLIC_KEY) + "===" +
+                PreferencesUtils.getString(this, Constants.LT_SDK_PROVACY_URL) + "===" +
+                PreferencesUtils.getString(this, Constants.LT_SDK_AGREEMENT_URL) + "===" +
+                PreferencesUtils.getString(this, Constants.LT_SDK_QQ_APP_ID) + "===" +
+                PreferencesUtils.getString(this, Constants.LT_SDK_WX_SECRET_KEY) + "===" +
+                PreferencesUtils.getString(this, Constants.LT_SDK_WX_APP_ID) + "===" +
+                PreferencesUtils.getString(this, Constants.LT_SDK_COUNTRY_MODEL) + "===" +
+                PreferencesUtils.getString(this, Constants.LT_SDK_GOOGLE_CLIENT_ID));
         mTxtResult = findViewById(R.id.txt_result);
         mBtnGuest = findViewById(R.id.btn_guest);
         mBtnGuest.setOnClickListener(new View.OnClickListener() {
@@ -122,27 +129,42 @@ public class MainActivity extends AppCompatActivity {
         mBtnPortUI.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, PortUIActivity.class));
+            }
+        });
+        mBtnQQ = findViewById(R.id.btn_qq);
+        mBtnQQ.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 startActivity(new Intent(MainActivity.this, QQActivity.class));
+            }
+        });
+        mBtnWX = findViewById(R.id.btn_wx);
+        mBtnWX.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, WeChatActivity.class));
             }
         });
         mBtnUploadRole = findViewById(R.id.btn_upload);
         mBtnUploadRole.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mRequest=new LoginObject();
-                mRequest.setRole_create_time(DateUtil.stringToLong(System.currentTimeMillis()+""));
+                mRequest = new LoginObject();
+                mRequest.setRole_create_time(DateUtil.stringToLong(System.currentTimeMillis() + ""));
                 mRequest.setRole_number(1);
                 mRequest.setRole_name("Silence");
                 mRequest.setRole_sex("0");
                 mRequest.setServer_number(1);
                 mRequest.setRole_level("1");
-                LTGameSDK.getDefaultInstance().uploadRole(MainActivity.this,mRequest,
+                LTGameSDK.getDefaultInstance().uploadRole(MainActivity.this, mRequest,
                         mOnStateListener);
             }
         });
 
 
     }
+
     /**
      * 初始化数据
      */

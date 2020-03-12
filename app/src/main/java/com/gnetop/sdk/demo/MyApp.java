@@ -3,9 +3,6 @@ package com.gnetop.sdk.demo;
 import android.app.Application;
 import android.support.multidex.MultiDex;
 
-import com.gnetop.ltgame.core.manager.lt.LTGameSDK;
-import com.gnetop.ltgame.core.model.LoginObject;
-
 /**
  * Created by Administrator on 2020\2\11
  */

@@ -44,4 +44,13 @@ public class LTGameUtil {
     }
 
 
+    public static boolean isAnyEq(String dest, String... source) {
+        for (String s : source) {
+            if (s.equals(dest)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 }

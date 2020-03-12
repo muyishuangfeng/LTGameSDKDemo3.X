@@ -38,9 +38,12 @@ public class QQActivity extends AppCompatActivity {
         mBtnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mRequest=MainActivity.mRequest;
+                mRequest = MainActivity.mRequest;
                 mRequest.setLoginType(Constants.QQ_LOGIN);
-                LTGameSDK.getDefaultInstance().login(QQActivity.this,  mRequest, mOnLoginListener);
+                mRequest.setType(Constants.QQ_LOGIN);
+                mRequest.setLoginOut(false);
+                LTGameSDK.getDefaultInstance().login(QQActivity.this, mRequest,
+                        mOnLoginListener);
 
 
             }
@@ -70,8 +73,8 @@ public class QQActivity extends AppCompatActivity {
             @Override
             public void onState(Activity activity, LoginResult result) {
                 switch (result.state) {
-                    case LTResultCode.STATE_GUEST_LOGIN_SUCCESS:
-                        Log.e("TAG", "STATE_GUEST_LOGIN_SUCCESS==========");
+                    case LTResultCode.STATE_QQ_LOGIN_SUCCESS:
+                        Log.e("TAG", "STATE_QQ_LOGIN_SUCCESS==========");
                         if (result.getResultModel() != null) {
                             String mLtToken = result.getResultModel().getData().getUkey();
                             int mLtId = result.getResultModel().getData().getUser_id();
@@ -79,8 +82,14 @@ public class QQActivity extends AppCompatActivity {
 
                         }
                         break;
-                    case LTResultCode.STATE_GUEST_LOGIN_FAILED:
-                        Log.e("TAG", "STATE_GUEST_LOGIN_FAILED==========");
+                    case LTResultCode.STATE_QQ_LOGIN_FAILED:
+                        Log.e("TAG", "STATE_QQ_LOGIN_FAILED==========");
+                        break;
+                    case LTResultCode.STATE_QQ_BIND_FAILED:
+                        Log.e("TAG", "STATE_QQ_BIND_FAILED==========");
+                        break;
+                    case LTResultCode.STATE_QQ_BIND_SUCCESS:
+                        Log.e("TAG", "STATE_QQ_BIND_SUCCESS==========");
                         break;
                     case LTResultCode.STATE_CODE_PARAMETERS_ERROR:
                         Log.e("TAG", "STATE_CODE_PARAMETERS_ERROR==========");

@@ -13,16 +13,6 @@ public class Constants {
     public static final String USER_API_TOKEN = "USER_API_TOKEN";
     /***用户的UUID*/
     public static final String USER_UUID = "USER_UUID";
-    /***QQ的AccessToken*/
-    public static final String QQ_ACCESS_TOKEN = "QQ_ACCESS_TOKEN";
-    /***QQ的昵称*/
-    public static final String QQ_USER_NAME = "QQ_USER_NAME";
-    /***QQ的openID*/
-    public static final String QQ_OPEN_ID = "QQ_OPEN_ID";
-    /***QQ token超时时间*/
-    public static final String QQ_TOKEN_TIMEOUT = "QQ_TOKEN_TIMEOUT";
-    /***微信的AccessToken*/
-    public static final String WE_CHAT_ACCESS_TOKEN = "WE_CHAT_ACCESS_TOKEN";
     /***异常*/
     public static final String MSG_EXCEPTION_NAME = "MSG_EXCEPTION_NAME";
     /***异常*/
@@ -49,6 +39,8 @@ public class Constants {
     public static final String QQ_LOGIN = "QQ_LOGIN";
     //微信登录
     public static final String WX_LOGIN = "WX_LOGIN";
+    //微信绑定
+    public static final String WX_BIND = "WX_BIND";
     //UI包登录
     public static final String UI_LOGIN = "UI_LOGIN";
     //UI包退出登录
@@ -63,6 +55,10 @@ public class Constants {
     public static final String FB_UI_TOKEN = "FB_UI_TOKEN";
     //UI包Google登录
     public static final String GOOGLE_UI_TOKEN = "GOOGLE_UI_TOKEN";
+    //UI包QQ登录
+    public static final String QQ_UI_TOKEN = "QQ_UI_TOKEN";
+    //UI包微信登录
+    public static final String WX_UI_TOKEN = "WX_UI_TOKEN";
     //Google绑定
     public static final String GOOGLE_BIND = "GOOGLE_BIND";
     //QQ绑定
@@ -113,8 +109,20 @@ public class Constants {
     public static final String LT_SERVER_OFFICIAL = "LT_SERVER_OFFICIAL";
     //QQ的token
     public static final String LT_QQ_TOKEN = "LT_QQ_TOKEN";
+    //微信的access_token
+    public static final String LT_WX_TOKEN = "LT_WX_TOKEN";
+    //微信的appID
+    public static final String LT_SDK_WX_APP_ID = "LT_SDK_WX_APP_ID";
+    //微信的appID
+    public static final String LT_SDK_WX_SECRET_KEY = "LT_SDK_WX_SECRET_KEY";
+    //国内还是国外
+    public static final String LT_SDK_COUNTRY_MODEL = "LT_SDK_COUNTRY_MODEL";
     //QQ的token时长
     public static final String LT_QQ_TOKEN_TIME = "LT_QQ_TOKEN_TIME";
+    //国外
+    public static final String LT_SDK_COUNTRY_ABROAD = "LT_SDK_COUNTRY_ABROAD";
+    //国内
+    public static final String LT_SDK_COUNTRY_HOME = "LT_SDK_COUNTRY_HOME";
 
 
 }

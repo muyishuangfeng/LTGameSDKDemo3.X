@@ -7,8 +7,8 @@ import android.util.Log;
 
 import com.gnetop.ltgame.core.base.BaseEntry;
 import com.gnetop.ltgame.core.common.Constants;
-import com.gnetop.ltgame.core.common.LTGameOptions;
 import com.gnetop.ltgame.core.common.LTGameCommon;
+import com.gnetop.ltgame.core.common.LTGameOptions;
 import com.gnetop.ltgame.core.exception.LTGameError;
 import com.gnetop.ltgame.core.exception.LTResultCode;
 import com.gnetop.ltgame.core.impl.OnLoginStateListener;
@@ -20,16 +20,15 @@ import com.gnetop.ltgame.core.model.LoginResult;
 import com.gnetop.ltgame.core.model.RechargeResult;
 import com.gnetop.ltgame.core.model.ResultModel;
 import com.gnetop.ltgame.core.model.WeChatAccessToken;
+import com.gnetop.ltgame.core.model.user.WXUser;
 import com.gnetop.ltgame.core.net.Api;
 import com.gnetop.ltgame.core.net.exception.ExceptionHelper;
 import com.gnetop.ltgame.core.util.AppUtil;
-import com.gnetop.ltgame.core.util.MD5Util;
 import com.gnetop.ltgame.core.util.PreferencesUtils;
 import com.gnetop.ltgame.core.util.ToastUtil;
 import com.google.gson.Gson;
 
 import java.util.Map;
-import java.util.SplittableRandom;
 import java.util.WeakHashMap;
 
 import io.reactivex.Observer;
@@ -705,14 +704,12 @@ public class LoginRealizeManager {
      * @param userName  微信返回的昵称
      * @param mListener 接口回调
      */
-    public static void weChatLogin(final Activity context, String bindID,
+    public static void weChatLogin(final Activity context, String baseUrl, String bindID,
                                    String account, String userName,
                                    final OnLoginStateListener mListener) {
         LTGameOptions options = LTGameCommon.options();
         String mLtAppID = "";
         String mADID = "";
-        String baseUrl = "";
-        String mServerTest = "";
         if (!TextUtils.isEmpty(options.getLtAppId())) {
             mLtAppID = options.getLtAppId();
         } else if (!TextUtils.isEmpty(PreferencesUtils.getString(context, Constants.LT_SDK_APP_ID))) {
@@ -723,13 +720,9 @@ public class LoginRealizeManager {
         } else if (!TextUtils.isEmpty(PreferencesUtils.getString(context, Constants.LT_SDK_DEVICE_ADID))) {
             mADID = PreferencesUtils.getString(context, Constants.LT_SDK_DEVICE_ADID);
         }
-        if (!TextUtils.isEmpty(options.getISServerTest())) {
-            mServerTest = options.getISServerTest();
-        } else if (!TextUtils.isEmpty(PreferencesUtils.getString(context, Constants.LT_SDK_SERVER_TEST_TAG))) {
-            mServerTest = PreferencesUtils.getString(context, Constants.LT_SDK_SERVER_TEST_TAG);
-        }
         if (!TextUtils.isEmpty(mLtAppID) &&
                 !TextUtils.isEmpty(mADID) &&
+                !TextUtils.isEmpty(baseUrl) &&
                 !TextUtils.isEmpty(bindID) &&
                 !TextUtils.isEmpty(account) &&
                 !TextUtils.isEmpty(userName)) {
@@ -752,12 +745,7 @@ public class LoginRealizeManager {
             params.put("account", account);
             params.put("username", userName);
             map.put("data", params);
-            if (mServerTest.equals(Constants.LT_SERVER_TEST)) {
-                baseUrl = Api.TEST_SERVER_URL + SDK_TEST + Api.TEST_SERVER_DOMAIN;
-            } else if (mServerTest.equals(Constants.LT_SERVER_OFFICIAL)) {
-                baseUrl = Api.FORMAL_SERVER_URL + mLtAppID + Api.FORMAL_SERVER_DOMAIN;
-            }
-
+            Log.e("TAG", "=======baseUrl======================" + baseUrl);
             Api.getInstance(context, baseUrl)
                     .weChatLogin(AppUtil.getLanguage(), LTToken, (int) LTTime, mLtAppID, map)
                     .subscribeOn(Schedulers.io())
@@ -1317,11 +1305,13 @@ public class LoginRealizeManager {
      * 验证微信AccessToken
      * <p>
      */
-    public static void authAccessToken(Context context, String access_token,
+    public static void authAccessToken(Context context, String baseUrl, String access_token, String openID,
                                        final OnWeChatAccessTokenListener<AuthWXModel> mListener) {
-        if (!TextUtils.isEmpty(access_token)) {
-            Api.getInstance((Activity) context, "https://api.weixin.qq.com/cgi-bin/getcallbackip")
-                    .authToken(access_token)
+        if (!TextUtils.isEmpty(access_token) &&
+                !TextUtils.isEmpty(openID) &&
+                !TextUtils.isEmpty(baseUrl)) {
+            Api.getInstance((Activity) context, baseUrl)
+                    .authToken(access_token, openID)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(new Observer<AuthWXModel>() {
@@ -1333,14 +1323,48 @@ public class LoginRealizeManager {
                         @Override
                         public void onNext(AuthWXModel result) {
                             if (result != null) {
-                                if (result.getErrcode() == 40001) {
-                                    if (mListener != null) {
-                                        mListener.onWeChatSuccess(result);
-                                    }
-                                } else {
-                                    if (mListener != null) {
-                                        mListener.onWeChatFailed("WeChat Validation failed");
-                                    }
+                                if (mListener != null) {
+                                    mListener.onWeChatSuccess(result);
+                                }
+                            }
+                        }
+
+                        @Override
+                        public void onError(Throwable e) {
+
+                        }
+
+                        @Override
+                        public void onComplete() {
+
+                        }
+                    });
+        }
+    }
+
+    /**
+     * 获取微信信息
+     */
+    public static void getWXInfo(Context context, String baseUrl, String access_token, String openID,
+                                 final OnWeChatAccessTokenListener<WXUser> mListener) {
+        if (!TextUtils.isEmpty(access_token) &&
+                !TextUtils.isEmpty(openID) &&
+                !TextUtils.isEmpty(baseUrl)) {
+            Api.getInstance((Activity) context, baseUrl)
+                    .getWXInfo(access_token, openID)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Observer<WXUser>() {
+                        @Override
+                        public void onSubscribe(Disposable d) {
+
+                        }
+
+                        @Override
+                        public void onNext(WXUser result) {
+                            if (result != null) {
+                                if (mListener != null) {
+                                    mListener.onWeChatSuccess(result);
                                 }
                             }
                         }
@@ -1857,14 +1881,12 @@ public class LoginRealizeManager {
      * @param userName  微信返回的昵称
      * @param mListener 接口回调
      */
-    public static void bindWX(final Context context, String bindID,
+    public static void bindWX(final Context context, String baseUrl, String bindID,
                               String account, String userName,
                               final OnLoginStateListener mListener) {
         LTGameOptions options = LTGameCommon.options();
         String mLtAppID = "";
         String mADID = "";
-        String baseUrl = "";
-        String mServerTest = "";
         if (!TextUtils.isEmpty(options.getLtAppId())) {
             mLtAppID = options.getLtAppId();
         } else if (!TextUtils.isEmpty(PreferencesUtils.getString(context, Constants.LT_SDK_APP_ID))) {
@@ -1875,15 +1897,11 @@ public class LoginRealizeManager {
         } else if (!TextUtils.isEmpty(PreferencesUtils.getString(context, Constants.LT_SDK_DEVICE_ADID))) {
             mADID = PreferencesUtils.getString(context, Constants.LT_SDK_DEVICE_ADID);
         }
-        if (!TextUtils.isEmpty(options.getISServerTest())) {
-            mServerTest = options.getISServerTest();
-        } else if (!TextUtils.isEmpty(PreferencesUtils.getString(context, Constants.LT_SDK_SERVER_TEST_TAG))) {
-            mServerTest = PreferencesUtils.getString(context, Constants.LT_SDK_SERVER_TEST_TAG);
-        }
 
 
         if (!TextUtils.isEmpty(mLtAppID) &&
                 !TextUtils.isEmpty(mADID) &&
+                !TextUtils.isEmpty(baseUrl) &&
                 !TextUtils.isEmpty(bindID) &&
                 !TextUtils.isEmpty(account) &&
                 !TextUtils.isEmpty(userName) &&
@@ -1903,12 +1921,6 @@ public class LoginRealizeManager {
             params.put("account", account);
             params.put("username", userName);
             map.put("data", params);
-            if (mServerTest.equals(Constants.LT_SERVER_TEST)) {
-                baseUrl = Api.TEST_SERVER_URL + SDK_TEST + Api.TEST_SERVER_DOMAIN;
-            } else if (mServerTest.equals(Constants.LT_SERVER_OFFICIAL)) {
-                baseUrl = Api.FORMAL_SERVER_URL + mLtAppID + Api.FORMAL_SERVER_DOMAIN;
-            }
-
             Api.getInstance((Activity) context, baseUrl)
                     .bindWX(AppUtil.getLanguage(), LTToken, (int) LTTime, mLtAppID, map)
                     .subscribeOn(Schedulers.io())

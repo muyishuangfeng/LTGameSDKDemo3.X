@@ -36,6 +36,10 @@ public class EmailLoginFragment extends BaseFragment implements View.OnClickList
     String mAdID;
     String mServerTest;
     String mFacebookID;
+    String mCountryModel;
+    String mQQAppID;
+    String mWXAppID;
+    String mWXSecret;
     boolean mIsLoginOut;
     EditText mEdtEmail, mEdtCode;
     String mEmailType;
@@ -105,7 +109,10 @@ public class EmailLoginFragment extends BaseFragment implements View.OnClickList
                 mServerTest = mData.isServerTest();
                 mIsLoginOut = mData.isLoginOut();
                 mEmailType = mData.getEmailType();
-
+                mQQAppID = mData.getQqAppID();
+                mWXAppID = mData.getWxAppID();
+                mWXSecret = mData.getAppSecret();
+                mCountryModel = mData.getCountryModel();
             }
         }
     }
@@ -254,6 +261,10 @@ public class EmailLoginFragment extends BaseFragment implements View.OnClickList
         data.setServerTest(mServerTest);
         data.setFBAppID(mFacebookID);
         data.setLoginOut(mIsLoginOut);
+        data.setQqAppID(mQQAppID);
+        data.setAppSecret(mWXSecret);
+        data.setWxAppID(mWXSecret);
+        data.setCountryModel(mCountryModel);
         data.setBind(true);
         getProxyActivity().addFragment(LoginFailedFragment.newInstance(data),
                 false,
@@ -289,6 +300,10 @@ public class EmailLoginFragment extends BaseFragment implements View.OnClickList
         data.setFBAppID(mFacebookID);
         data.setServerTest(mServerTest);
         data.setLoginOut(mIsLoginOut);
+        data.setQqAppID(mQQAppID);
+        data.setAppSecret(mWXSecret);
+        data.setWxAppID(mWXSecret);
+        data.setCountryModel(mCountryModel);
         getProxyActivity().addFragment(LoginUIFragment.newInstance(data),
                 false, true);
         if (mActivity.getSupportFragmentManager().getBackStackEntryCount() > 0) {
@@ -310,6 +325,10 @@ public class EmailLoginFragment extends BaseFragment implements View.OnClickList
         data.setServerTest(mServerTest);
         data.setFBAppID(mFacebookID);
         data.setLoginOut(mIsLoginOut);
+        data.setQqAppID(mQQAppID);
+        data.setAppSecret(mWXSecret);
+        data.setWxAppID(mWXSecret);
+        data.setCountryModel(mCountryModel);
         data.setBind(false);
         getProxyActivity().addFragment(LoginFailedFragment.newInstance(data),
                 false,

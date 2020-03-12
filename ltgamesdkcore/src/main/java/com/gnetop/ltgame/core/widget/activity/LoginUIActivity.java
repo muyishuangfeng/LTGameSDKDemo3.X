@@ -21,7 +21,10 @@ public class LoginUIActivity extends BaseAppActivity {
     String mServerTest;
     String mFacebookID;
     boolean mIsLoginOut;
-    String mOrientation;
+    String mQQAppID;
+    String mWXAppID;
+    String mWXSecret;
+    String mCountryModel;
 
 
     @Override
@@ -43,7 +46,10 @@ public class LoginUIActivity extends BaseAppActivity {
         mServerTest = bundle.getString("mServerTest");
         mFacebookID = bundle.getString("mFacebookID");
         mIsLoginOut = bundle.getBoolean("mIsLoginOut");
-        mOrientation = bundle.getString("orientation");
+        mQQAppID = bundle.getString("mQQAppID");
+        mWXAppID = bundle.getString("mWXAppID");
+        mWXSecret = bundle.getString("mWXSecret");
+        mCountryModel = bundle.getString("mCountryModel");
 
         LoginObject data = new LoginObject();
         data.setAgreementUrl(mAgreementUrl);
@@ -53,6 +59,10 @@ public class LoginUIActivity extends BaseAppActivity {
         data.setServerTest(mServerTest);
         data.setFBAppID(mFacebookID);
         data.setLoginOut(mIsLoginOut);
+        data.setQqAppID(mQQAppID);
+        data.setAppSecret(mWXSecret);
+        data.setWxAppID(mWXSecret);
+        data.setCountryModel(mCountryModel);
 
         if (!TextUtils.isEmpty(mAgreementUrl) &&
                 !TextUtils.isEmpty(mPrivacyUrl)) {

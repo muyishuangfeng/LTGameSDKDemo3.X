@@ -12,11 +12,13 @@ public class Api extends RetrofitClient {
     public static final String TEST_SERVER_URL="http://";
     //测试服务器
     public static final String TEST_SERVER_DOMAIN=".newtestgco.appcpi.com";
+
     //正式服务器
     public static final String FORMAL_SERVER_URL="https://";
     //正式服务器
     public static final String FORMAL_SERVER_DOMAIN=".gco.appcpi.com";
-
+    //微信域名
+    public static final String WX_BASE_URL = "https://api.weixin.qq.com/";
 
     private Api(String baseUrl) {
         super(baseUrl);

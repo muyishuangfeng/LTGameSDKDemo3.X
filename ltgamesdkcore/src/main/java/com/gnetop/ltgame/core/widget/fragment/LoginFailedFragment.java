@@ -22,6 +22,10 @@ public class LoginFailedFragment extends BaseFragment {
     String mAdID;
     String mFacebookID;
     String mServerTest;
+    String mQQAppID;
+    String mWXAppID;
+    String mWXSecret;
+    String mCountryModel;
     boolean mIsLoginOut;
     boolean mIsBind;
     ProgressView mPgbLoading;
@@ -65,6 +69,10 @@ public class LoginFailedFragment extends BaseFragment {
                 mServerTest = mData.isServerTest();
                 mIsLoginOut = mData.isLoginOut();
                 mIsBind = mData.ismBind();
+                mQQAppID = mData.getQqAppID();
+                mWXAppID = mData.getWxAppID();
+                mWXSecret = mData.getAppSecret();
+                mCountryModel = mData.getCountryModel();
                 initData(mPrivacyUrl, mAgreementUrl);
             }
         }
@@ -93,6 +101,10 @@ public class LoginFailedFragment extends BaseFragment {
                 data.setFBAppID(mFacebookID);
                 data.setServerTest(mServerTest);
                 data.setLoginOut(mIsLoginOut);
+                data.setQqAppID(mQQAppID);
+                data.setAppSecret(mWXSecret);
+                data.setWxAppID(mWXSecret);
+                data.setCountryModel(mCountryModel);
                 getProxyActivity().addFragment(LoginUIFragment.newInstance(data),
                         false,
                         true);

@@ -16,7 +16,6 @@ import com.gnetop.ltgame.core.impl.OnLoginStateListener;
 import com.gnetop.ltgame.core.manager.lt.LTGameSDK;
 import com.gnetop.ltgame.core.model.LoginObject;
 import com.gnetop.ltgame.core.model.LoginResult;
-import com.gnetop.ltgame.core.util.PreferencesUtils;
 
 
 public class UIActivity extends AppCompatActivity {

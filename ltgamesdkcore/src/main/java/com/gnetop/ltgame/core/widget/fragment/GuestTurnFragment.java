@@ -27,6 +27,10 @@ public class GuestTurnFragment extends BaseFragment implements View.OnClickListe
     String mServerTest;
     String mFacebookID;
     boolean mIsLoginOut;
+    String mCountryModel;
+    String mQQAppID;
+    String mWXAppID;
+    String mWXSecret;
     TextView mBtnSwitch, mBtnBind;
     TextView mTxtContinue;
     LoginObject mData;
@@ -80,6 +84,10 @@ public class GuestTurnFragment extends BaseFragment implements View.OnClickListe
                 mFacebookID = mData.getFBAppID();
                 mServerTest = mData.isServerTest();
                 mIsLoginOut = mData.isLoginOut();
+                mQQAppID = mData.getQqAppID();
+                mWXAppID = mData.getWxAppID();
+                mWXSecret = mData.getAppSecret();
+                mCountryModel = mData.getCountryModel();
 
             }
         }
@@ -113,6 +121,10 @@ public class GuestTurnFragment extends BaseFragment implements View.OnClickListe
         data.setFBAppID(mFacebookID);
         data.setServerTest(mServerTest);
         data.setLoginOut(mIsLoginOut);
+        data.setQqAppID(mQQAppID);
+        data.setAppSecret(mWXSecret);
+        data.setWxAppID(mWXSecret);
+        data.setCountryModel(mCountryModel);
         getProxyActivity().addFragment(LoginUIFragment.newInstance(data),
                 false,
                 true);
@@ -132,6 +144,10 @@ public class GuestTurnFragment extends BaseFragment implements View.OnClickListe
         data.setServerTest(mServerTest);
         data.setFBAppID(mFacebookID);
         data.setLoginOut(mIsLoginOut);
+        data.setQqAppID(mQQAppID);
+        data.setAppSecret(mWXSecret);
+        data.setWxAppID(mWXSecret);
+        data.setCountryModel(mCountryModel);
         data.setBind(false);
         getProxyActivity().addFragment(LoginFailedFragment.newInstance(data),
                 false,
@@ -151,6 +167,10 @@ public class GuestTurnFragment extends BaseFragment implements View.OnClickListe
         data.setServerTest(mServerTest);
         data.setFBAppID(mFacebookID);
         data.setLoginOut(mIsLoginOut);
+        data.setQqAppID(mQQAppID);
+        data.setAppSecret(mWXSecret);
+        data.setWxAppID(mWXSecret);
+        data.setCountryModel(mCountryModel);
         BindFragment fragment = BindFragment.newInstance(data);
         getProxyActivity().addFragment(fragment,
                 true,

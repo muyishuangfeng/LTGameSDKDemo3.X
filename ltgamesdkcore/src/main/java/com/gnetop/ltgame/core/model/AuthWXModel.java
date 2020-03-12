@@ -5,7 +5,11 @@ public class AuthWXModel {
     private int errcode;
     private String errmsg;
 
-    public int getErrcode() {
+    public boolean isNoError() {
+        return errcode == 0;
+    }
+
+    int getErrcode() {
         return errcode;
     }
 
@@ -19,5 +23,15 @@ public class AuthWXModel {
 
     public void setErrmsg(String errmsg) {
         this.errmsg = errmsg;
+    }
+
+
+
+    @Override
+    public String toString() {
+        return "TokenValidResp{" +
+                "errcode=" + errcode +
+                ", errmsg='" + errmsg + '\'' +
+                '}';
     }
 }

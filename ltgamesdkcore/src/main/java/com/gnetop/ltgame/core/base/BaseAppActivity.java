@@ -2,7 +2,6 @@ package com.gnetop.ltgame.core.base;
 
 import android.view.View;
 
-
 import com.gnetop.ltgame.core.R;
 
 import java.util.Calendar;

@@ -43,4 +43,8 @@
     <string name="text_bind_google">Bind to Google</string>
     <string name="text_bind_email">Bind to Email</string>
     <string name="text_loading">loading...</string>
+    <string name="text_qq">QQ Login</string>
+    <string name="text_wx">WeChat Login</string>
+    <string name="text_bind_wx">Bind WeChat</string>
+    <string name="text_bind_qq">Bind QQ</string>
 </resources>

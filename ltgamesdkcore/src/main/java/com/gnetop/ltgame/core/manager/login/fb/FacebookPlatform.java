@@ -11,8 +11,6 @@ import com.gnetop.ltgame.core.common.LTGameCommon;
 import com.gnetop.ltgame.core.common.LTGameOptions;
 import com.gnetop.ltgame.core.impl.OnLoginStateListener;
 import com.gnetop.ltgame.core.impl.OnRechargeStateListener;
-import com.gnetop.ltgame.core.util.PreferencesUtils;
-import com.gnetop.ltgame.core.widget.activity.FacebookActionActivity;
 import com.gnetop.ltgame.core.model.LoginObject;
 import com.gnetop.ltgame.core.model.RechargeObject;
 import com.gnetop.ltgame.core.platform.AbsPlatform;
@@ -20,6 +18,8 @@ import com.gnetop.ltgame.core.platform.IPlatform;
 import com.gnetop.ltgame.core.platform.PlatformFactory;
 import com.gnetop.ltgame.core.platform.Target;
 import com.gnetop.ltgame.core.util.LTGameUtil;
+import com.gnetop.ltgame.core.util.PreferencesUtils;
+import com.gnetop.ltgame.core.widget.activity.FacebookActionActivity;
 
 
 public class FacebookPlatform extends AbsPlatform {
@@ -80,7 +80,9 @@ public class FacebookPlatform extends AbsPlatform {
         } else if (!TextUtils.isEmpty(PreferencesUtils.getString(activity, Constants.LT_SDK_FB_APP_ID))) {
             mAppID = PreferencesUtils.getString(activity, Constants.LT_SDK_FB_APP_ID);
         }
-        mLoginHelper.login(mAppID, activity);
+        if (!TextUtils.isEmpty(mAppID)) {
+            mLoginHelper.login(mAppID, activity);
+        }
 
     }
 

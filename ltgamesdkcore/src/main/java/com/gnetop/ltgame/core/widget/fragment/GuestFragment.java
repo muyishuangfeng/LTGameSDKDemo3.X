@@ -16,9 +16,7 @@ import com.gnetop.ltgame.core.manager.ui.LoginUIManager;
 import com.gnetop.ltgame.core.model.LoginObject;
 import com.gnetop.ltgame.core.model.LoginResult;
 import com.gnetop.ltgame.core.ui.dialog.GeneralCenterDialog;
-import com.gnetop.ltgame.core.util.AnimationUtils;
 import com.gnetop.ltgame.core.util.PreferencesUtils;
-import com.gnetop.ltgame.core.util.ToastUtil;
 
 
 public class GuestFragment extends BaseFragment implements View.OnClickListener {
@@ -30,6 +28,10 @@ public class GuestFragment extends BaseFragment implements View.OnClickListener 
     String mAdID;
     String mServerTest;
     String mFacebookID;
+    String mQQAppID;
+    String mWXAppID;
+    String mWXSecret;
+    String mCountryModel;
     boolean mIsLoginOut;
     Button mBtnSure, mBtnCancel;
     TextView mTxtTitle, mTxtTips, mTxtContent;
@@ -84,7 +86,10 @@ public class GuestFragment extends BaseFragment implements View.OnClickListener 
                 mFacebookID = mData.getFBAppID();
                 mServerTest = mData.isServerTest();
                 mIsLoginOut = mData.isLoginOut();
-
+                mQQAppID = mData.getQqAppID();
+                mWXAppID = mData.getWxAppID();
+                mWXSecret = mData.getAppSecret();
+                mCountryModel = mData.getCountryModel();
             }
         }
         initData();
@@ -116,6 +121,10 @@ public class GuestFragment extends BaseFragment implements View.OnClickListener 
         data.setFBAppID(mFacebookID);
         data.setServerTest(mServerTest);
         data.setLoginOut(mIsLoginOut);
+        data.setQqAppID(mQQAppID);
+        data.setAppSecret(mWXSecret);
+        data.setWxAppID(mWXSecret);
+        data.setCountryModel(mCountryModel);
         getProxyActivity().addFragment(LoginUIFragment.newInstance(data),
                 false, true);
         if (mActivity.getSupportFragmentManager().getBackStackEntryCount() > 0) {
@@ -138,6 +147,10 @@ public class GuestFragment extends BaseFragment implements View.OnClickListener 
         data.setServerTest(mServerTest);
         data.setFBAppID(mFacebookID);
         data.setLoginOut(mIsLoginOut);
+        data.setQqAppID(mQQAppID);
+        data.setAppSecret(mWXSecret);
+        data.setWxAppID(mWXSecret);
+        data.setCountryModel(mCountryModel);
         data.setBind(false);
         getProxyActivity().addFragment(LoginFailedFragment.newInstance(data),
                 false,

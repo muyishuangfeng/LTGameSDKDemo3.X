@@ -40,5 +40,8 @@
     <string name="text_loading">loading...</string>
     <string name="text_seal_number">This account has been suspended, please contact Customer Service.</string>
     <string name="text_sealing_equipment">This is the device that was blocked. Please contact customer service.</string>
-
+    <string name="text_qq">QQ Login</string>
+    <string name="text_wx">WeChat Login</string>
+    <string name="text_bind_wx">Bind WeChat</string>
+    <string name="text_bind_qq">Bind QQ</string>
 </resources>

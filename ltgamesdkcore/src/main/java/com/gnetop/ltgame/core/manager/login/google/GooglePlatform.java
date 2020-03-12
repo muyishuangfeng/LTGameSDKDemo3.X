@@ -11,8 +11,6 @@ import com.gnetop.ltgame.core.common.LTGameCommon;
 import com.gnetop.ltgame.core.common.LTGameOptions;
 import com.gnetop.ltgame.core.impl.OnLoginStateListener;
 import com.gnetop.ltgame.core.impl.OnRechargeStateListener;
-import com.gnetop.ltgame.core.util.PreferencesUtils;
-import com.gnetop.ltgame.core.widget.activity.GoogleLoginActivity;
 import com.gnetop.ltgame.core.model.LoginObject;
 import com.gnetop.ltgame.core.model.RechargeObject;
 import com.gnetop.ltgame.core.platform.AbsPlatform;
@@ -20,6 +18,8 @@ import com.gnetop.ltgame.core.platform.IPlatform;
 import com.gnetop.ltgame.core.platform.PlatformFactory;
 import com.gnetop.ltgame.core.platform.Target;
 import com.gnetop.ltgame.core.util.LTGameUtil;
+import com.gnetop.ltgame.core.util.PreferencesUtils;
+import com.gnetop.ltgame.core.widget.activity.GoogleLoginActivity;
 
 
 public class GooglePlatform extends AbsPlatform {
@@ -83,7 +83,9 @@ public class GooglePlatform extends AbsPlatform {
         } else if (!TextUtils.isEmpty(PreferencesUtils.getString(activity, Constants.LT_SDK_GOOGLE_CLIENT_ID))) {
             mClientID = PreferencesUtils.getString(activity, Constants.LT_SDK_GOOGLE_CLIENT_ID);
         }
-        mGoogleHelper.loginAction(mClientID);
+        if (!TextUtils.isEmpty(mClientID)){
+            mGoogleHelper.loginAction(mClientID);
+        }
 
 
     }

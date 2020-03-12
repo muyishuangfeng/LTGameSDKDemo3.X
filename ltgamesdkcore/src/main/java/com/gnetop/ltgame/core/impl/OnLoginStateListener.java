@@ -1,7 +1,6 @@
 package com.gnetop.ltgame.core.impl;
 
 import android.app.Activity;
-import android.content.Context;
 
 import com.gnetop.ltgame.core.model.LoginResult;
 

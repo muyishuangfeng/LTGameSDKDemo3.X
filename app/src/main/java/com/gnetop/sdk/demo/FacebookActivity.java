@@ -10,7 +10,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.gnetop.ltgame.core.common.Constants;
-import com.gnetop.ltgame.core.exception.LTGameError;
 import com.gnetop.ltgame.core.exception.LTResultCode;
 import com.gnetop.ltgame.core.impl.OnLoginStateListener;
 import com.gnetop.ltgame.core.manager.lt.LTGameSDK;

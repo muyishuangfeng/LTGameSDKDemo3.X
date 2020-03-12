@@ -22,8 +22,9 @@ import com.gnetop.ltgame.core.util.PreferencesUtils;
 
 public class LoginUIFragment extends BaseFragment implements View.OnClickListener {
 
-    LinearLayout mLytGoogle, mLytFaceBook;
-    TextView mTxtGuest;
+    LinearLayout mLytGoogle, mLytFaceBook, mLytQQ, mLytWX, mLytHome, mLytAbroad;
+    TextView mTxtGuest, mTxtHomeGuest;
+    TextView mTxtEmail, mTxtHomeEmail;
     String mAgreementUrl;
     String mPrivacyUrl;
     String googleClientID;
@@ -32,10 +33,13 @@ public class LoginUIFragment extends BaseFragment implements View.OnClickListene
     String mFacebookID;
     boolean mIsLoginOut;
     String mServerTest;
+    String mQQAppID;
+    String mWXAppID;
+    String mWXSecret;
+    String mCountryModel;
     LoginObject mData;
     private OnLoginStateListener mListener;
     GeneralCenterDialog mDialog;
-    TextView mTxtEmail;
 
 
     public static LoginUIFragment newInstance(LoginObject data) {
@@ -59,14 +63,30 @@ public class LoginUIFragment extends BaseFragment implements View.OnClickListene
         mLytGoogle = view.findViewById(R.id.lyt_login_google);
         mLytGoogle.setOnClickListener(this);
 
-        mTxtGuest = view.findViewById(R.id.txt_visitor);
+        mTxtGuest = view.findViewById(R.id.txt_abroad_visitor);
         mTxtGuest.setOnClickListener(this);
 
-        mTxtEmail = view.findViewById(R.id.txt_email);
+        mTxtEmail = view.findViewById(R.id.txt_abroad_email);
         mTxtEmail.setOnClickListener(this);
+
+        mTxtHomeGuest = view.findViewById(R.id.txt_home_visitor);
+        mTxtHomeGuest.setOnClickListener(this);
+
+        mTxtHomeEmail = view.findViewById(R.id.txt_home_email);
+        mTxtHomeEmail.setOnClickListener(this);
 
         mLytFaceBook = view.findViewById(R.id.lyt_login_facebook);
         mLytFaceBook.setOnClickListener(this);
+
+        mLytWX = view.findViewById(R.id.lyt_login_wx);
+        mLytWX.setOnClickListener(this);
+
+        mLytQQ = view.findViewById(R.id.lyt_login_qq);
+        mLytQQ.setOnClickListener(this);
+
+        mLytHome = view.findViewById(R.id.lyt_home);
+
+        mLytAbroad = view.findViewById(R.id.lyt_abroad);
     }
 
     @Override
@@ -84,6 +104,34 @@ public class LoginUIFragment extends BaseFragment implements View.OnClickListene
                 mFacebookID = mData.getFBAppID();
                 mServerTest = mData.isServerTest();
                 mIsLoginOut = mData.isLoginOut();
+                mQQAppID = mData.getQqAppID();
+                mWXAppID = mData.getWxAppID();
+                mWXSecret = mData.getAppSecret();
+                mCountryModel = mData.getCountryModel();
+
+                if (mCountryModel != null) {
+                    switch (mCountryModel) {
+                        case Constants.LT_SDK_COUNTRY_ABROAD://国外
+                            mLytQQ.setVisibility(View.GONE);
+                            mLytWX.setVisibility(View.GONE);
+                            mLytHome.setVisibility(View.GONE);
+                            mLytGoogle.setVisibility(View.VISIBLE);
+                            mLytFaceBook.setVisibility(View.VISIBLE);
+                            mLytAbroad.setVisibility(View.VISIBLE);
+
+                            break;
+                        case Constants.LT_SDK_COUNTRY_HOME://国内
+                            mLytQQ.setVisibility(View.VISIBLE);
+                            mLytWX.setVisibility(View.VISIBLE);
+                            mLytHome.setVisibility(View.VISIBLE);
+                            mLytGoogle.setVisibility(View.GONE);
+                            mLytFaceBook.setVisibility(View.GONE);
+                            mLytAbroad.setVisibility(View.GONE);
+
+                            break;
+                    }
+                }
+
             }
         }
         initData();
@@ -97,15 +145,19 @@ public class LoginUIFragment extends BaseFragment implements View.OnClickListene
             LoginUIManager.getInstance().getFBInfo(mActivity, mData, mListener);
         } else if (resID == R.id.lyt_login_google) {//google
             LoginUIManager.getInstance().getGoogleInfo(mActivity, mData, mListener);
-        } else if (resID == R.id.txt_visitor) {//游客登录
+        } else if (resID == R.id.txt_abroad_visitor || resID == R.id.txt_home_visitor) {//游客登录
             if (!TextUtils.isEmpty(PreferencesUtils.getString(mActivity, Constants.USER_BIND_FLAG)) &&
                     TextUtils.equals(PreferencesUtils.getString(mActivity, Constants.USER_BIND_FLAG), "YES")) {//游客登录过
                 LoginUIManager.getInstance().guestLogin(mActivity, mData, mListener);
             } else {
                 guestLogin();
             }
-        } else if (resID == R.id.txt_email) {//邮箱登录
+        } else if (resID == R.id.txt_abroad_email || resID == R.id.txt_home_email) {//邮箱登录
             emailLogin();
+        } else if (resID == R.id.lyt_login_qq) {//QQ登录
+            LoginUIManager.getInstance().getQQInfo(mActivity, mData, mListener);
+        } else if (resID == R.id.lyt_login_wx) {//微信登录
+            LoginUIManager.getInstance().getWXInfo(mActivity, mData, mListener);
         }
     }
 
@@ -143,6 +195,28 @@ public class LoginUIFragment extends BaseFragment implements View.OnClickListene
                         }
 
                         break;
+                    case LTResultCode.STATE_WX_UI_TOKEN: //微信获取信息
+                        if (result.getResultModel() != null) {
+                            showDialog(getResources().getString(R.string.text_loading));
+                            LoginUIManager.getInstance().wxLogin(mActivity,
+                                    result.getResultModel().getData().getId(),
+                                    result.getResultModel().getData().getEmali(),
+                                    result.getResultModel().getData().getNickName(),
+                                    mListener);
+                        }
+
+                        break;
+                    case LTResultCode.STATE_QQ_UI_TOKEN: //QQ获取信息
+                        if (result.getResultModel() != null) {
+                            showDialog(getResources().getString(R.string.text_loading));
+                            LoginUIManager.getInstance().qqLogin(mActivity,
+                                    result.getResultModel().getData().getId(),
+                                    result.getResultModel().getData().getEmali(),
+                                    result.getResultModel().getData().getNickName(),
+                                    mListener);
+                        }
+
+                        break;
                     case LTResultCode.STATE_GOOGLE_LOGIN_FAILED: //google登录失败
                         LoginUIManager.getInstance().setResultFailed(activity,
                                 LTResultCode.STATE_GOOGLE_LOGIN_FAILED,
@@ -152,6 +226,18 @@ public class LoginUIFragment extends BaseFragment implements View.OnClickListene
                     case LTResultCode.STATE_FB_LOGIN_FAILED: //Facebook登录失败
                         LoginUIManager.getInstance().setResultFailed(activity,
                                 LTResultCode.STATE_FB_LOGIN_FAILED,
+                                result.getResultModel().getMsg());
+                        dismissDialog();
+                        break;
+                    case LTResultCode.STATE_QQ_LOGIN_FAILED: //QQ登录失败
+                        LoginUIManager.getInstance().setResultFailed(activity,
+                                LTResultCode.STATE_QQ_LOGIN_FAILED,
+                                result.getResultModel().getMsg());
+                        dismissDialog();
+                        break;
+                    case LTResultCode.STATE_WX_LOGIN_FAILED: //微信登录失败
+                        LoginUIManager.getInstance().setResultFailed(activity,
+                                LTResultCode.STATE_WX_LOGIN_FAILED,
                                 result.getResultModel().getMsg());
                         dismissDialog();
                         break;
@@ -175,18 +261,38 @@ public class LoginUIFragment extends BaseFragment implements View.OnClickListene
 
                         }
                         break;
+                    case LTResultCode.STATE_QQ_LOGIN_SUCCESS: //QQ登录成功
+                        if (result.getResultModel() != null) {
+                            LoginUIManager.getInstance().setResultSuccess(activity,
+                                    LTResultCode.STATE_QQ_LOGIN_SUCCESS,
+                                    result.getResultModel());
+                            dismissDialog();
+                            getProxyActivity().finish();
+
+                        }
+                        break;
+                    case LTResultCode.STATE_WX_LOGIN_SUCCESS: //微信登录成功
+                        if (result.getResultModel() != null) {
+                            LoginUIManager.getInstance().setResultSuccess(activity,
+                                    LTResultCode.STATE_WX_LOGIN_SUCCESS,
+                                    result.getResultModel());
+                            dismissDialog();
+                            getProxyActivity().finish();
+
+                        }
+                        break;
                     case LTResultCode.STATE_GUEST_LOGIN_SUCCESS:
                         if (result.getResultModel() != null) {
                             PreferencesUtils.init(activity);
                             PreferencesUtils.putString(activity,
-                                    Constants.USER_GUEST_FLAG,"YES");
+                                    Constants.USER_GUEST_FLAG, "YES");
                             PreferencesUtils.putString(activity,
-                                    Constants.USER_BIND_FLAG,"YES");
+                                    Constants.USER_BIND_FLAG, "YES");
                             guestTurn();
                         }
                         break;
                     case LTResultCode.STATE_GUEST_LOGIN_FAILED:
-                        Log.e("TAG","STATE_GUEST_LOGIN_FAILED==");
+                        Log.e("TAG", "STATE_GUEST_LOGIN_FAILED==");
                         break;
                 }
             }
@@ -234,6 +340,11 @@ public class LoginUIFragment extends BaseFragment implements View.OnClickListene
         data.setServerTest(mServerTest);
         data.setFBAppID(mFacebookID);
         data.setLoginOut(mIsLoginOut);
+        data.setQqAppID(mQQAppID);
+        data.setAppSecret(mWXSecret);
+        data.setWxAppID(mWXSecret);
+        ;
+        data.setCountryModel(mCountryModel);
         data.setBind(false);
         getProxyActivity().addFragment(LoginFailedFragment.newInstance(data),
                 false,
@@ -253,6 +364,10 @@ public class LoginUIFragment extends BaseFragment implements View.OnClickListene
         data.setServerTest(mServerTest);
         data.setFBAppID(mFacebookID);
         data.setLoginOut(mIsLoginOut);
+        data.setQqAppID(mQQAppID);
+        data.setAppSecret(mWXSecret);
+        data.setWxAppID(mWXSecret);
+        data.setCountryModel(mCountryModel);
         data.setEmailType(Constants.EMAIL_LOGIN_JUMP);
         EmailLoginFragment fragment = EmailLoginFragment.newInstance(data);
         getProxyActivity().addFragment(fragment,
@@ -274,6 +389,10 @@ public class LoginUIFragment extends BaseFragment implements View.OnClickListene
         data.setServerTest(mServerTest);
         data.setFBAppID(mFacebookID);
         data.setLoginOut(mIsLoginOut);
+        data.setQqAppID(mQQAppID);
+        data.setAppSecret(mWXSecret);
+        data.setWxAppID(mWXSecret);
+        data.setCountryModel(mCountryModel);
         GuestFragment fragment = GuestFragment.newInstance(data);
         getProxyActivity().addFragment(fragment,
                 false,
@@ -293,6 +412,10 @@ public class LoginUIFragment extends BaseFragment implements View.OnClickListene
         data.setServerTest(mServerTest);
         data.setFBAppID(mFacebookID);
         data.setLoginOut(mIsLoginOut);
+        data.setQqAppID(mQQAppID);
+        data.setAppSecret(mWXSecret);
+        data.setWxAppID(mWXSecret);
+        data.setCountryModel(mCountryModel);
         GuestTurnFragment fragment = GuestTurnFragment.newInstance(data);
         getProxyActivity().addFragment(fragment,
                 false,

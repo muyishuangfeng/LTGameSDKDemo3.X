@@ -11,8 +11,6 @@ import com.gnetop.ltgame.core.common.LTGameCommon;
 import com.gnetop.ltgame.core.common.LTGameOptions;
 import com.gnetop.ltgame.core.impl.OnLoginStateListener;
 import com.gnetop.ltgame.core.impl.OnRechargeStateListener;
-import com.gnetop.ltgame.core.util.PreferencesUtils;
-import com.gnetop.ltgame.core.widget.activity.QQActionActivity;
 import com.gnetop.ltgame.core.model.LoginObject;
 import com.gnetop.ltgame.core.model.RechargeObject;
 import com.gnetop.ltgame.core.platform.AbsPlatform;
@@ -20,6 +18,8 @@ import com.gnetop.ltgame.core.platform.IPlatform;
 import com.gnetop.ltgame.core.platform.PlatformFactory;
 import com.gnetop.ltgame.core.platform.Target;
 import com.gnetop.ltgame.core.util.LTGameUtil;
+import com.gnetop.ltgame.core.util.PreferencesUtils;
+import com.gnetop.ltgame.core.widget.activity.QQActionActivity;
 
 
 public class QQPlatform extends AbsPlatform {
@@ -43,8 +43,11 @@ public class QQPlatform extends AbsPlatform {
         } else if (!TextUtils.isEmpty(PreferencesUtils.getString(activity, Constants.LT_SDK_QQ_APP_ID))) {
             mQQAppID = PreferencesUtils.getString(activity, Constants.LT_SDK_QQ_APP_ID);
         }
-        mHelper = new QQHelper(activity, mQQAppID, object.getType(), object.isLoginOut(), listener);
-        mHelper.loginAction();
+        if (!TextUtils.isEmpty(mQQAppID)) {
+            mHelper = new QQHelper(activity, mQQAppID, object.getType(), object.isLoginOut(), listener);
+            mHelper.loginAction();
+        }
+
     }
 
     @Override

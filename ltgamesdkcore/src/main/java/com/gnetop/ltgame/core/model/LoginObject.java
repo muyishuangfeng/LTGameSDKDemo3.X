@@ -2,13 +2,13 @@ package com.gnetop.ltgame.core.model;
 
 
 import java.io.Serializable;
-import java.io.StringReader;
 
 /**
  * 登录参数类
  */
 public class LoginObject implements Serializable {
 
+    private String wxAppID; // 微信的AppID
     private String appSecret; // 授权域
     private String scope = LTGameValues.WX_SCOPE; // 授权域
     private String nonceStr; // 随机字符串
@@ -40,10 +40,26 @@ public class LoginObject implements Serializable {
     private String role_name;//       角色名称
     private String role_sex;//      角色性别
     private String role_level;//      角色等级
+    private String countryModel;//      国内外
     private long role_create_time;// 角色创建时间
     private int server_number;//   服务器编号
     private boolean debug;//   是否是debug模式
 
+    public String getCountryModel() {
+        return countryModel;
+    }
+
+    public void setCountryModel(String countryModel) {
+        this.countryModel = countryModel;
+    }
+
+    public String getWxAppID() {
+        return wxAppID;
+    }
+
+    public void setWxAppID(String wxAppID) {
+        this.wxAppID = wxAppID;
+    }
 
     public boolean isDebug() {
         return debug;

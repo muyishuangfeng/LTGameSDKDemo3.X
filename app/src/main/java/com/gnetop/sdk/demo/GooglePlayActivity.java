@@ -12,13 +12,9 @@ import android.widget.TextView;
 import com.gnetop.ltgame.core.common.Constants;
 import com.gnetop.ltgame.core.exception.LTResultCode;
 import com.gnetop.ltgame.core.impl.OnRechargeStateListener;
-import com.gnetop.ltgame.core.manager.login.fb.FacebookEventManager;
 import com.gnetop.ltgame.core.manager.lt.LTGameSDK;
 import com.gnetop.ltgame.core.model.RechargeObject;
 import com.gnetop.ltgame.core.model.RechargeResult;
-
-import java.util.Map;
-import java.util.WeakHashMap;
 
 
 public class GooglePlayActivity extends AppCompatActivity {

@@ -55,12 +55,28 @@
         app:layout_constraintTop_toBottomOf="@+id/btn_ui" />
 
     <Button
+        android:id="@+id/btn_qq"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="QQ"
+        android:textAllCaps="false"
+        app:layout_constraintTop_toBottomOf="@+id/btn_ui_port" />
+    <Button
+        android:id="@+id/btn_wx"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="微信"
+        android:textAllCaps="false"
+        app:layout_constraintTop_toBottomOf="@+id/btn_qq" />
+
+    <Button
         android:id="@+id/btn_gp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Google Play"
         android:textAllCaps="false"
-        app:layout_constraintTop_toBottomOf="@+id/btn_ui_port" />
+        app:layout_constraintTop_toBottomOf="@+id/btn_wx" />
+
     <Button
         android:id="@+id/btn_upload"
         android:layout_width="match_parent"

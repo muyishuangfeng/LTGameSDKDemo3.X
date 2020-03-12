@@ -32,6 +32,9 @@ public class AgreementFragment extends BaseFragment implements View.OnClickListe
     String mFacebookID;
     boolean mIsLoginOut;
     String mServerTest;
+    String mQQAppID;
+    String mWXAppID;
+    String mWXSecret;
 
 
     public static AgreementFragment newInstance(LoginObject data) {
@@ -82,6 +85,9 @@ public class AgreementFragment extends BaseFragment implements View.OnClickListe
                 mFacebookID = mData.getFBAppID();
                 mServerTest = mData.isServerTest();
                 mIsLoginOut = mData.isLoginOut();
+                mQQAppID = mData.getQqAppID();
+                mWXAppID = mData.getWxAppID();
+                mWXSecret = mData.getAppSecret();
             }
         }
     }
@@ -144,6 +150,9 @@ public class AgreementFragment extends BaseFragment implements View.OnClickListe
         data.setServerTest(mServerTest);
         data.setFBAppID(mFacebookID);
         data.setLoginOut(mIsLoginOut);
+        data.setQqAppID(mQQAppID);
+        data.setAppSecret(mWXSecret);
+        data.setWxAppID(mWXSecret);
         getProxyActivity().addFragment(LoginUIFragment.newInstance(data),
                 false,
                 true);

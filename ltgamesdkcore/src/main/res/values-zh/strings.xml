@@ -40,4 +40,8 @@
     <string name="text_loading">加载中...</string>
     <string name="text_seal_number">此帐户已被暂停，请联系客户服务.</string>
     <string name="text_sealing_equipment">这是被阻止的设备，请联系客户服务。</string>
+    <string name="text_qq">QQ登录</string>
+    <string name="text_wx">微信登录</string>
+    <string name="text_bind_wx">绑定微信</string>
+    <string name="text_bind_qq">绑定QQ</string>
 </resources>

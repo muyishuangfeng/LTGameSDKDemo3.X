@@ -1,11 +1,12 @@
 package com.gnetop.ltgame.core.model;
 
 
+import com.gnetop.ltgame.core.platform.Target;
 
 /**
  * Describe : 微信的token
  */
-public class WeChatAccessToken  {
+public class WeChatAccessToken extends AccessToken {
 
     //正确返回
     private String refresh_token;//用户刷新access_token。
@@ -53,6 +54,11 @@ public class WeChatAccessToken  {
 
     public boolean isNoError() {
         return errcode == 0;
+    }
+
+    @Override
+    public int getLoginTarget() {
+        return Target.LOGIN_WX;
     }
 
 

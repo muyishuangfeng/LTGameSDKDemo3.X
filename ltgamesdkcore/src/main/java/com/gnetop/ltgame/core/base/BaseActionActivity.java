@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 
 import com.gnetop.ltgame.core.platform.GlobalPlatform;
 import com.gnetop.ltgame.core.platform.IPlatform;
@@ -106,6 +107,7 @@ public class BaseActionActivity extends Activity {
         IPlatform iPlatform = getPlatform();
         if (iPlatform != null) {
             iPlatform.onResponse(object);
+            Log.e("TAG","handleResp==="+object.toString());
         }
         checkFinish();
     }

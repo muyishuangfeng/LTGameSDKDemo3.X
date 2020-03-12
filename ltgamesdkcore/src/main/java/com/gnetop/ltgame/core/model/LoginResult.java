@@ -17,6 +17,10 @@ public class LoginResult extends Result {
     private String msg;
     //状态
     public int state;
+    // 扫码登录二维码文件路径
+    public String wxCodePath;
+    // 授权码，如果 onlyAuthCode 为 true, 将会返回它
+    public String wxAuthCode;
 
 
     private LoginResult() {
@@ -45,7 +49,7 @@ public class LoginResult extends Result {
     }
 
 
-    public static LoginResult successBaseEntryOf(int code,BaseEntry baseEntry) {
+    public static LoginResult successBaseEntryOf(int code, BaseEntry baseEntry) {
         LoginResult result = new LoginResult(code);
         result.baseEntry = baseEntry;
         return result;

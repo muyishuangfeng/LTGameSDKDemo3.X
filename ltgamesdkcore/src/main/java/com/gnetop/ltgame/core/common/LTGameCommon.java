@@ -15,7 +15,9 @@ public class LTGameCommon {
     private static LTGameOptions mOptions;
     // platform factory
     private static SparseArray<PlatformFactory> mPlatformFactories;
-    private static final String TAG=LTGameCommon.class.getSimpleName();
+    private static final String TAG = LTGameCommon.class.getSimpleName();
+
+
 
 
     /**
@@ -89,7 +91,7 @@ public class LTGameCommon {
     /**
      * 添加平台
      *
-     * @param target       目标平台
+     * @param target 目标平台
      */
     private static void addPlatform(int target, String factoryClazz) {
         try {

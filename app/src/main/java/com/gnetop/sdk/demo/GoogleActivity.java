@@ -7,7 +7,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.gnetop.ltgame.core.common.Constants;
 import com.gnetop.ltgame.core.exception.LTResultCode;
@@ -15,7 +14,6 @@ import com.gnetop.ltgame.core.impl.OnLoginStateListener;
 import com.gnetop.ltgame.core.manager.lt.LTGameSDK;
 import com.gnetop.ltgame.core.model.LoginObject;
 import com.gnetop.ltgame.core.model.LoginResult;
-import com.gnetop.ltgame.core.util.PreferencesUtils;
 
 
 public class GoogleActivity extends AppCompatActivity {

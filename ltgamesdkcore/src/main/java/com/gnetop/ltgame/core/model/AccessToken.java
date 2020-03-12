@@ -7,7 +7,6 @@ import android.text.TextUtils;
 import com.gnetop.ltgame.core.common.Constants;
 import com.gnetop.ltgame.core.common.LTGameCommon;
 import com.gnetop.ltgame.core.common.LTGameOptions;
-import com.gnetop.ltgame.core.model.user.QQUser;
 import com.gnetop.ltgame.core.platform.Target;
 import com.gnetop.ltgame.core.util.PreferencesUtils;
 import com.google.gson.Gson;

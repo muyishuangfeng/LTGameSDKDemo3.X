@@ -7,8 +7,6 @@ import android.os.Build;
 import android.os.Environment;
 import android.util.Log;
 
-import com.gnetop.ltgame.core.common.LTGameCommon;
-
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;

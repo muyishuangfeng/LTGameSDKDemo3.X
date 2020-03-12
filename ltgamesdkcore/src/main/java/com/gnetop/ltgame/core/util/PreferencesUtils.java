@@ -3,8 +3,6 @@ package com.gnetop.ltgame.core.util;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import com.gnetop.ltgame.core.common.Constants;
-
 public class PreferencesUtils {
 
     private static SharedPreferences settings;
