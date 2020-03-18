@@ -3,8 +3,10 @@ package com.gnetop.ltgame.core.manager.login.google;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.gnetop.ltgame.core.base.BaseEntry;
 import com.gnetop.ltgame.core.common.Constants;
@@ -32,7 +34,7 @@ public class GoogleLoginHelper {
     private OnLoginStateListener mListener;
     private String type;
 
-    GoogleLoginHelper(Activity activity,  String type,
+    GoogleLoginHelper(Activity activity, String type,
                       OnLoginStateListener listener) {
         this.mActivityRef = new WeakReference<>(activity);
         this.mListener = listener;
@@ -84,11 +86,23 @@ public class GoogleLoginHelper {
                     switch (type) {
                         case Constants.GOOGLE_LOGIN: //登录
                             LoginRealizeManager.googleLogin(mActivityRef.get(), account.getId(),
-                                    account.getEmail(), account.getDisplayName(), account.getIdToken(),mListener);
+                                    account.getEmail(), account.getDisplayName(), account.getIdToken(), mListener);
+                            new Handler().postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    mActivityRef.get().finish();
+                                }
+                            },500);
                             break;
                         case Constants.GOOGLE_BIND: //绑定
                             LoginRealizeManager.bindGoogle(mActivityRef.get(), account.getId(),
-                                    account.getEmail(), account.getDisplayName(),account.getIdToken(), mListener);
+                                    account.getEmail(), account.getDisplayName(), account.getIdToken(), mListener);
+                            new Handler().postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    mActivityRef.get().finish();
+                                }
+                            },500);
                             break;
                         case Constants.GOOGLE_UI_TOKEN: //获取token
                             BaseEntry<ResultModel> resultModelBaseEntry = new BaseEntry<>();
@@ -106,12 +120,17 @@ public class GoogleLoginHelper {
             } else {
                 mListener.onState(mActivityRef.get(),
                         LoginResult.failOf(LTGameError.make(LTResultCode.STATE_GOOGLE_COMMON_FAILED)));
+                mActivityRef.get().finish();
             }
 
         } catch (ApiException e) {
-            e.printStackTrace();
+            LoginRealizeManager.sendException(mActivityRef.get(),
+                    e.getStatusCode(), "Google_Get_Token:" + e.getMessage(),
+                    e.getMessage(), mListener);
             mListener.onState(mActivityRef.get(),
                     LoginResult.failOf(LTGameError.make(LTResultCode.STATE_GOOGLE_COMMON_FAILED, e.getMessage())));
+            mActivityRef.get().finish();
+            e.printStackTrace();
         }
     }
 

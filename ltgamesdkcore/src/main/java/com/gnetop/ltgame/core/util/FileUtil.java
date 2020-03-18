@@ -4,7 +4,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.text.TextUtils;
 
-
 import com.gnetop.ltgame.core.common.LTGameCommon;
 
 import java.io.File;
@@ -41,7 +40,7 @@ public class FileUtil {
      * 保存数据到文件中
      */
     public static File saveWxCode2File(byte[] buffer) throws IOException {
-        File saveFile = new File(LTGameCommon.options().getCacheDir(), System.currentTimeMillis() + "_code.jpg");
+        File saveFile = new File(LTGameCommon.getInstance().options().getCacheDir(), System.currentTimeMillis() + "_code.jpg");
         Bitmap bitmap = BitmapFactory.decodeByteArray(buffer, 0, buffer.length);
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, new FileOutputStream(saveFile));
         BitmapUtil.recyclerBitmaps(bitmap);

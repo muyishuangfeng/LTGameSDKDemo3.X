@@ -2,12 +2,6 @@ apply plugin: 'com.android.application'
 
 android {
     signingConfigs {
-//        config {
-//            keyAlias 'YOCO'
-//            keyPassword 'yoco654321'
-//            storeFile file('F:\\Program\\sort\\YOCO_Release')
-//            storePassword 'yoco654321'
-//        }
         config {
             keyAlias 'sdk'
             keyPassword '123456'

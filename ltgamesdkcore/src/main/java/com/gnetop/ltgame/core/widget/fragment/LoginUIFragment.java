@@ -18,6 +18,7 @@ import com.gnetop.ltgame.core.model.LoginObject;
 import com.gnetop.ltgame.core.model.LoginResult;
 import com.gnetop.ltgame.core.ui.dialog.GeneralCenterDialog;
 import com.gnetop.ltgame.core.util.PreferencesUtils;
+import com.gnetop.ltgame.core.util.ToastUtil;
 
 
 public class LoginUIFragment extends BaseFragment implements View.OnClickListener {
@@ -108,6 +109,8 @@ public class LoginUIFragment extends BaseFragment implements View.OnClickListene
                 mWXAppID = mData.getWxAppID();
                 mWXSecret = mData.getAppSecret();
                 mCountryModel = mData.getCountryModel();
+
+                Log.e("TAG","===LoginUIFragment========"+mData.toString());
 
                 if (mCountryModel != null) {
                     switch (mCountryModel) {
@@ -220,25 +223,29 @@ public class LoginUIFragment extends BaseFragment implements View.OnClickListene
                     case LTResultCode.STATE_GOOGLE_LOGIN_FAILED: //google登录失败
                         LoginUIManager.getInstance().setResultFailed(activity,
                                 LTResultCode.STATE_GOOGLE_LOGIN_FAILED,
-                                result.getResultModel().getMsg());
+                                result.msg);
+                        ToastUtil.getInstance().showToast(mActivity,result.msg);
                         dismissDialog();
                         break;
                     case LTResultCode.STATE_FB_LOGIN_FAILED: //Facebook登录失败
                         LoginUIManager.getInstance().setResultFailed(activity,
                                 LTResultCode.STATE_FB_LOGIN_FAILED,
-                                result.getResultModel().getMsg());
+                                result.msg);
+                        ToastUtil.getInstance().showToast(mActivity,result.msg);
                         dismissDialog();
                         break;
                     case LTResultCode.STATE_QQ_LOGIN_FAILED: //QQ登录失败
                         LoginUIManager.getInstance().setResultFailed(activity,
                                 LTResultCode.STATE_QQ_LOGIN_FAILED,
-                                result.getResultModel().getMsg());
+                                result.msg);
+                        ToastUtil.getInstance().showToast(mActivity,result.msg);
                         dismissDialog();
                         break;
                     case LTResultCode.STATE_WX_LOGIN_FAILED: //微信登录失败
                         LoginUIManager.getInstance().setResultFailed(activity,
                                 LTResultCode.STATE_WX_LOGIN_FAILED,
-                                result.getResultModel().getMsg());
+                                result.msg);
+                        ToastUtil.getInstance().showToast(mActivity,result.msg);
                         dismissDialog();
                         break;
                     case LTResultCode.STATE_GOOGLE_LOGIN_SUCCESS: //google登录成功

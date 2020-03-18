@@ -2,6 +2,7 @@ package com.gnetop.ltgame.core.widget.fragment;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
@@ -65,7 +66,7 @@ public class EmailLoginFragment extends BaseFragment implements View.OnClickList
     @Override
     protected void initView(View view) {
 
-        mDialog=new GeneralCenterDialog(mActivity);
+        mDialog = new GeneralCenterDialog(mActivity);
         mBtnCode = view.findViewById(R.id.btn_count_down);
         mBtnCode.setOnClickListener(this);
 
@@ -171,6 +172,7 @@ public class EmailLoginFragment extends BaseFragment implements View.OnClickList
         }
 
     }
+
     /**
      * 初始化数据
      */
@@ -181,14 +183,14 @@ public class EmailLoginFragment extends BaseFragment implements View.OnClickList
                 switch (result.state) {
                     case LTResultCode.STATE_EMAIL_GET_CODE_SUCCESS: //获取验证码成功
                         mBtnCode.setClickable(true);
-                        ToastUtil.getInstance().shortToast(mActivity,
+                        ToastUtil.getInstance().showToast(mActivity,
                                 result.getBaseEntry().getMsg());
                         dismissDialog();
                         break;
                     case LTResultCode.STATE_EMAIL_GET_CODE_FAILED: //获取验证码失败
                         if (mTxtError.getVisibility() == View.INVISIBLE) {
                             mTxtError.setVisibility(View.VISIBLE);
-                            mTxtError.setText(result.getBaseEntry().getMsg());
+                            mTxtError.setText(result.msg);
                         }
                         mBtnCode.setClickable(true);
                         LoginUIManager.getInstance().setResultFailed(activity,
@@ -197,24 +199,36 @@ public class EmailLoginFragment extends BaseFragment implements View.OnClickList
                         dismissDialog();
                         break;
                     case LTResultCode.STATE_EMAIL_BIND_FAILED: //绑定失败
-                        if (result.getResultModel().getMsg()!=null){
-                            LoginUIManager.getInstance().setResultFailed(activity,
-                                    LTResultCode.STATE_EMAIL_BIND_FAILED,"BindFailed");
-                        }
-                        dismissDialog();
+                        LoginUIManager.getInstance().setResultFailed(activity,
+                                LTResultCode.STATE_EMAIL_BIND_FAILED, result.msg);
+                        new Handler().postAtTime(new Runnable() {
+                            @Override
+                            public void run() {
+                                dismissDialog();
+                            }
+                        },2000);
+                        ToastUtil.getInstance().showToast(mActivity, result.msg);
                         break;
                     case LTResultCode.STATE_EMAIL_LOGIN_FAILED: //登录失败
                         LoginUIManager.getInstance().setResultFailed(activity,
                                 LTResultCode.STATE_EMAIL_LOGIN_FAILED,
-                                result.getResultModel().getMsg());
-                        dismissDialog();
+                                result.msg);
+                        new Handler().postAtTime(new Runnable() {
+                            @Override
+                            public void run() {
+                                dismissDialog();
+                            }
+                        },2000);
+                        ToastUtil.getInstance().showToast(mActivity,
+                                result.msg);
                         break;
                     case LTResultCode.STATE_EMAIL_ALREADY_BIND: //已经绑定了邮箱
                         LoginUIManager.getInstance().setResultFailed(activity,
                                 LTResultCode.STATE_EMAIL_ALREADY_BIND,
-                                result.getResultModel().getMsg());
+                                result.msg);
                         dismissDialog();
-
+                        ToastUtil.getInstance().showToast(mActivity,
+                                result.msg);
                         break;
 
                     case LTResultCode.STATE_EMAIL_BIND_SUCCESS: //绑定成功
@@ -263,7 +277,7 @@ public class EmailLoginFragment extends BaseFragment implements View.OnClickList
         data.setLoginOut(mIsLoginOut);
         data.setQqAppID(mQQAppID);
         data.setAppSecret(mWXSecret);
-        data.setWxAppID(mWXSecret);
+        data.setWxAppID(mWXAppID);
         data.setCountryModel(mCountryModel);
         data.setBind(true);
         getProxyActivity().addFragment(LoginFailedFragment.newInstance(data),
@@ -302,7 +316,7 @@ public class EmailLoginFragment extends BaseFragment implements View.OnClickList
         data.setLoginOut(mIsLoginOut);
         data.setQqAppID(mQQAppID);
         data.setAppSecret(mWXSecret);
-        data.setWxAppID(mWXSecret);
+        data.setWxAppID(mWXAppID);
         data.setCountryModel(mCountryModel);
         getProxyActivity().addFragment(LoginUIFragment.newInstance(data),
                 false, true);
@@ -327,7 +341,7 @@ public class EmailLoginFragment extends BaseFragment implements View.OnClickList
         data.setLoginOut(mIsLoginOut);
         data.setQqAppID(mQQAppID);
         data.setAppSecret(mWXSecret);
-        data.setWxAppID(mWXSecret);
+        data.setWxAppID(mWXAppID);
         data.setCountryModel(mCountryModel);
         data.setBind(false);
         getProxyActivity().addFragment(LoginFailedFragment.newInstance(data),

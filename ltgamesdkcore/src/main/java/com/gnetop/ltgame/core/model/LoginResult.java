@@ -14,7 +14,7 @@ public class LoginResult extends Result {
     //错误信息
     public LTGameError error;
     //错误信息
-    private String msg;
+    public String msg;
     //状态
     public int state;
     // 扫码登录二维码文件路径

@@ -45,7 +45,7 @@ public class WxPlatform extends AbsPlatform {
         @Override
         public IPlatform create(Context context, int target) {
             IPlatform platform = null;
-            LTGameOptions opts = LTGameCommon.options();
+            LTGameOptions opts = LTGameCommon.getInstance().options();
             if (!LTGameUtil.isAnyEmpty(opts.getWxAppId(), opts.getWxSecretKey())) {
                 platform = new WxPlatform(context, opts.getWxAppId(), target, opts.getWxSecretKey());
             }

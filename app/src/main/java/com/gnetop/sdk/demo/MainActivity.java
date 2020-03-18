@@ -25,8 +25,8 @@ public class MainActivity extends AppCompatActivity {
             mBtnQQ,mBtnWX;
     TextView mTxtResult;
 
-    private static final String mLtAppID = "1";
-    private static final String mAuthID = "443503959733-nlr4ofibakk0j2dqkkomdqu3uta50pbe.apps.googleusercontent.com";
+    private static final String mLtAppID = "35";
+    private static final String mAuthID = "443503959733-0vhjo7df08ahd9i7d5lj9mdtt7bahsbq.apps.googleusercontent.com";
     private static final String mFacebookId = "2717734461592670";
     private static final String mAgreementUrl = "http://www.baidu.com";
     private static final String mProvacyUrl = "http://www.baidu.com";
@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String QQ_APP_ID = "1108097616";
     private static final String wxAppID = "wx12163d2efc218137";
     private static final String wxSecret = "55210ccc632b6273f7c9e995346dc211";
-    private static final String mCountryModel = Constants.LT_SDK_COUNTRY_HOME;
+    private static final String mCountryModel = Constants.LT_SDK_COUNTRY_ABROAD;
     static LoginObject mRequest;
     private boolean debug = true;
     private String isServerTest = Constants.LT_SERVER_TEST;

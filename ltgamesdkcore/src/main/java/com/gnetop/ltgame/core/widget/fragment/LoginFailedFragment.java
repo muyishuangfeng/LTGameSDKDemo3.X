@@ -103,7 +103,7 @@ public class LoginFailedFragment extends BaseFragment {
                 data.setLoginOut(mIsLoginOut);
                 data.setQqAppID(mQQAppID);
                 data.setAppSecret(mWXSecret);
-                data.setWxAppID(mWXSecret);
+                data.setWxAppID(mWXAppID);
                 data.setCountryModel(mCountryModel);
                 getProxyActivity().addFragment(LoginUIFragment.newInstance(data),
                         false,

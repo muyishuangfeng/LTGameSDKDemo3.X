@@ -275,8 +275,8 @@ public class LoginUIManager {
         LoginObject object = new LoginObject();
         PreferencesUtils.init(context);
         String mAppID = "";
-        if (!TextUtils.isEmpty(result.getFBAppID())) {
-            mAppID = result.getFBAppID();
+        if (!TextUtils.isEmpty(result.getmGoogleClient())) {
+            mAppID = result.getmGoogleClient();
         } else if (!TextUtils.isEmpty(PreferencesUtils.getString(context, Constants.LT_SDK_GOOGLE_CLIENT_ID))) {
             mAppID = PreferencesUtils.getString(context, Constants.LT_SDK_GOOGLE_CLIENT_ID);
         }
@@ -454,7 +454,7 @@ public class LoginUIManager {
      */
     public void wxLogin(Activity activity, String bindID,
                         String account, String userName, OnLoginStateListener mListener) {
-        LTGameOptions options = LTGameCommon.options();
+        LTGameOptions options = LTGameCommon.getInstance().options();
         String mLtAppID = "";
         String baseUrl = "";
         if (!TextUtils.isEmpty(options.getLtAppId())) {
@@ -499,7 +499,7 @@ public class LoginUIManager {
      */
     public void wxBind(Activity activity, String bindID,
                        String account, String userName, OnLoginStateListener mListener) {
-        LTGameOptions options = LTGameCommon.options();
+        LTGameOptions options = LTGameCommon.getInstance().options();
         String mLtAppID = "";
         String baseUrl = "";
         if (!TextUtils.isEmpty(options.getLtAppId())) {

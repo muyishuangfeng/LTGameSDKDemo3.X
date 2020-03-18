@@ -13,6 +13,8 @@
     <color name="colorSure">#FF4267b2</color>
     <color name="colorLightGray">#F5F5F5</color>
     <color name="colorLightBlue">#3C68F2</color>
+    <color name="colorWX">#FF00D30C</color>
+    <color name="colorQQ">#FF12B7F5</color>
 
 
     <color name="transparent">#00000000</color>

@@ -33,7 +33,7 @@ public class GuestPlatform extends AbsPlatform {
         @Override
         public IPlatform create(Context context, int target) {
             IPlatform platform = null;
-            LTGameOptions options = LTGameCommon.options();
+            LTGameOptions options = LTGameCommon.getInstance().options();
             if (!LTGameUtil.isAnyEmpty(options.getLtAppId())) {
                 platform = new GuestPlatform(context, options.getLtAppId(), target);
             }

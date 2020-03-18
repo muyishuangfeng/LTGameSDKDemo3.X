@@ -33,6 +33,17 @@ public class ResultModel implements Serializable {
     private String emali;
     //token
     private String accessToken;
+    //时间
+    private long time;
+
+
+    public long getTime() {
+        return time;
+    }
+
+    public void setTime(long time) {
+        this.time = time;
+    }
 
     public String getAccessToken() {
         return accessToken;
@@ -177,7 +188,6 @@ public class ResultModel implements Serializable {
                 ", emali='" + emali + '\'' +
                 '}';
     }
-
 
 
 

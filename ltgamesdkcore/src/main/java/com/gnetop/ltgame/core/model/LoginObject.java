@@ -19,8 +19,6 @@ public class LoginObject implements Serializable {
     private String mGoogleClient;//GoogleClientID
     private String fbAppID;//facebook AppID
     private boolean loginOut;//退出登录
-    private String mPhone;//手机号
-    private String mPassword;//密码
     private String mLoginCode;//登录状态码
     private String qqAppID;//qqAppID
     private String guestType;//游客登录类型
@@ -44,6 +42,15 @@ public class LoginObject implements Serializable {
     private long role_create_time;// 角色创建时间
     private int server_number;//   服务器编号
     private boolean debug;//   是否是debug模式
+    private int tokenTime;//token保存时间
+
+    public int getTokenTime() {
+        return tokenTime;
+    }
+
+    public void setTokenTime(int tokenTime) {
+        this.tokenTime = tokenTime;
+    }
 
     public String getCountryModel() {
         return countryModel;
@@ -289,21 +296,6 @@ public class LoginObject implements Serializable {
         this.loginOut = loginOut;
     }
 
-    public String getmPhone() {
-        return mPhone;
-    }
-
-    public void setmPhone(String mPhone) {
-        this.mPhone = mPhone;
-    }
-
-    public String getmPassword() {
-        return mPassword;
-    }
-
-    public void setmPassword(String mPassword) {
-        this.mPassword = mPassword;
-    }
 
     public String getmLoginCode() {
         return mLoginCode;
@@ -335,5 +327,45 @@ public class LoginObject implements Serializable {
 
     public void setStats(boolean mStats) {
         this.mStats = mStats;
+    }
+
+    @Override
+    public String toString() {
+        return "LoginObject{" +
+                "wxAppID='" + wxAppID + '\'' +
+                ", appSecret='" + appSecret + '\'' +
+                ", scope='" + scope + '\'' +
+                ", nonceStr='" + nonceStr + '\'' +
+                ", timestamp='" + timestamp + '\'' +
+                ", signature='" + signature + '\'' +
+                ", LTAppID='" + LTAppID + '\'' +
+                ", mAdID='" + mAdID + '\'' +
+                ", mGoogleClient='" + mGoogleClient + '\'' +
+                ", fbAppID='" + fbAppID + '\'' +
+                ", loginOut=" + loginOut +
+                ", mLoginCode='" + mLoginCode + '\'' +
+                ", qqAppID='" + qqAppID + '\'' +
+                ", guestType='" + guestType + '\'' +
+                ", mStats=" + mStats +
+                ", mType='" + mType + '\'' +
+                ", email='" + email + '\'' +
+                ", authCode='" + authCode + '\'' +
+                ", loginType='" + loginType + '\'' +
+                ", mAgreementUrl='" + mAgreementUrl + '\'' +
+                ", mPrivacyUrl='" + mPrivacyUrl + '\'' +
+                ", isServerTest='" + isServerTest + '\'' +
+                ", mGPPublicKey='" + mGPPublicKey + '\'' +
+                ", mOneStorePublicKey='" + mOneStorePublicKey + '\'' +
+                ", mBind=" + mBind +
+                ", emailType='" + emailType + '\'' +
+                ", role_number=" + role_number +
+                ", role_name='" + role_name + '\'' +
+                ", role_sex='" + role_sex + '\'' +
+                ", role_level='" + role_level + '\'' +
+                ", countryModel='" + countryModel + '\'' +
+                ", role_create_time=" + role_create_time +
+                ", server_number=" + server_number +
+                ", debug=" + debug +
+                '}';
     }
 }

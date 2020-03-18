@@ -12,7 +12,7 @@ public class LTGameUtil {
     private static final String TAG = LTGameUtil.class.getSimpleName();
 
     public static void e(String tag, String msg) {
-        if (LTGameCommon.options().isDebug()) {
+        if (LTGameCommon.getInstance().options().isDebug()) {
             Log.e(TAG + "|" + tag, msg);
         }
     }

@@ -3,6 +3,7 @@ package com.gnetop.ltgame.core.model;
 
 import android.content.Context;
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.gnetop.ltgame.core.common.Constants;
 import com.gnetop.ltgame.core.common.LTGameCommon;
@@ -90,8 +91,9 @@ public abstract class AccessToken {
     /**
      * 保存Token
      */
-    public static void saveToken(final Context context, final String key, final Object token) {
-        LTGameOptions opts = LTGameCommon.options();
+    public static void saveToken(final Context context, final String key,String tokenTimeKey,
+                                 final Object token) {
+        LTGameOptions opts = LTGameCommon.getInstance().options();
         if (opts.getTokenExpiresHoursMs() <= 0) {
             return;
         }
@@ -103,7 +105,7 @@ public abstract class AccessToken {
                 PreferencesUtils.init(context);
                 if (token != null) {
                     PreferencesUtils.putString(context, key, token + "");
-                    PreferencesUtils.putLong(Constants.LT_QQ_TOKEN_TIME, System.currentTimeMillis());
+                    PreferencesUtils.putLong(tokenTimeKey, System.currentTimeMillis());
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -114,8 +116,8 @@ public abstract class AccessToken {
     /**
      * Json解析
      */
-    public static <T> T getToken(final Context context, String key, final Class<T> tokenClazz) {
-        LTGameOptions opts = LTGameCommon.options();
+    public static <T> T getWXToken(final Context context, String key, final Class<T> tokenClazz) {
+        LTGameOptions opts = LTGameCommon.getInstance().options();
         if (opts.getTokenExpiresHoursMs() <= 0) {
             return null;
         }
@@ -124,8 +126,34 @@ public abstract class AccessToken {
         if (currentTimeMillis - time < opts.getTokenExpiresHoursMs()) {
             T t = null;
             if (!TextUtils.isEmpty(PreferencesUtils.getString(context, key))) {
+                String token = PreferencesUtils.getString(context, key).substring(15,
+                        PreferencesUtils.getString(context, key).length());
                 t = new Gson().fromJson
-                        (PreferencesUtils.getString(context, key), tokenClazz);
+                        (token, tokenClazz);
+            }
+            return t;
+        } else {
+            return null;
+        }
+    }
+    /**
+     * Json解析
+     */
+    public static <T> T getQQToken(final Context context, String key, final Class<T> tokenClazz) {
+        LTGameOptions opts = LTGameCommon.getInstance().options();
+        if (opts.getTokenExpiresHoursMs() <= 0) {
+            return null;
+        }
+        long time = PreferencesUtils.getLong(context, Constants.LT_QQ_TOKEN_TIME);
+        long currentTimeMillis = System.currentTimeMillis();
+        if (currentTimeMillis - time < opts.getTokenExpiresHoursMs()) {
+            T t = null;
+            if (!TextUtils.isEmpty(PreferencesUtils.getString(context, key))) {
+                String token = PreferencesUtils.getString(context, key).substring(15,
+                        PreferencesUtils.getString(context, key).length());
+                Log.e("TAG","==============qqToken========="+token);
+                t = new Gson().fromJson
+                        (token, tokenClazz);
             }
             return t;
         } else {

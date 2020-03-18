@@ -15,6 +15,7 @@ import com.gnetop.ltgame.core.model.LoginObject;
 import com.gnetop.ltgame.core.model.LoginResult;
 import com.gnetop.ltgame.core.ui.dialog.GeneralCenterDialog;
 import com.gnetop.ltgame.core.util.PreferencesUtils;
+import com.gnetop.ltgame.core.util.ToastUtil;
 
 
 public class GuestTurnFragment extends BaseFragment implements View.OnClickListener {
@@ -123,7 +124,7 @@ public class GuestTurnFragment extends BaseFragment implements View.OnClickListe
         data.setLoginOut(mIsLoginOut);
         data.setQqAppID(mQQAppID);
         data.setAppSecret(mWXSecret);
-        data.setWxAppID(mWXSecret);
+        data.setWxAppID(mWXAppID);
         data.setCountryModel(mCountryModel);
         getProxyActivity().addFragment(LoginUIFragment.newInstance(data),
                 false,
@@ -146,7 +147,7 @@ public class GuestTurnFragment extends BaseFragment implements View.OnClickListe
         data.setLoginOut(mIsLoginOut);
         data.setQqAppID(mQQAppID);
         data.setAppSecret(mWXSecret);
-        data.setWxAppID(mWXSecret);
+        data.setWxAppID(mWXAppID);
         data.setCountryModel(mCountryModel);
         data.setBind(false);
         getProxyActivity().addFragment(LoginFailedFragment.newInstance(data),
@@ -169,7 +170,7 @@ public class GuestTurnFragment extends BaseFragment implements View.OnClickListe
         data.setLoginOut(mIsLoginOut);
         data.setQqAppID(mQQAppID);
         data.setAppSecret(mWXSecret);
-        data.setWxAppID(mWXSecret);
+        data.setWxAppID(mWXAppID);
         data.setCountryModel(mCountryModel);
         BindFragment fragment = BindFragment.newInstance(data);
         getProxyActivity().addFragment(fragment,
@@ -227,7 +228,8 @@ public class GuestTurnFragment extends BaseFragment implements View.OnClickListe
                     case LTResultCode.STATE_GUEST_LOGIN_FAILED:
                         LoginUIManager.getInstance().setResultFailed(activity,
                                 LTResultCode.STATE_GUEST_LOGIN_FAILED,
-                                result.getResultModel().getMsg());
+                                result.msg);
+                        ToastUtil.getInstance().showToast(mActivity,result.msg);
                         dismissDialog();
                         break;
                 }

@@ -14,8 +14,10 @@ import com.gnetop.ltgame.core.impl.OnLoginStateListener;
 import com.gnetop.ltgame.core.manager.ui.LoginUIManager;
 import com.gnetop.ltgame.core.model.LoginObject;
 import com.gnetop.ltgame.core.model.LoginResult;
+import com.gnetop.ltgame.core.ui.dialog.DialogUtil;
 import com.gnetop.ltgame.core.ui.dialog.GeneralCenterDialog;
 import com.gnetop.ltgame.core.util.PreferencesUtils;
+import com.gnetop.ltgame.core.util.ToastUtil;
 
 
 public class BindFragment extends BaseFragment implements View.OnClickListener {
@@ -36,7 +38,6 @@ public class BindFragment extends BaseFragment implements View.OnClickListener {
 
     LoginObject mData;
     private OnLoginStateListener mListener;
-    GeneralCenterDialog mDialog;
 
 
     public static BindFragment newInstance(LoginObject data) {
@@ -157,7 +158,7 @@ public class BindFragment extends BaseFragment implements View.OnClickListener {
         data.setLoginOut(mIsLoginOut);
         data.setQqAppID(mQQAppID);
         data.setAppSecret(mWXSecret);
-        data.setWxAppID(mWXSecret);
+        data.setWxAppID(mWXAppID);
         data.setCountryModel(mCountryModel);
         data.setBind(false);
         data.setEmailType(Constants.EMAIL_BIND_JUMP);
@@ -183,7 +184,7 @@ public class BindFragment extends BaseFragment implements View.OnClickListener {
         data.setLoginOut(mIsLoginOut);
         data.setQqAppID(mQQAppID);
         data.setAppSecret(mWXSecret);
-        data.setWxAppID(mWXSecret);
+        data.setWxAppID(mWXAppID);
         data.setCountryModel(mCountryModel);
         GuestTurnFragment fragment = GuestTurnFragment.newInstance(data);
         getProxyActivity().addFragment(fragment,
@@ -201,12 +202,8 @@ public class BindFragment extends BaseFragment implements View.OnClickListener {
             public void onState(Activity activity, LoginResult result) {
                 switch (result.state) {
                     case LTResultCode.STATE_GOOGLE_UI_TOKEN: //google获取信息
-                        Log.e("TAG", "STATE_GOOGLE_UI_TOKEN=====" +
-                                result.getResultModel().getData().getId() + "==" +
-                                result.getResultModel().getData().getEmali() + "==" +
-                                result.getResultModel().getData().getNickName() + "==");
                         if (result.getResultModel() != null) {
-                            showDialog(getResources().getString(R.string.text_loading));
+                            DialogUtil.showDialog(mActivity);
                             LoginUIManager.getInstance().googleBind(mActivity,
                                     result.getResultModel().getData().getId(),
                                     result.getResultModel().getData().getEmali(),
@@ -218,7 +215,7 @@ public class BindFragment extends BaseFragment implements View.OnClickListener {
                         break;
                     case LTResultCode.STATE_FB_UI_TOKEN: //Facebook获取信息
                         if (result.getResultModel() != null) {
-                            showDialog(getResources().getString(R.string.text_loading));
+                            DialogUtil.showDialog(mActivity);
                             LoginUIManager.getInstance().fbBind(mActivity,
                                     result.getResultModel().getData().getId(),
                                     result.getResultModel().getData().getEmali(),
@@ -229,7 +226,7 @@ public class BindFragment extends BaseFragment implements View.OnClickListener {
                         break;
                     case LTResultCode.STATE_QQ_UI_TOKEN: //QQ获取信息
                         if (result.getResultModel() != null) {
-                            showDialog(getResources().getString(R.string.text_loading));
+                            DialogUtil.showDialog(mActivity);
                             LoginUIManager.getInstance().qqBind(mActivity,
                                     result.getResultModel().getData().getId(),
                                     result.getResultModel().getData().getEmali(),
@@ -239,7 +236,7 @@ public class BindFragment extends BaseFragment implements View.OnClickListener {
                         break;
                     case LTResultCode.STATE_WX_UI_TOKEN: //微信获取信息
                         if (result.getResultModel() != null) {
-                            showDialog(getResources().getString(R.string.text_loading));
+                            DialogUtil.showDialog(mActivity);
                             LoginUIManager.getInstance().wxBind(mActivity,
                                     result.getResultModel().getData().getId(),
                                     result.getResultModel().getData().getEmali(),
@@ -249,31 +246,34 @@ public class BindFragment extends BaseFragment implements View.OnClickListener {
                         break;
                     case LTResultCode.STATE_GOOGLE_BIND_FAILED: //google绑定失败
                         LoginUIManager.getInstance().setResultFailed(activity,
-                                LTResultCode.STATE_GOOGLE_BIND_FAILED, "Google Bind Failed");
+                                LTResultCode.STATE_GOOGLE_BIND_FAILED, result.msg);
                         PreferencesUtils.putString(mActivity, Constants.USER_GUEST_FLAG, "YES");
-                        dismissDialog();
-
+                        ToastUtil.getInstance().showToast(mActivity, result.msg);
+                        DialogUtil.dismiss(mActivity);
                         break;
                     case LTResultCode.STATE_FB_BIND_FAILED: //Facebook绑定失败
                         LoginUIManager.getInstance().setResultFailed(activity,
                                 LTResultCode.STATE_FB_BIND_FAILED,
-                                result.getResultModel().getMsg());
+                                result.msg);
                         PreferencesUtils.putString(mActivity, Constants.USER_GUEST_FLAG, "YES");
-                        dismissDialog();
+                        ToastUtil.getInstance().showToast(mActivity, result.msg);
+                        DialogUtil.dismiss(mActivity);
                         break;
                     case LTResultCode.STATE_QQ_BIND_FAILED: //QQ绑定失败
                         LoginUIManager.getInstance().setResultFailed(activity,
                                 LTResultCode.STATE_QQ_BIND_FAILED,
-                                result.getResultModel().getMsg());
+                                result.msg);
                         PreferencesUtils.putString(mActivity, Constants.USER_GUEST_FLAG, "YES");
-                        dismissDialog();
+                        ToastUtil.getInstance().showToast(mActivity, result.msg);
+                        DialogUtil.dismiss(mActivity);
                         break;
                     case LTResultCode.STATE_WX_BIND_FAILED: //微信绑定失败
                         LoginUIManager.getInstance().setResultFailed(activity,
                                 LTResultCode.STATE_WX_BIND_FAILED,
-                                result.getResultModel().getMsg());
+                                result.msg);
                         PreferencesUtils.putString(mActivity, Constants.USER_GUEST_FLAG, "YES");
-                        dismissDialog();
+                        ToastUtil.getInstance().showToast(mActivity, result.msg);
+                        DialogUtil.dismiss(mActivity);
                         break;
                     case LTResultCode.STATE_GOOGLE_BIND_SUCCESS: //google绑定成功
                         if (result.getResultModel() != null) {
@@ -281,7 +281,7 @@ public class BindFragment extends BaseFragment implements View.OnClickListener {
                                     LTResultCode.STATE_GOOGLE_BIND_SUCCESS,
                                     result.getResultModel());
                             PreferencesUtils.putString(mActivity, Constants.USER_GUEST_FLAG, "NO");
-                            dismissDialog();
+                            DialogUtil.dismiss(mActivity);
                             getProxyActivity().finish();
 
                         }
@@ -289,31 +289,34 @@ public class BindFragment extends BaseFragment implements View.OnClickListener {
                     case LTResultCode.STATE_FB_ALREADY_BIND: //已经绑定了facebook
                         LoginUIManager.getInstance().setResultFailed(activity,
                                 LTResultCode.STATE_FB_ALREADY_BIND,
-                                result.getResultModel().getMsg());
+                                result.msg);
                         PreferencesUtils.putString(mActivity, Constants.USER_GUEST_FLAG, "YES");
-                        dismissDialog();
+                        ToastUtil.getInstance().showToast(mActivity, result.msg);
+                        DialogUtil.dismiss(mActivity);
                         break;
                     case LTResultCode.STATE_WX_ALREADY_BIND: //已经绑定了微信
                         LoginUIManager.getInstance().setResultFailed(activity,
                                 LTResultCode.STATE_WX_ALREADY_BIND,
-                                result.getResultModel().getMsg());
+                                result.msg);
                         PreferencesUtils.putString(mActivity, Constants.USER_GUEST_FLAG, "YES");
-                        dismissDialog();
+                        ToastUtil.getInstance().showToast(mActivity, result.msg);
+                        DialogUtil.dismiss(mActivity);
                         break;
                     case LTResultCode.STATE_QQ_ALREADY_BIND: //已经绑定了QQ
                         LoginUIManager.getInstance().setResultFailed(activity,
                                 LTResultCode.STATE_QQ_ALREADY_BIND,
-                                result.getResultModel().getMsg());
+                                result.msg);
                         PreferencesUtils.putString(mActivity, Constants.USER_GUEST_FLAG, "YES");
-                        dismissDialog();
+                        ToastUtil.getInstance().showToast(mActivity, result.msg);
+                        DialogUtil.dismiss(mActivity);
                         break;
                     case LTResultCode.STATE_GOOGLE_ALREADY_BIND: //已经绑定了Google
                         LoginUIManager.getInstance().setResultFailed(activity,
                                 LTResultCode.STATE_GOOGLE_ALREADY_BIND,
-                                result.getResultModel().getMsg());
-
+                                result.msg);
+                        ToastUtil.getInstance().showToast(mActivity, result.msg);
                         PreferencesUtils.putString(mActivity, Constants.USER_GUEST_FLAG, "YES");
-                        dismissDialog();
+                        DialogUtil.dismiss(mActivity);
 
                         break;
                     case LTResultCode.STATE_FB_BIND_SUCCESS: //Facebook绑定成功
@@ -322,7 +325,7 @@ public class BindFragment extends BaseFragment implements View.OnClickListener {
                                     LTResultCode.STATE_FB_BIND_SUCCESS,
                                     result.getResultModel());
                             PreferencesUtils.putString(mActivity, Constants.USER_GUEST_FLAG, "NO");
-                            dismissDialog();
+                            DialogUtil.dismiss(mActivity);
                             getProxyActivity().finish();
                         }
                         break;
@@ -332,7 +335,7 @@ public class BindFragment extends BaseFragment implements View.OnClickListener {
                                     LTResultCode.STATE_QQ_BIND_SUCCESS,
                                     result.getResultModel());
                             PreferencesUtils.putString(mActivity, Constants.USER_GUEST_FLAG, "NO");
-                            dismissDialog();
+                            DialogUtil.dismiss(mActivity);
                             getProxyActivity().finish();
                         }
                         break;
@@ -342,7 +345,7 @@ public class BindFragment extends BaseFragment implements View.OnClickListener {
                                     LTResultCode.STATE_WX_BIND_SUCCESS,
                                     result.getResultModel());
                             PreferencesUtils.putString(mActivity, Constants.USER_GUEST_FLAG, "NO");
-                            dismissDialog();
+                            DialogUtil.dismiss(mActivity);
                             getProxyActivity().finish();
                         }
                         break;
@@ -354,28 +357,6 @@ public class BindFragment extends BaseFragment implements View.OnClickListener {
 
             }
         };
-    }
-
-    /**
-     * 显示对话框
-     */
-    private void showDialog(String content) {
-        if (mDialog != null && !mDialog.isShowing()) {
-            mDialog.setContent(content);
-            mDialog.setCancelable(false);
-            mDialog.setCanceledOnTouchOutside(false);
-            mDialog.show();
-        }
-    }
-
-    /**
-     * 隐藏对话框
-     */
-    private void dismissDialog() {
-        if (mDialog != null && mDialog.isShowing()) {
-            mDialog.dismissDialog(mActivity);
-        }
-
     }
 
 

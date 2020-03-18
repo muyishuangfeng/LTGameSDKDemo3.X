@@ -1,6 +1,7 @@
 package com.gnetop.ltgame.core.manager.login.wx;
 
 import android.app.Activity;
+import android.os.Handler;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -70,7 +71,7 @@ public class WxLoginHelper {
      * 获取token
      */
     private WeChatAccessToken getToken() {
-        return AccessToken.getToken(mActivityRef.get(), Constants.LT_WX_TOKEN, WeChatAccessToken.class);
+        return AccessToken.getWXToken(mActivityRef.get(), Constants.LT_WX_TOKEN, WeChatAccessToken.class);
     }
 
     /**
@@ -140,7 +141,7 @@ public class WxLoginHelper {
             public void onAuthFinish(OAuthErrCode oAuthErrCode, String authCode) {
                 switch (oAuthErrCode) {
                     case WechatAuth_Err_OK:
-                        if (LTGameCommon.options().isWxOnlyAuthCode()) {
+                        if (LTGameCommon.getInstance().options().isWxOnlyAuthCode()) {
                             getAccessTokenByCode(authCode);
                         }
                         break;
@@ -198,7 +199,8 @@ public class WxLoginHelper {
                     public void onWeChatSuccess(WeChatAccessToken weChatAccessToken) {
                         if (weChatAccessToken.isNoError()) {
                             Log.e(TAG, "刷新token成功 token = " + weChatAccessToken);
-                            AccessToken.saveToken(mActivityRef.get(), Constants.LT_WX_TOKEN, weChatAccessToken);
+                            AccessToken.saveToken(mActivityRef.get(), Constants.LT_WX_TOKEN,
+                                    Constants.LT_WX_TOKEN_TIME, weChatAccessToken);
                             // 刷新完成，获取用户信息
                             getUserInfoByValidToken(weChatAccessToken);
                         } else {
@@ -212,7 +214,7 @@ public class WxLoginHelper {
                     public void onWeChatFailed(String failed) {
                         mListener.onState(mActivityRef.get(), LoginResult.failOf(LTResultCode.STATE_WX_REFRESH_TOKEN_FAILED, failed));
                     }
-                });
+                },mListener);
 
     }
 
@@ -229,7 +231,8 @@ public class WxLoginHelper {
                     @Override
                     public void onWeChatSuccess(WeChatAccessToken weChatAccessToken) {
                         if (weChatAccessToken.isNoError()) {
-                            AccessToken.saveToken(mActivityRef.get(), Constants.LT_WX_TOKEN, weChatAccessToken);
+                            AccessToken.saveToken(mActivityRef.get(), Constants.LT_WX_TOKEN,
+                                    Constants.LT_WX_TOKEN_TIME, weChatAccessToken);
                             getUserInfoByValidToken(weChatAccessToken);
                         } else {
                             mListener.onState(mActivityRef.get(), LoginResult.failOf(LTResultCode.STATE_WX_ACCESS_TOKEN_FAILED,
@@ -243,7 +246,7 @@ public class WxLoginHelper {
                     public void onWeChatFailed(String failed) {
                         mListener.onState(mActivityRef.get(), LoginResult.failOf(LTResultCode.STATE_WX_ACCESS_TOKEN_FAILED, failed));
                     }
-                });
+                },mListener);
     }
 
 
@@ -273,7 +276,7 @@ public class WxLoginHelper {
                     public void onWeChatFailed(String failed) {
                         mListener.onState(mActivityRef.get(), LoginResult.failOf(LTResultCode.STATE_WX_CHECK_ACCESS_TOKEN_FAILED, failed));
                     }
-                });
+                },mListener);
 
     }
 
@@ -307,7 +310,7 @@ public class WxLoginHelper {
                         mListener.onState(mActivityRef.get(), LoginResult.failOf(LTResultCode.STATE_WX_INFO_FAILED,
                                 failed));
                     }
-                });
+                },mListener);
 
     }
 
@@ -325,7 +328,7 @@ public class WxLoginHelper {
 
 
     private void wxLogin(WXUser wxUser) {
-        LTGameOptions options = LTGameCommon.options();
+        LTGameOptions options = LTGameCommon.getInstance().options();
         String mLtAppID = "";
         String baseUrl = "";
         if (!TextUtils.isEmpty(options.getLtAppId())) {
@@ -342,10 +345,22 @@ public class WxLoginHelper {
             case Constants.WX_LOGIN://微信登录
                 LoginRealizeManager.weChatLogin(mActivityRef.get(), baseUrl, wxUser.getOpenId(),
                         wxUser.getUserId(), wxUser.getUserNickName(), mListener);
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        mActivityRef.get().finish();
+                    }
+                },500);
                 break;
             case Constants.WX_BIND://微信绑定
                 LoginRealizeManager.bindWX(mActivityRef.get(), baseUrl, wxUser.getOpenId(),
                         wxUser.getUserId(), wxUser.getUserNickName(), mListener);
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        mActivityRef.get().finish();
+                    }
+                },500);
                 break;
 
             case Constants.WX_UI_TOKEN: //获取token

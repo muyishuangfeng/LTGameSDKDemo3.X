@@ -119,10 +119,14 @@ public class Constants {
     public static final String LT_SDK_COUNTRY_MODEL = "LT_SDK_COUNTRY_MODEL";
     //QQ的token时长
     public static final String LT_QQ_TOKEN_TIME = "LT_QQ_TOKEN_TIME";
+    //微信的token时长
+    public static final String LT_WX_TOKEN_TIME = "LT_WX_TOKEN_TIME";
     //国外
     public static final String LT_SDK_COUNTRY_ABROAD = "LT_SDK_COUNTRY_ABROAD";
     //国内
     public static final String LT_SDK_COUNTRY_HOME = "LT_SDK_COUNTRY_HOME";
+    //时间戳
+    public static final String LT_SDK_TIME_STAMP = "LT_SDK_TIME_STAMP";
 
 
 }

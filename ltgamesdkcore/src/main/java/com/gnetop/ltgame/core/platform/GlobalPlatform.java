@@ -35,13 +35,13 @@ public class GlobalPlatform {
      * 使用 target 创建对应的 platform
      */
     public static IPlatform newPlatformByTarget(Context context, int target) {
-        if (LTGameCommon.options() == null) {
+        if (LTGameCommon.getInstance().options() == null) {
             throw new IllegalArgumentException(Target.toDesc(target) + " LTGameSdk.init() request");
         }
         IPlatform platform = newPlatformByTargetUseFactory(context, target);
         if (platform == null) {
             throw new IllegalArgumentException(Target.toDesc(target) + "  创建platform失败，请检查参数 "
-                    + LTGameCommon.options().toString());
+                    + LTGameCommon.getInstance().options().toString());
         }
         return platform;
     }
@@ -59,7 +59,7 @@ public class GlobalPlatform {
     private static IPlatform newPlatformByTargetUseFactory(Context context, int target) {
         PlatformFactory platformFactory = null;
         Log.e("TAG", "===使用配置的工厂创建");
-        SparseArray<PlatformFactory> factories = LTGameCommon.getPlatformFactories();
+        SparseArray<PlatformFactory> factories = LTGameCommon.getInstance().getPlatformFactories();
         for (int i = 0; i < factories.size(); i++) {
             PlatformFactory factory = factories.valueAt(i);
             Log.e("TAG", factories.size() + "===" + factory.getPlatformTarget());

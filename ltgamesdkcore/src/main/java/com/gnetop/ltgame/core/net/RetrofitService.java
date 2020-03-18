@@ -327,5 +327,18 @@ public interface RetrofitService {
                                    @Header("app_id") String Long,
                                    @Body Map<String, Object> map);
 
+    /**
+     * 获取服务器时间
+     */
+    @Headers({"Content-Type:application/json",
+            "Accept-Charset:utf-8",
+            "urlname:manage"})
+    @POST("/v1/time")
+    Observable<BaseEntry<ResultModel>> getTime(@Header("language") String LTAppID,
+                                               @Header("token") String LTToken,
+                                               @Header("tsp") int LTTime,
+                                               @Header("app_id") String Long,
+                                               @Body Map<String, Object> map);
+
 
 }

@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.TextUtils;
 
 import com.facebook.AccessToken;
@@ -34,7 +35,7 @@ public class FacebookLoginHelper {
 
     private static CallbackManager mFaceBookCallBack;
     private int mLoginTarget;
-    private static WeakReference<Activity> mActivityRef;
+    private  WeakReference<Activity> mActivityRef;
     private OnLoginStateListener mListener;
     private String type;
 
@@ -116,6 +117,9 @@ public class FacebookLoginHelper {
                         });
             }
         } catch (FacebookSdkNotInitializedException ex) {
+            LoginRealizeManager.sendException(mActivityRef.get(),
+                    LTResultCode.STATE_FB_GET_TOKEN_ERROR, "FB_Get_Token:" + ex.getMessage(),
+                    ex.getMessage(), mListener);
             ex.printStackTrace();
         }
     }
@@ -144,12 +148,22 @@ public class FacebookLoginHelper {
                     if (!TextUtils.isEmpty(type)) {
                         switch (type) {
                             case Constants.FB_LOGIN: //登录
-                                LoginRealizeManager.facebookLogin(activity, id, emali, name, accessToken.getToken(),mListener);
-
+                                LoginRealizeManager.facebookLogin(activity, id, emali, name, accessToken.getToken(), mListener);
+                                new Handler().postDelayed(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        mActivityRef.get().finish();
+                                    }
+                                },500);
                                 break;
                             case Constants.FB_BIND: //绑定
-                                LoginRealizeManager.bindFB(activity, id, emali, name,accessToken.getToken(), mListener);
-
+                                LoginRealizeManager.bindFB(activity, id, emali, name, accessToken.getToken(), mListener);
+                                new Handler().postDelayed(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        mActivityRef.get().finish();
+                                    }
+                                },500);
                                 break;
                             case Constants.FB_UI_TOKEN://获取token
                                 BaseEntry<ResultModel> resultModelBaseEntry = new BaseEntry<>();

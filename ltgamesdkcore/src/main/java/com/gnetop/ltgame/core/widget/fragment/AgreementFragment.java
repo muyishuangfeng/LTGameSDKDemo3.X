@@ -35,6 +35,7 @@ public class AgreementFragment extends BaseFragment implements View.OnClickListe
     String mQQAppID;
     String mWXAppID;
     String mWXSecret;
+    String mCountryModel;
 
 
     public static AgreementFragment newInstance(LoginObject data) {
@@ -88,6 +89,7 @@ public class AgreementFragment extends BaseFragment implements View.OnClickListe
                 mQQAppID = mData.getQqAppID();
                 mWXAppID = mData.getWxAppID();
                 mWXSecret = mData.getAppSecret();
+                mCountryModel = mData.getCountryModel();
             }
         }
     }
@@ -152,7 +154,8 @@ public class AgreementFragment extends BaseFragment implements View.OnClickListe
         data.setLoginOut(mIsLoginOut);
         data.setQqAppID(mQQAppID);
         data.setAppSecret(mWXSecret);
-        data.setWxAppID(mWXSecret);
+        data.setWxAppID(mWXAppID);
+        data.setCountryModel(mCountryModel);
         getProxyActivity().addFragment(LoginUIFragment.newInstance(data),
                 false,
                 true);

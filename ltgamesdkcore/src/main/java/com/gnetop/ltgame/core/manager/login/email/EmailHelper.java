@@ -2,6 +2,7 @@ package com.gnetop.ltgame.core.manager.login.email;
 
 
 import android.app.Activity;
+import android.os.Handler;
 import android.text.TextUtils;
 
 import com.gnetop.ltgame.core.common.Constants;
@@ -66,14 +67,25 @@ public class EmailHelper {
                                 LoginResult.successOf(
                                         LTResultCode.STATE_EMAIL_GET_CODE_SUCCESS,
                                         result.getResultModel()));
-                        mActivityRef.get().finish();
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                mActivityRef.get().finish();
+                            }
+                        },500);
+
                         break;
                     case LTResultCode.STATE_EMAIL_GET_CODE_FAILED:
                         mListener.onState(mActivityRef.get(),
                                 LoginResult.failOf(
                                         LTResultCode.STATE_EMAIL_GET_CODE_FAILED,
-                                        result.getBaseEntry().getMsg()));
-                        mActivityRef.get().finish();
+                                        result.msg));
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                mActivityRef.get().finish();
+                            }
+                        },500);
                         break;
                 }
             }

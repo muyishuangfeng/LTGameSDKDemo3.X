@@ -37,7 +37,7 @@ public class FacebookPlatform extends AbsPlatform {
         @Override
         public IPlatform create(Context context, int target) {
             IPlatform platform = null;
-            LTGameOptions options = LTGameCommon.options();
+            LTGameOptions options = LTGameCommon.getInstance().options();
             if (!LTGameUtil.isAnyEmpty(options.getLtAppId())) {
                 platform = new FacebookPlatform(context, options.getLtAppId(), target);
             }

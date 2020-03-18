@@ -3,16 +3,17 @@ package com.gnetop.ltgame.core.manager.login.qq;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Handler;
 import android.text.TextUtils;
 
 import com.gnetop.ltgame.core.base.BaseEntry;
 import com.gnetop.ltgame.core.exception.LTGameError;
 import com.gnetop.ltgame.core.exception.LTResultCode;
 import com.gnetop.ltgame.core.impl.OnLoginStateListener;
-import com.gnetop.ltgame.core.manager.login.qq.model.QQAccessToken;
 import com.gnetop.ltgame.core.manager.lt.LoginRealizeManager;
 import com.gnetop.ltgame.core.model.AccessToken;
 import com.gnetop.ltgame.core.model.LoginResult;
+import com.gnetop.ltgame.core.model.QQAccessToken;
 import com.gnetop.ltgame.core.model.ResultModel;
 import com.gnetop.ltgame.core.model.user.QQUser;
 import com.gnetop.ltgame.core.platform.Target;
@@ -61,8 +62,7 @@ class QQHelper {
                 mTencent.logout(mActivityRef.get());
                 login();
             } else {
-                mLoginListener = new LoginUIListener();
-                mTencent.login(mActivityRef.get(), "all", mLoginListener);
+                login();
             }
         }
     }
@@ -105,12 +105,16 @@ class QQHelper {
                         mTencent.reAuth(mActivityRef.get(), "all", mLoginListener);
                     } else {
                         // 保存token
-                        AccessToken.saveToken(getContext(), com.gnetop.ltgame.core.common.Constants.LT_QQ_TOKEN, qqToken);
+                        AccessToken.saveToken(getContext(), com.gnetop.ltgame.core.common.Constants.LT_QQ_TOKEN,
+                                com.gnetop.ltgame.core.common.Constants.LT_QQ_TOKEN_TIME, qqToken);
                         mTencent.setAccessToken(qqToken.getAccess_token(), qqToken.getExpires_in() + "");
                         mTencent.setOpenId(qqToken.getOpenid());
-                        getUserInfo(qqToken);
+                        getUserInfo();
                     }
                 } catch (Exception e) {
+                    LoginRealizeManager.sendException(mActivityRef.get(),
+                            LTResultCode.STATE_QQ_GET_TOKEN_ERROR, "QQ_Access_Token_Exception:" + e.getMessage(),
+                            e.getMessage(), mListener);
                     e.printStackTrace();
                 }
             }
@@ -118,6 +122,9 @@ class QQHelper {
 
         @Override
         public void onError(UiError uiError) {
+            LoginRealizeManager.sendException(mActivityRef.get(),
+                    uiError.errorCode, "QQ_Access_Token:" + uiError.errorMessage,
+                    uiError.errorDetail, mListener);
             LTGameError error = LTGameError.make(LTResultCode.STATE_CODE_PARSE_ERROR,
                     TAG + uiError.errorDetail + uiError.errorMessage + uiError.errorCode);
             mListener.onState(null, LoginResult.failOf(error));
@@ -129,25 +136,21 @@ class QQHelper {
         }
     }
 
-
     /**
      * 登录
      */
     private void login() {
-        if (mTencent != null) {
-            QQAccessToken qqToken = getToken();
-            if (qqToken != null) {
-                mTencent.setAccessToken(qqToken.getAccess_token(), String.valueOf(qqToken.getExpires_in()));
-                mTencent.setOpenId(qqToken.getOpenid());
-                if (mTencent.isSessionValid()) {
-                    getUserInfo(qqToken);
-                }
-            } else {
-                mLoginListener = new LoginUIListener();
-                mTencent.login(mActivityRef.get(), "all", mLoginListener, true);
+        QQAccessToken qqToken = getToken();
+        if (qqToken != null) {
+            mTencent.setAccessToken(qqToken.getAccess_token(), String.valueOf(qqToken.getExpires_in()));
+            mTencent.setOpenId(qqToken.getOpenid());
+            if (mTencent.isSessionValid()) {
+                getUserInfo();
             }
+        } else {
+            mLoginListener = new LoginUIListener();
+            mTencent.login(mActivityRef.get(), "all", mLoginListener, true);
         }
-
     }
 
 
@@ -162,13 +165,13 @@ class QQHelper {
      * 获取token
      */
     public QQAccessToken getToken() {
-        return AccessToken.getToken(getContext(), com.gnetop.ltgame.core.common.Constants.LT_QQ_TOKEN,
+        return AccessToken.getQQToken(getContext(), com.gnetop.ltgame.core.common.Constants.LT_QQ_TOKEN,
                 QQAccessToken.class);
     }
 
 
     // 获取用户信息
-    private void getUserInfo(final QQAccessToken qqToken) {
+    private void getUserInfo() {
         UserInfo info = new UserInfo(getContext(), mTencent.getQQToken());
         info.getUserInfo(new IUiListener() {
             @Override
@@ -189,6 +192,12 @@ class QQHelper {
                                         qqUserInfo.getUserId(),
                                         qqUserInfo.getUserNickName(),
                                         mListener);
+                                new Handler().postDelayed(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        mActivityRef.get().finish();
+                                    }
+                                },500);
                                 break;
                             case com.gnetop.ltgame.core.common.Constants.QQ_BIND://QQ绑定
                                 LoginRealizeManager.bindQQ(mActivityRef.get(),
@@ -196,6 +205,12 @@ class QQHelper {
                                         qqUserInfo.getUserId(),
                                         qqUserInfo.getUserNickName(),
                                         mListener);
+                                new Handler().postDelayed(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        mActivityRef.get().finish();
+                                    }
+                                },500);
                                 break;
 
                             case com.gnetop.ltgame.core.common.Constants.QQ_UI_TOKEN: //获取token
@@ -216,6 +231,9 @@ class QQHelper {
 
             @Override
             public void onError(UiError e) {
+                LoginRealizeManager.sendException(mActivityRef.get(),
+                        e.errorCode, "QQ_Get_User_Info:" + e.errorMessage,
+                        e.errorDetail, mListener);
                 mListener.onState(null, LoginResult
                         .failOf(LTResultCode.STATE_QQ_GET_USER_INFO_FAILED,
                                 "getUserInfo#qq获取用户信息失败"));

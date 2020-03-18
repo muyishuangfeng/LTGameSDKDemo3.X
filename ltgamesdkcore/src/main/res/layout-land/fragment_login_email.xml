@@ -58,6 +58,7 @@
                 android:layout_toLeftOf="@+id/txt_line"
                 android:background="@null"
                 android:gravity="center_vertical"
+                android:inputType="number"
                 android:hint="@string/text_hint_verification_code"
                 android:maxLength="8"
                 android:maxLines="1"

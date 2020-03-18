@@ -238,6 +238,16 @@ public class LTResultCode {
     public static final int STATE_GP_CREATE_ORDER_FAILED = BASE_CODE + 91;
     //google创建订单成功
     public static final int STATE_GP_CREATE_ORDER_SUCCESS = BASE_CODE + 92;
+    //oneStore支付失败
+    public static final int STATE_ONE_STORE_PLAY_FAILED = BASE_CODE + 93;
+    //Facebook获取Token失败
+    public static final int STATE_FB_GET_TOKEN_ERROR = BASE_CODE + 94;
+    //QQ获取Token失败
+    public static final int STATE_QQ_GET_TOKEN_ERROR = BASE_CODE + 95;
+    //获取服务器时间失败
+    public static final int STATE_GET_SERVER_FAILED = BASE_CODE + 96;
+    //获取服务器时间成功
+    public static final int STATE_GET_SERVER_SUCCESS = BASE_CODE + 97;
 
     //成功信息
     public static final String MSG_STATE_SUCCESS = "SUCCESS";

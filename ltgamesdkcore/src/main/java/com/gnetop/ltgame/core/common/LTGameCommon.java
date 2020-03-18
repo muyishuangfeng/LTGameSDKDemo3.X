@@ -12,18 +12,35 @@ public class LTGameCommon {
 
 
     // 配置项
-    private static LTGameOptions mOptions;
+    private LTGameOptions mOptions;
+    //单例
+    private static LTGameCommon sInstance;
     // platform factory
     private static SparseArray<PlatformFactory> mPlatformFactories;
     private static final String TAG = LTGameCommon.class.getSimpleName();
 
+    private LTGameCommon(){}
+
+    /**
+     * 单例
+     */
+    public static LTGameCommon getInstance(){
+        if (sInstance==null){
+            synchronized (LTGameCommon.class){
+                if (sInstance==null){
+                    sInstance=new LTGameCommon();
+                }
+            }
+        }
+        return sInstance;
+    }
 
 
 
     /**
      * 初始化
      */
-    public static void init(LTGameOptions options) {
+    public  void init(LTGameOptions options) {
         mOptions = options;
         mPlatformFactories = new SparseArray<>();
         // Google平台
@@ -64,7 +81,7 @@ public class LTGameCommon {
     /**
      * 获取配置项
      */
-    public static LTGameOptions options() {
+    public LTGameOptions options() {
         if (mOptions == null) {
             throw LTGameError.make(LTResultCode.STATE_SDK_INIT_ERROR);
         }
@@ -74,7 +91,7 @@ public class LTGameCommon {
     /**
      * 获取构建工厂
      */
-    public static SparseArray<PlatformFactory> getPlatformFactories() {
+    public  SparseArray<PlatformFactory> getPlatformFactories() {
         return mPlatformFactories;
     }
 
@@ -84,7 +101,7 @@ public class LTGameCommon {
      *
      * @param factory 平台工厂
      */
-    private static void addPlatform(PlatformFactory factory) {
+    private  void addPlatform(PlatformFactory factory) {
         mPlatformFactories.append(factory.getPlatformTarget(), factory);
     }
 
@@ -93,7 +110,7 @@ public class LTGameCommon {
      *
      * @param target 目标平台
      */
-    private static void addPlatform(int target, String factoryClazz) {
+    private  void addPlatform(int target, String factoryClazz) {
         try {
             Object instance = Class.forName(factoryClazz).newInstance();
             if (instance instanceof PlatformFactory) {

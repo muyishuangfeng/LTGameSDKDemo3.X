@@ -1,5 +1,7 @@
 package com.gnetop.sdk.demo.util;
 
+import android.annotation.SuppressLint;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -10,7 +12,7 @@ import java.util.Date;
  *
  * @author shimiso
  */
-
+@SuppressLint("SimpleDateFormat")
 public class DateUtil {
 
     /**
@@ -41,17 +43,17 @@ public class DateUtil {
     /**
      * 英文全称  如：2010-12-01 23:15:06
      */
-    public static String FORMAT_YMDHMS = "yyyy-MM-dd HH:mm:ss";
+    private static String FORMAT_YMDHMS = "yyyy-MM-dd HH:mm:ss";
 
     /**
      * 精确到毫秒的完整时间    如：yyyy-MM-dd HH:mm:ss.S
      */
-    public static String FORMAT_FULL = "yyyy-MM-dd HH:mm:ss.S";
+    private static String FORMAT_FULL = "yyyy-MM-dd HH:mm:ss.S";
 
     /**
      * 精确到毫秒的完整时间    如：yyyy-MM-dd HH:mm:ss.S
      */
-    public static String FORMAT_FULL_SN = "yyyyMMddHHmmss";
+    private static String FORMAT_FULL_SN = "yyyyMMddHHmmss";
 
     /**
      * 中文简写  如：2010年12月01日
@@ -78,7 +80,7 @@ public class DateUtil {
      */
     public static String FORMAT_FULL_CN = "yyyy年MM月dd日  HH时mm分ss秒SSS毫秒";
 
-    public static Calendar calendar = null;
+    private static Calendar calendar = null;
     private static final String FORMAT = "yyyy-MM-dd HH:mm:ss";
 
 
@@ -436,9 +438,9 @@ public class DateUtil {
     // strTime要转换的string类型的时间，formatType要转换的格式yyyy-MM-dd HH:mm:ss//yyyy年MM月dd日
     // HH时mm分ss秒，
     // strTime的时间格式必须要与formatType的时间格式相同
-    private static Date stringToDate(String strTime, String formatType)
+    private static Date stringToDate(String strTime)
             throws ParseException {
-        SimpleDateFormat formatter = new SimpleDateFormat(formatType);
+        SimpleDateFormat formatter = new SimpleDateFormat(FORMAT_FULL_SN);
         Date date = null;
         date = formatter.parse(strTime);
         return date;
@@ -453,9 +455,8 @@ public class DateUtil {
     // formatType时间格式
     // strTime的时间格式和formatType的时间格式必须相同
     public static long stringToLong(String strTime) {
-        Date date;
         try {
-            date = stringToDate(strTime, FORMAT_FULL_SN); // String类型转成date类型
+            Date date = stringToDate(strTime); // String类型转成date类型
             if (date == null) {
                 return 0;
             } else {

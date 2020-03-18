@@ -52,7 +52,7 @@ public class GuestHelper {
                         mListener.onState(mActivityRef.get(),
                                 LoginResult.failOf(
                                         LTResultCode.STATE_GUEST_LOGIN_FAILED,
-                                        result.getBaseEntry().getMsg()));
+                                        result.msg));
                         mActivityRef.get().finish();
                         break;
                 }
@@ -94,7 +94,7 @@ public class GuestHelper {
                         mListener.onState(mActivityRef.get(),
                                 LoginResult.failOf(
                                         LTResultCode.STATE_GUEST_BIND_FAILED,
-                                        result.getBaseEntry().getMsg()));
+                                        result.msg));
                         mActivityRef.get().finish();
                         break;
                 }

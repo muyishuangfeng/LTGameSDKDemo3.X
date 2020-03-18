@@ -9,7 +9,7 @@ public class AuthWXModel {
         return errcode == 0;
     }
 
-    int getErrcode() {
+    public int getErrcode() {
         return errcode;
     }
 
@@ -24,7 +24,6 @@ public class AuthWXModel {
     public void setErrmsg(String errmsg) {
         this.errmsg = errmsg;
     }
-
 
 
     @Override
