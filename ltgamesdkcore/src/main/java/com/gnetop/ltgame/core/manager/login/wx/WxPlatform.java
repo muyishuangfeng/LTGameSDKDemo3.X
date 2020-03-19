@@ -9,6 +9,7 @@ import com.gnetop.ltgame.core.common.LTGameCommon;
 import com.gnetop.ltgame.core.common.LTGameOptions;
 import com.gnetop.ltgame.core.impl.OnLoginStateListener;
 import com.gnetop.ltgame.core.impl.OnRechargeStateListener;
+import com.gnetop.ltgame.core.manager.recharge.wechat.WeChatHelper;
 import com.gnetop.ltgame.core.model.LoginObject;
 import com.gnetop.ltgame.core.model.LoginResult;
 import com.gnetop.ltgame.core.model.RechargeObject;
@@ -54,7 +55,7 @@ public class WxPlatform extends AbsPlatform {
 
         @Override
         public int getPlatformTarget() {
-            return Target.PLATFORM_WX;
+            return Target.PLATFORM_WX | Target.PLATFORM_WX_PLAY;
         }
 
 
@@ -65,7 +66,7 @@ public class WxPlatform extends AbsPlatform {
 
         @Override
         public boolean checkRechargePlatformTarget(int target) {
-            return false;
+            return target == Target.RECHARGE_WX_PLAY;
         }
     }
 
@@ -152,7 +153,14 @@ public class WxPlatform extends AbsPlatform {
 
     @Override
     public void recharge(Activity activity, int target, RechargeObject object, OnRechargeStateListener listener) {
-
+        if (object.getWxAppID() != null) {
+            mWxAppID = object.getWxAppID();
+        } else if (!TextUtils.isEmpty(PreferencesUtils.getString(activity, Constants.LT_SDK_WX_APP_ID))) {
+            mWxAppID = PreferencesUtils.getString(activity, Constants.LT_SDK_WX_APP_ID);
+        }
+        WeChatHelper mHelper = new WeChatHelper(activity, mWxApi, mWxAppID, object.getmPartnerid(),
+                object.getmPrepayid(), object.getmTimestamp(), target);
+        mHelper.wxPay();
     }
 
 

@@ -39,7 +39,6 @@ import static com.gnetop.ltgame.core.net.Api.WX_BASE_URL;
 public class WxLoginHelper {
 
 
-    private static final String SDK_TEST = "1";
     private static final String TAG = WxLoginHelper.class.getSimpleName();
 
     private int mLoginTarget;
@@ -55,8 +54,7 @@ public class WxLoginHelper {
     private IDiffDevOAuth mDiffDevOAuth;
 
     WxLoginHelper(Activity act, IWXAPI iwxapi, int target, String appId, String appSecret,
-                  String type,
-                  LoginObject loginObj) {
+                  String type, LoginObject loginObj) {
         mActivityRef = new WeakReference<>(act);
         mType = type;
         mLoginObj = loginObj;
@@ -178,7 +176,6 @@ public class WxLoginHelper {
      * 发起申请
      */
     private void sendAuthReq() {
-        Log.e(TAG, "本地没有token,发起登录");
         SendAuth.Req req = new SendAuth.Req();
         req.scope = "snsapi_userinfo";
         req.state = "carjob_wx_login";
@@ -191,13 +188,11 @@ public class WxLoginHelper {
      * @param token 用来放 refresh_token
      */
     private void refreshToken(final WeChatAccessToken token) {
-        Log.e(TAG, "token失效，开始刷新token");
         LoginRealizeManager.refreshWXAccessToken(mActivityRef.get(), WX_BASE_URL, mAppId, token.getRefresh_token(),
                 new OnWeChatAccessTokenListener<WeChatAccessToken>() {
                     @Override
                     public void onWeChatSuccess(WeChatAccessToken weChatAccessToken) {
                         if (weChatAccessToken.isNoError()) {
-                            Log.e(TAG, "刷新token成功 token = " + weChatAccessToken);
                             AccessToken.saveToken(mActivityRef.get(), Constants.LT_WX_TOKEN,
                                     Constants.LT_WX_TOKEN_TIME, weChatAccessToken);
                             // 刷新完成，获取用户信息
@@ -224,7 +219,6 @@ public class WxLoginHelper {
      */
     void getAccessTokenByCode(String code) {
         mAuthCode = code;
-        Log.e(TAG, "使用code获取access_token " + code);
         LoginRealizeManager.getWXAccessToken(mActivityRef.get(), WX_BASE_URL, mAppId, mSecretKey, code,
                 new OnWeChatAccessTokenListener<WeChatAccessToken>() {
                     @Override
@@ -255,13 +249,11 @@ public class WxLoginHelper {
      * @param token 用来拿access_token
      */
     private void checkAccessTokenValid(final WeChatAccessToken token) {
-        Log.e(TAG, "本地存了token,开始检测有效性" + token.toString());
         LoginRealizeManager.authAccessToken(mActivityRef.get(), WX_BASE_URL, token.getAccess_token(), token.getOpenid(),
                 new OnWeChatAccessTokenListener<AuthWXModel>() {
                     @Override
                     public void onWeChatSuccess(AuthWXModel authWXModel) {
                         // 检测是否有效
-                        Log.e(TAG, "检测token结束，结果 = " + authWXModel.toString());
                         if (authWXModel.isNoError()) {
                             // access_token有效。开始获取用户信息
                             getUserInfoByValidToken(token);
@@ -285,12 +277,10 @@ public class WxLoginHelper {
      * @param token 用来拿access_token
      */
     private void getUserInfoByValidToken(final WeChatAccessToken token) {
-        Log.e(TAG, "access_token有效，开始获取用户信息");
         LoginRealizeManager.getWXInfo(mActivityRef.get(), WX_BASE_URL, token.getAccess_token(), token.getOpenid(),
                 new OnWeChatAccessTokenListener<WXUser>() {
                     @Override
                     public void onWeChatSuccess(WXUser wxUser) {
-                        Log.e(TAG, "获取到用户信息" + wxUser.toString());
                         if (wxUser.isNoError()) {
                             if (!TextUtils.isEmpty(mType)) {
                                 wxLogin(wxUser);
@@ -336,7 +326,7 @@ public class WxLoginHelper {
             mLtAppID = PreferencesUtils.getString(mActivityRef.get(), Constants.LT_SDK_APP_ID);
         }
         if (options.getISServerTest().equals(Constants.LT_SERVER_TEST)) {
-            baseUrl = Api.TEST_SERVER_URL + SDK_TEST + Api.TEST_SERVER_DOMAIN;
+            baseUrl = Api.TEST_SERVER_URL + mLtAppID + Api.TEST_SERVER_DOMAIN;
         } else if (options.getISServerTest().equals(Constants.LT_SERVER_OFFICIAL)) {
             baseUrl = Api.FORMAL_SERVER_URL + mLtAppID + Api.FORMAL_SERVER_DOMAIN;
         }

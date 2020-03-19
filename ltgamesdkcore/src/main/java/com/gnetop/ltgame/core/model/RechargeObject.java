@@ -6,6 +6,17 @@ import java.util.Map;
  * 登录参数类
  */
 public class RechargeObject {
+
+    //商户号
+    private String mPartnerid;
+    //支付会话ID
+    private String mPrepayid;
+    //随机字符串
+    private String mNoncestr;
+    //时间戳
+    private String mTimestamp;
+    // 微信的AppID
+    private String wxAppID;
     //乐推AppID
     private String LTAppID;
     //乐推AppKey
@@ -38,6 +49,46 @@ public class RechargeObject {
     private int role_number;//  角色编号（游戏服务器用户ID）
     private int server_number;// 服务器编号（游戏提供）
     private String goods_number;//  商品ID，游戏提供
+
+    public String getmPartnerid() {
+        return mPartnerid;
+    }
+
+    public void setmPartnerid(String mPartnerid) {
+        this.mPartnerid = mPartnerid;
+    }
+
+    public String getmPrepayid() {
+        return mPrepayid;
+    }
+
+    public void setmPrepayid(String mPrepayid) {
+        this.mPrepayid = mPrepayid;
+    }
+
+    public String getmNoncestr() {
+        return mNoncestr;
+    }
+
+    public void setmNoncestr(String mNoncestr) {
+        this.mNoncestr = mNoncestr;
+    }
+
+    public String getmTimestamp() {
+        return mTimestamp;
+    }
+
+    public void setmTimestamp(String mTimestamp) {
+        this.mTimestamp = mTimestamp;
+    }
+
+    public String getWxAppID() {
+        return wxAppID;
+    }
+
+    public void setWxAppID(String wxAppID) {
+        this.wxAppID = wxAppID;
+    }
 
     public String getFbAppID() {
         return fbAppID;

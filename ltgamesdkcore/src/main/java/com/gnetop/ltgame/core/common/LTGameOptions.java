@@ -141,6 +141,9 @@ public class LTGameOptions {
     public boolean isGuestEnable() {
         return isGuestEnable;
     }
+    public boolean isAliPay() {
+        return isAliPay;
+    }
 
     public void setGuestEnable(boolean guestEnable) {
         isGuestEnable = guestEnable;

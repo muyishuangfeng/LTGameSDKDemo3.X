@@ -75,6 +75,10 @@ public class LTGameCommon {
         if (mOptions.isGuestEnable()) {
             addPlatform(Target.PLATFORM_GUEST, "com.gnetop.ltgame.core.manager.login.guest.GuestPlatform$Factory");
         }
+        // 游客登录
+        if (mOptions.isAliPay()) {
+            addPlatform(Target.PLATFORM_ALI_PLAY, "com.gnetop.ltgame.core.manager.recharge.ali.AliPlayPlatform$Factory");
+        }
 
     }
 
