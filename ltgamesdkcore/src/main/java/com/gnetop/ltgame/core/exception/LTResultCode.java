@@ -273,6 +273,8 @@ public class LTResultCode {
     public static final int STATE_ALI_PLAY_AUTH_SUCCESS = BASE_CODE + 106;
     //支付宝授权失败
     public static final int STATE_ALI_PLAY_AUTH_FAILED = BASE_CODE + 107;
+    //微信支付失败
+    public static final int STATE_WX_PAY_FAILED = BASE_CODE + 108;
 
 
     //==========================请求码==============================//

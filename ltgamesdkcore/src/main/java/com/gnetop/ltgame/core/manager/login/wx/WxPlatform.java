@@ -7,12 +7,14 @@ import android.text.TextUtils;
 import com.gnetop.ltgame.core.common.Constants;
 import com.gnetop.ltgame.core.common.LTGameCommon;
 import com.gnetop.ltgame.core.common.LTGameOptions;
+import com.gnetop.ltgame.core.exception.LTResultCode;
 import com.gnetop.ltgame.core.impl.OnLoginStateListener;
 import com.gnetop.ltgame.core.impl.OnRechargeStateListener;
 import com.gnetop.ltgame.core.manager.recharge.wechat.WeChatHelper;
 import com.gnetop.ltgame.core.model.LoginObject;
 import com.gnetop.ltgame.core.model.LoginResult;
 import com.gnetop.ltgame.core.model.RechargeObject;
+import com.gnetop.ltgame.core.model.RechargeResult;
 import com.gnetop.ltgame.core.platform.AbsPlatform;
 import com.gnetop.ltgame.core.platform.IPlatform;
 import com.gnetop.ltgame.core.platform.PlatformFactory;
@@ -30,6 +32,7 @@ import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 public class WxPlatform extends AbsPlatform {
 
     private WxLoginHelper mWeChatLoginHelper;
+    private WeChatHelper mWXRechargeHelper;
     private IWXAPI mWxApi;
     private String mWxSecret;
     private String mWxAppID;
@@ -126,6 +129,24 @@ public class WxPlatform extends AbsPlatform {
                     // 用户拒绝授权
                     // 用户取消
                     listener.onState(null, LoginResult.cancelOf());
+                    break;
+            }
+        } else if (baseResp.getType() == ConstantsAPI.COMMAND_PAY_BY_WX) {
+            OnRechargeStateListener listener = mWXRechargeHelper.mListener;
+            switch (baseResp.errCode) {
+                case BaseResp.ErrCode.ERR_OK:
+                    // 用户同意
+                    SendAuth.Resp authResp = (SendAuth.Resp) resp;
+                    String authCode = authResp.code;
+                    mWXRechargeHelper.uploadToWX(authCode);
+                    break;
+                case BaseResp.ErrCode.ERR_USER_CANCEL:
+                    // 用户取消
+                    listener.onState(null, RechargeResult.cancelOf());
+                case BaseResp.ErrCode.ERR_COMM:
+                    // 用户取消
+                    listener.onState(null, RechargeResult.failOf(LTResultCode.STATE_WX_PAY_FAILED,
+                            "WeChat Pay Failed"));
                     break;
             }
         }

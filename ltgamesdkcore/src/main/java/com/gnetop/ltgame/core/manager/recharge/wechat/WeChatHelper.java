@@ -2,6 +2,7 @@ package com.gnetop.ltgame.core.manager.recharge.wechat;
 
 import android.app.Activity;
 
+import com.gnetop.ltgame.core.impl.OnRechargeStateListener;
 import com.gnetop.ltgame.core.model.RechargeObject;
 import com.gnetop.ltgame.core.platform.Target;
 import com.tencent.mm.opensdk.modelpay.PayReq;
@@ -25,6 +26,7 @@ public class WeChatHelper {
     private String mTimestamp;
     //签名
     private String mSign;
+    public OnRechargeStateListener mListener;
 
     public WeChatHelper(Activity act, IWXAPI iwxapi, String appId, String partnerid,
                         String prepayid,  String timestamp, int target) {
@@ -50,6 +52,13 @@ public class WeChatHelper {
         request.timeStamp = mTimestamp;
         request.sign = mSign;
         mIWXAPI.sendReq(request);
+    }
+
+    /**
+     * 上传
+     */
+    public void uploadToWX(String token){
+
     }
 
 }
