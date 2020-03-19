@@ -22,7 +22,7 @@ import com.gnetop.sdk.demo.util.DateUtil;
 public class MainActivity extends AppCompatActivity {
 
     Button mBtnGoogle, mBtnFB, mBtnGP, mBtnGuest, mBtnUI, mBtnEmail, mBtnPortUI, mBtnUploadRole,
-            mBtnQQ,mBtnWX;
+            mBtnQQ, mBtnWX, mBtnAuto;
     TextView mTxtResult;
 
     private static final String mLtAppID = "35";
@@ -161,6 +161,13 @@ public class MainActivity extends AppCompatActivity {
                         mOnStateListener);
             }
         });
+        mBtnAuto = findViewById(R.id.btn_auto);
+        mBtnAuto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                LTGameSDK.getDefaultInstance().autoLogin(MainActivity.this, mOnStateListener);
+            }
+        });
 
 
     }
@@ -183,7 +190,12 @@ public class MainActivity extends AppCompatActivity {
                     case LTResultCode.STATE_CODE_PARAMETERS_ERROR:
                         Log.e("TAG", "STATE_CODE_PARAMETERS_ERROR==========");
                         break;
-
+                    case LTResultCode.STATE_AUTO_LOGIN_SUCCESS:
+                        mTxtResult.setText(result.getResultModel().getData().toString());
+                        break;
+                    case LTResultCode.STATE_AUTO_LOGIN_FAILED:
+                        Log.e("TAG", "STATE_AUTO_LOGIN_FAILED==========");
+                        break;
                 }
 
 

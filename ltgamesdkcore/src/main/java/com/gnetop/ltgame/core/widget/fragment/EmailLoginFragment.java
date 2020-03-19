@@ -2,7 +2,6 @@ package com.gnetop.ltgame.core.widget.fragment;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.os.Handler;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
@@ -18,6 +17,7 @@ import com.gnetop.ltgame.core.model.LoginObject;
 import com.gnetop.ltgame.core.model.LoginResult;
 import com.gnetop.ltgame.core.ui.CountDownButton;
 import com.gnetop.ltgame.core.ui.dialog.GeneralCenterDialog;
+import com.gnetop.ltgame.core.util.PreferencesUtils;
 import com.gnetop.ltgame.core.util.RegexUtil;
 import com.gnetop.ltgame.core.util.ToastUtil;
 
@@ -66,7 +66,7 @@ public class EmailLoginFragment extends BaseFragment implements View.OnClickList
     @Override
     protected void initView(View view) {
 
-        mDialog = new GeneralCenterDialog(mActivity);
+        mDialog=new GeneralCenterDialog(mActivity);
         mBtnCode = view.findViewById(R.id.btn_count_down);
         mBtnCode.setOnClickListener(this);
 
@@ -172,7 +172,6 @@ public class EmailLoginFragment extends BaseFragment implements View.OnClickList
         }
 
     }
-
     /**
      * 初始化数据
      */
@@ -195,40 +194,29 @@ public class EmailLoginFragment extends BaseFragment implements View.OnClickList
                         mBtnCode.setClickable(true);
                         LoginUIManager.getInstance().setResultFailed(activity,
                                 LTResultCode.STATE_EMAIL_GET_CODE_FAILED,
-                                result.getResultModel().getMsg());
+                                result.msg);
                         dismissDialog();
                         break;
                     case LTResultCode.STATE_EMAIL_BIND_FAILED: //绑定失败
-                        LoginUIManager.getInstance().setResultFailed(activity,
-                                LTResultCode.STATE_EMAIL_BIND_FAILED, result.msg);
-                        new Handler().postAtTime(new Runnable() {
-                            @Override
-                            public void run() {
-                                dismissDialog();
-                            }
-                        },2000);
+                            LoginUIManager.getInstance().setResultFailed(activity,
+                                    LTResultCode.STATE_EMAIL_BIND_FAILED,result.msg);
                         ToastUtil.getInstance().showToast(mActivity, result.msg);
+                        dismissDialog();
                         break;
                     case LTResultCode.STATE_EMAIL_LOGIN_FAILED: //登录失败
                         LoginUIManager.getInstance().setResultFailed(activity,
                                 LTResultCode.STATE_EMAIL_LOGIN_FAILED,
                                 result.msg);
-                        new Handler().postAtTime(new Runnable() {
-                            @Override
-                            public void run() {
-                                dismissDialog();
-                            }
-                        },2000);
-                        ToastUtil.getInstance().showToast(mActivity,
-                                result.msg);
+                        ToastUtil.getInstance().showToast(mActivity, result.msg);
+                        dismissDialog();
                         break;
                     case LTResultCode.STATE_EMAIL_ALREADY_BIND: //已经绑定了邮箱
                         LoginUIManager.getInstance().setResultFailed(activity,
                                 LTResultCode.STATE_EMAIL_ALREADY_BIND,
                                 result.msg);
+                        ToastUtil.getInstance().showToast(mActivity, result.msg);
                         dismissDialog();
-                        ToastUtil.getInstance().showToast(mActivity,
-                                result.msg);
+
                         break;
 
                     case LTResultCode.STATE_EMAIL_BIND_SUCCESS: //绑定成功
@@ -236,6 +224,7 @@ public class EmailLoginFragment extends BaseFragment implements View.OnClickList
                             LoginUIManager.getInstance().setResultSuccess(activity,
                                     LTResultCode.STATE_EMAIL_BIND_SUCCESS,
                                     result.getResultModel());
+                            PreferencesUtils.putString(mActivity, Constants.USER_GUEST_FLAG, "NO");
                             dismissDialog();
                             getProxyActivity().finish();
 

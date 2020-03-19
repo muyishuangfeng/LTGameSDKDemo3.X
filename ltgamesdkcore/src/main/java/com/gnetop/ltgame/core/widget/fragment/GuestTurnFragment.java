@@ -229,7 +229,7 @@ public class GuestTurnFragment extends BaseFragment implements View.OnClickListe
                         LoginUIManager.getInstance().setResultFailed(activity,
                                 LTResultCode.STATE_GUEST_LOGIN_FAILED,
                                 result.msg);
-                        ToastUtil.getInstance().showToast(mActivity,result.msg);
+                        ToastUtil.getInstance().showToast(mActivity, result.msg);
                         dismissDialog();
                         break;
                 }

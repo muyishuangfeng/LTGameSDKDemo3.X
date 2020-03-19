@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.text.TextUtils;
 
 import com.facebook.AccessToken;
@@ -149,21 +148,11 @@ public class FacebookLoginHelper {
                         switch (type) {
                             case Constants.FB_LOGIN: //登录
                                 LoginRealizeManager.facebookLogin(activity, id, emali, name, accessToken.getToken(), mListener);
-                                new Handler().postDelayed(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        mActivityRef.get().finish();
-                                    }
-                                },500);
+                                mActivityRef.get().finish();
                                 break;
                             case Constants.FB_BIND: //绑定
                                 LoginRealizeManager.bindFB(activity, id, emali, name, accessToken.getToken(), mListener);
-                                new Handler().postDelayed(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        mActivityRef.get().finish();
-                                    }
-                                },500);
+                                mActivityRef.get().finish();
                                 break;
                             case Constants.FB_UI_TOKEN://获取token
                                 BaseEntry<ResultModel> resultModelBaseEntry = new BaseEntry<>();

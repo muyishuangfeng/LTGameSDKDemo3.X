@@ -1167,6 +1167,15 @@ public class LoginRealizeManager {
     }
 
     /**
+     * google支付
+     */
+    public static void aliPlay(final Context context, String purchaseToken, String orderID,
+                               final OnRechargeStateListener mListener) {
+
+
+    }
+
+    /**
      * oneStore支付
      */
     public static void oneStorePlay(final Context context, String purchaseToken, String orderID,

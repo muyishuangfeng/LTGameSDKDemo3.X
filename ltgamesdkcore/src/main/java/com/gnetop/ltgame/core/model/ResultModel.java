@@ -33,9 +33,18 @@ public class ResultModel implements Serializable {
     private String emali;
     //token
     private String accessToken;
-    //时间
+    //服务器时间
     private long time;
+    //支付宝支付结果
+    private String aliResult;
 
+    public String getAliResult() {
+        return aliResult;
+    }
+
+    public void setAliResult(String aliResult) {
+        this.aliResult = aliResult;
+    }
 
     public long getTime() {
         return time;
@@ -188,6 +197,7 @@ public class ResultModel implements Serializable {
                 ", emali='" + emali + '\'' +
                 '}';
     }
+
 
 
 

@@ -339,6 +339,4 @@ public interface RetrofitService {
                                                @Header("tsp") int LTTime,
                                                @Header("app_id") String Long,
                                                @Body Map<String, Object> map);
-
-
 }

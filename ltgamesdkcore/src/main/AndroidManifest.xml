@@ -3,10 +3,50 @@
 
     <application>
         <activity
-            android:name="com.gnetop.ltgame.core.widget.activity.LoginUIActivity"
-            android:theme="@style/CustomTheme_Dialog" />
+            android:name=".widget.activity.LoginUIActivity"
+            android:theme="@style/CustomThemeDialog" />
         <activity
-            android:name="com.gnetop.ltgame.core.widget.activity.FacebookActionActivity"
+            android:name=".widget.activity.FacebookActionActivity"
+            android:exported="true"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar">
+            <intent-filter>
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".widget.activity.GooglePlayActivity"
+            android:exported="true"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar">
+            <intent-filter>
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".widget.activity.GuestActivity"
+            android:exported="true"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar">
+            <intent-filter>
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".widget.activity.GoogleLoginActivity"
+            android:exported="true"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar">
+            <intent-filter>
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".widget.activity.QQActionActivity"
+            android:exported="true"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar">
+            <intent-filter>
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".widget.activity.EmailActionActivity"
             android:exported="true"
             android:theme="@android:style/Theme.Translucent.NoTitleBar">
             <intent-filter>
@@ -15,31 +55,7 @@
         </activity>
 
         <activity
-            android:name="com.gnetop.ltgame.core.widget.activity.GooglePlayActivity"
-            android:exported="true"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar">
-            <intent-filter>
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name="com.gnetop.ltgame.core.widget.activity.GuestActivity"
-            android:exported="true"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar">
-            <intent-filter>
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name="com.gnetop.ltgame.core.widget.activity.GoogleLoginActivity"
-            android:exported="true"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar">
-            <intent-filter>
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name="com.gnetop.ltgame.core.widget.activity.EmailActionActivity"
+            android:name=".widget.activity.AliPlayActionActivity"
             android:exported="true"
             android:theme="@android:style/Theme.Translucent.NoTitleBar">
             <intent-filter>
@@ -47,14 +63,6 @@
             </intent-filter>
         </activity>
 
-        <activity
-            android:name="com.gnetop.ltgame.core.widget.activity.QQActionActivity"
-            android:exported="true"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar">
-            <intent-filter>
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
         <activity
             android:name="com.tencent.connect.common.AssistActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
@@ -96,7 +104,6 @@
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="${fb_app_id}" />
-
         <!--用于发起请求和接受数据，同步生命周期-->
         <activity
             android:name="com.gnetop.ltgame.core.widget.activity.WeChatActionActivity"
@@ -117,6 +124,7 @@
             android:taskAffinity="${applicationId}"
             android:launchMode="singleTask"
             android:targetActivity="com.gnetop.ltgame.core.widget.activity.WeChatActionActivity"/>
+
     </application>
 
 </manifest>

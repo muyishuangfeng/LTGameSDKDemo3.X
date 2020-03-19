@@ -3,10 +3,8 @@ package com.gnetop.ltgame.core.manager.login.google;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
-import android.util.Log;
 
 import com.gnetop.ltgame.core.base.BaseEntry;
 import com.gnetop.ltgame.core.common.Constants;
@@ -87,22 +85,12 @@ public class GoogleLoginHelper {
                         case Constants.GOOGLE_LOGIN: //登录
                             LoginRealizeManager.googleLogin(mActivityRef.get(), account.getId(),
                                     account.getEmail(), account.getDisplayName(), account.getIdToken(), mListener);
-                            new Handler().postDelayed(new Runnable() {
-                                @Override
-                                public void run() {
-                                    mActivityRef.get().finish();
-                                }
-                            },500);
+                            mActivityRef.get().finish();
                             break;
                         case Constants.GOOGLE_BIND: //绑定
                             LoginRealizeManager.bindGoogle(mActivityRef.get(), account.getId(),
                                     account.getEmail(), account.getDisplayName(), account.getIdToken(), mListener);
-                            new Handler().postDelayed(new Runnable() {
-                                @Override
-                                public void run() {
-                                    mActivityRef.get().finish();
-                                }
-                            },500);
+                            mActivityRef.get().finish();
                             break;
                         case Constants.GOOGLE_UI_TOKEN: //获取token
                             BaseEntry<ResultModel> resultModelBaseEntry = new BaseEntry<>();

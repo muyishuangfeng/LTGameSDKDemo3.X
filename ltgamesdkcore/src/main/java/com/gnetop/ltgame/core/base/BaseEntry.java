@@ -10,8 +10,6 @@ public class BaseEntry<T> {
     private String msg;
     private int marktime;
 
-
-
     private T data;
 
     public int getCode() {

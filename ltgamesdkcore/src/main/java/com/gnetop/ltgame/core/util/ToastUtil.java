@@ -71,10 +71,9 @@ public class ToastUtil {
             final Toast t = getToast(context);
             t.setText(toast);
             t.setDuration(length);
-            t.setGravity(Gravity.TOP,0,0);
             t.show();
         } catch (Exception e) {
-            e.printStackTrace();
+            Toast.makeText(context, toast, length).show();
         }
     }
 

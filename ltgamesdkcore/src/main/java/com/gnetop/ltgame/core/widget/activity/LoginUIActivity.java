@@ -64,7 +64,6 @@ public class LoginUIActivity extends BaseAppActivity {
         data.setWxAppID(mWXSecret);
         data.setCountryModel(mCountryModel);
 
-
         if (!TextUtils.isEmpty(mAgreementUrl) &&
                 !TextUtils.isEmpty(mPrivacyUrl)) {
             if (TextUtils.isEmpty(PreferencesUtils.getString(this,

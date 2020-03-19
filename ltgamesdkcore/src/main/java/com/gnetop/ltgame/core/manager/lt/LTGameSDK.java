@@ -134,10 +134,9 @@ public class LTGameSDK {
                                 .setCountryModel(result.getCountryModel())
                                 .setAgreementUrl(result.getAgreementUrl())
                                 .setPrivacyUrl(result.getPrivacyUrl())
-                                .setPrivacyUrl(result.getPrivacyUrl())
                                 .setTokenTime(result.getTokenTime())
                                 //.setOneStore(result.getOneStorePublicKey())
-                                .setWX(result.getWxAppID(), result.getAppSecret())
+                                .setWX(result.getWxAppID(),result.getAppSecret())
                                 .appID(result.getLTAppID())
                                 .emailEnable()
                                 .setQQ(result.getQqAppID())
@@ -160,8 +159,6 @@ public class LTGameSDK {
                         PreferencesUtils.putString(context, Constants.LT_SDK_WX_SECRET_KEY, result.getAppSecret());
                         PreferencesUtils.putString(context, Constants.LT_SDK_COUNTRY_MODEL, result.getCountryModel());
                         LTGameCommon.getInstance().init(options);
-                        LoginRealizeManager.getTime(context);
-
 //                        CrashHandler.getInstance().init(context, LTGameCommon.options().getCacheDir() +
 //                                "/Crash/log/");
                     }
@@ -285,7 +282,7 @@ public class LTGameSDK {
         object.setType(result.getType());
         //object.setWxAppID(mAppID);
         //object.setAppSecret(mSecret);
-        LoginManager.login(context, Target.LOGIN_WX,
+        LoginManager.login(context, Target.LOGIN_WX ,
                 object, mOnLoginListener);
     }
 

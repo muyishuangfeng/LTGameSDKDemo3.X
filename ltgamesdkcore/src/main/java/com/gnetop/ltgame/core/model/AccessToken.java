@@ -151,7 +151,6 @@ public abstract class AccessToken {
             if (!TextUtils.isEmpty(PreferencesUtils.getString(context, key))) {
                 String token = PreferencesUtils.getString(context, key).substring(15,
                         PreferencesUtils.getString(context, key).length());
-                Log.e("TAG","==============qqToken========="+token);
                 t = new Gson().fromJson
                         (token, tokenClazz);
             }

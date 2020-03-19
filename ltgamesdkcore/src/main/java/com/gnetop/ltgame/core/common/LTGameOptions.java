@@ -52,14 +52,20 @@ public class LTGameOptions {
     private boolean isWeChatEnable;
     //是否支持游客登录
     private boolean isGuestEnable;
+    //是否支持支付宝支付
+    private boolean isAliPay;
+    //是否支持微信支付
+    private boolean isWeChatPay;
     //是否支持OneStore支付
     private boolean isOneStoreEnable;
     private long tokenExpiresHours;
     private boolean wxOnlyAuthCode;
     //国内还是国外
     private String mCountryModel;
-    private String mAgreementUrl;//用户协议
-    private String mPrivacyUrl;//隐私政策
+    //用户协议
+    private String mAgreementUrl;
+    //隐私政策
+    private String mPrivacyUrl;
 
     public long getTokenExpiresHoursMs() {
         if (tokenExpiresHours <= 0) {
@@ -208,6 +214,8 @@ public class LTGameOptions {
                 ", ltAppId='" + ltAppId + '\'' +
                 ", adID='" + adID + '\'' +
                 ", packageID='" + packageID + '\'' +
+                ", mAgreementUrl='" + mAgreementUrl + '\'' +
+                ", mPrivacyUrl='" + mPrivacyUrl + '\'' +
                 ", mPayTest=" + mPayTest +
                 ", mPublicKey='" + mPublicKey + '\'' +
                 ", mISServerTest=" + mISServerTest +
@@ -273,6 +281,8 @@ public class LTGameOptions {
         this.isGoogleEnable = builder.isGoogleEnable;
         this.isGuestEnable = builder.isGuestEnable;
         this.isWeChatEnable = builder.isWeChatEnable;
+        this.isWeChatPay = builder.isWeChatPay;
+        this.isAliPay = builder.isAliPay;
         this.isGPEnable = builder.isGPEnable;
         this.isOneStoreEnable = builder.isOneStoreEnable;
         this.tokenExpiresHours = builder.tokenExpiresHours;
@@ -317,6 +327,10 @@ public class LTGameOptions {
         private String mPrivacyUrl;//隐私政策
         // token 失效时间，默认立刻失效
         private int tokenExpiresHours = -1;
+        //是否支持支付宝支付
+        private boolean isAliPay;
+        //是否支持微信支付
+        private boolean isWeChatPay;
 
         //乐推AppID
         private String ltAppId;
@@ -363,6 +377,16 @@ public class LTGameOptions {
             this.wxAppId = wxAppId;
             this.wxSecretKey = wxSecretKey;
             this.isWeChatEnable = true;
+            return this;
+        }
+
+        public Builder setWeChat() {
+            this.isWeChatPay = true;
+            return this;
+        }
+
+        public Builder setAliPay() {
+            this.isAliPay = true;
             return this;
         }
 

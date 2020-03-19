@@ -140,15 +140,7 @@ public class LoginUIManager {
         });
     }
 
-    /**
-     * 是否登录成功
-     */
-    private boolean isLoginStatus(Activity activity) {
-        return TextUtils.isEmpty(PreferencesUtils.getString(activity,
-                Constants.USER_LT_UID)) &&
-                TextUtils.isEmpty(PreferencesUtils.getString(activity,
-                        Constants.USER_LT_UID_KEY));
-    }
+
 
     /**
      * 登录方法

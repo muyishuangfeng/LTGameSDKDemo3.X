@@ -17,7 +17,8 @@ public class Target {
     public static final int PLATFORM_WB = 107; // 微博登录
     public static final int PLATFORM_TWITTER = 108; // Twitter登录
     public static final int PLATFORM_WX_SCAN = 109; // 微信扫码登录
-
+    public static final int PLATFORM_ALI_PLAY = 110; // 支付宝支付
+    public static final int PLATFORM_WX_PLAY = 111; //  微信支付
 
 
     public static final int LOGIN_QQ = 200; // qq 登录
@@ -35,22 +36,24 @@ public class Target {
     public static final int LOGIN_GUEST = 211; // 游客登录
     public static final int PLATFORM_EMAIL = 212; // 邮箱登录
     public static final int LOGIN_EMAIL = 213; // 邮箱登录
+    public static final int RECHARGE_ALI_PLAY = 214; // 支付宝支付
+    public static final int RECHARGE_WX_PLAY = 215; // 微信支付
 
-    @IntDef({Target.RECHARGE_GOOGLE, Target.RECHARGE_ONE_STORE})
+    @IntDef({Target.RECHARGE_GOOGLE, Target.RECHARGE_ONE_STORE, Target.RECHARGE_ALI_PLAY, Target.RECHARGE_WX_PLAY})
     @Retention(RetentionPolicy.SOURCE)
     public @interface RechargeTarget {
 
     }
 
     @IntDef({Target.LOGIN_FACEBOOK, Target.LOGIN_GOOGLE, Target.LOGIN_QQ, Target.LOGIN_WX,
-            LOGIN_WB, LOGIN_TWITTER, LOGIN_PHONE, LOGIN_WX_SCAN,LOGIN_GUEST,LOGIN_EMAIL})
+            LOGIN_WB, LOGIN_TWITTER, LOGIN_PHONE, LOGIN_WX_SCAN, LOGIN_GUEST, LOGIN_EMAIL})
     @Retention(RetentionPolicy.SOURCE)
     public @interface LoginTarget {
     }
 
     @IntDef({Target.PLATFORM_FACEBOOK, Target.PLATFORM_GOOGLE, Target.PLATFORM_QQ, Target.PLATFORM_WX,
             Target.PLATFORM_GOOGLE_PLAY, Target.PLATFORM_ONE_STORE, PLATFORM_TWITTER, PLATFORM_WB,
-            PLATFORM_PHONE, PLATFORM_WX_SCAN,PLATFORM_GUEST,PLATFORM_EMAIL})
+            PLATFORM_PHONE, PLATFORM_WX_SCAN, PLATFORM_GUEST, PLATFORM_EMAIL, PLATFORM_ALI_PLAY, PLATFORM_WX_PLAY})
     @Retention(RetentionPolicy.SOURCE)
     public @interface PlatformTarget {
     }
@@ -88,6 +91,18 @@ public class Target {
                 break;
             case Target.LOGIN_EMAIL:
                 result = "邮箱登录";
+                break;
+            case Target.RECHARGE_ALI_PLAY:
+                result = "支付宝支付";
+                break;
+            case Target.RECHARGE_GOOGLE:
+                result = "Google支付";
+                break;
+            case Target.RECHARGE_ONE_STORE:
+                result = "oneStore支付";
+                break;
+            case Target.RECHARGE_WX_PLAY:
+                result = "微信支付";
                 break;
 
         }

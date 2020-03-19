@@ -248,7 +248,36 @@ public class LTResultCode {
     public static final int STATE_GET_SERVER_FAILED = BASE_CODE + 96;
     //获取服务器时间成功
     public static final int STATE_GET_SERVER_SUCCESS = BASE_CODE + 97;
+    //==========================支付宝请求码==============================//
+    //==========================支付宝请求码==============================//
+    //==========================支付宝请求码==============================//
+    //支付宝支付成功（9000）
+    public static final int STATE_ALI_PLAY_SUCCESS = BASE_CODE + 98;
+    //支付宝正在处理中，支付结果未知（有可能已经支付成功），
+    // 请查询商户订单列表中订单的支付状态（8000）
+    public static final int STATE_ALI_PLAY_HANDLE = BASE_CODE + 99;
+    //支付宝重复请求（5000）
+    public static final int STATE_ALI_PLAY_REPEAT = BASE_CODE + 100;
+    //支付宝用户中途取消(6001)
+    public static final int STATE_ALI_PLAY_CANCEL = BASE_CODE + 101;
+    //支付宝网络连接出错(6002)
+    public static final int STATE_ALI_PLAY_NTE_WORK = BASE_CODE + 102;
+    //支付宝支付结果未知（有可能已经支付成功）
+    // 请查询商户订单列表中订单的支付状态(6004)
+    public static final int STATE_ALI_PLAY_RESULT = BASE_CODE + 103;
+    //支付宝支付失败（4000）
+    public static final int STATE_ALI_PLAY_FAILED = BASE_CODE + 104;
+    //支付宝支付错误
+    public static final int STATE_ALI_PLAY_ERROR = BASE_CODE + 105;
+    //支付宝授权成功
+    public static final int STATE_ALI_PLAY_AUTH_SUCCESS = BASE_CODE + 106;
+    //支付宝授权失败
+    public static final int STATE_ALI_PLAY_AUTH_FAILED = BASE_CODE + 107;
 
+
+    //==========================请求码==============================//
+    //==========================请求码==============================//
+    //==========================请求码==============================//
     //成功信息
     public static final String MSG_STATE_SUCCESS = "SUCCESS";
     //失败信息

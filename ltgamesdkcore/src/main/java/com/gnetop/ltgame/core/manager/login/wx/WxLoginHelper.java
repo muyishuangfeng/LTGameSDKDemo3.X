@@ -1,7 +1,6 @@
 package com.gnetop.ltgame.core.manager.login.wx;
 
 import android.app.Activity;
-import android.os.Handler;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -345,22 +344,12 @@ public class WxLoginHelper {
             case Constants.WX_LOGIN://微信登录
                 LoginRealizeManager.weChatLogin(mActivityRef.get(), baseUrl, wxUser.getOpenId(),
                         wxUser.getUserId(), wxUser.getUserNickName(), mListener);
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        mActivityRef.get().finish();
-                    }
-                },500);
+                mActivityRef.get().finish();
                 break;
             case Constants.WX_BIND://微信绑定
                 LoginRealizeManager.bindWX(mActivityRef.get(), baseUrl, wxUser.getOpenId(),
                         wxUser.getUserId(), wxUser.getUserNickName(), mListener);
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        mActivityRef.get().finish();
-                    }
-                },500);
+                mActivityRef.get().finish();
                 break;
 
             case Constants.WX_UI_TOKEN: //获取token

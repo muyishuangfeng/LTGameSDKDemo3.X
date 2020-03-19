@@ -110,8 +110,6 @@ public class LoginUIFragment extends BaseFragment implements View.OnClickListene
                 mWXSecret = mData.getAppSecret();
                 mCountryModel = mData.getCountryModel();
 
-                Log.e("TAG","===LoginUIFragment========"+mData.toString());
-
                 if (mCountryModel != null) {
                     switch (mCountryModel) {
                         case Constants.LT_SDK_COUNTRY_ABROAD://国外
@@ -224,28 +222,28 @@ public class LoginUIFragment extends BaseFragment implements View.OnClickListene
                         LoginUIManager.getInstance().setResultFailed(activity,
                                 LTResultCode.STATE_GOOGLE_LOGIN_FAILED,
                                 result.msg);
-                        ToastUtil.getInstance().showToast(mActivity,result.msg);
+                        ToastUtil.getInstance().showToast(mActivity, result.msg);
                         dismissDialog();
                         break;
                     case LTResultCode.STATE_FB_LOGIN_FAILED: //Facebook登录失败
                         LoginUIManager.getInstance().setResultFailed(activity,
                                 LTResultCode.STATE_FB_LOGIN_FAILED,
                                 result.msg);
-                        ToastUtil.getInstance().showToast(mActivity,result.msg);
+                        ToastUtil.getInstance().showToast(mActivity, result.msg);
                         dismissDialog();
                         break;
                     case LTResultCode.STATE_QQ_LOGIN_FAILED: //QQ登录失败
                         LoginUIManager.getInstance().setResultFailed(activity,
                                 LTResultCode.STATE_QQ_LOGIN_FAILED,
                                 result.msg);
-                        ToastUtil.getInstance().showToast(mActivity,result.msg);
+                        ToastUtil.getInstance().showToast(mActivity, result.msg);
                         dismissDialog();
                         break;
                     case LTResultCode.STATE_WX_LOGIN_FAILED: //微信登录失败
                         LoginUIManager.getInstance().setResultFailed(activity,
                                 LTResultCode.STATE_WX_LOGIN_FAILED,
                                 result.msg);
-                        ToastUtil.getInstance().showToast(mActivity,result.msg);
+                        ToastUtil.getInstance().showToast(mActivity, result.msg);
                         dismissDialog();
                         break;
                     case LTResultCode.STATE_GOOGLE_LOGIN_SUCCESS: //google登录成功

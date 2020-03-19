@@ -3,8 +3,8 @@ package com.gnetop.ltgame.core.manager.login.qq;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Handler;
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.gnetop.ltgame.core.base.BaseEntry;
 import com.gnetop.ltgame.core.exception.LTGameError;
@@ -141,6 +141,7 @@ class QQHelper {
      */
     private void login() {
         QQAccessToken qqToken = getToken();
+        Log.e("Toke", qqToken.toString());
         if (qqToken != null) {
             mTencent.setAccessToken(qqToken.getAccess_token(), String.valueOf(qqToken.getExpires_in()));
             mTencent.setOpenId(qqToken.getOpenid());
@@ -192,12 +193,7 @@ class QQHelper {
                                         qqUserInfo.getUserId(),
                                         qqUserInfo.getUserNickName(),
                                         mListener);
-                                new Handler().postDelayed(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        mActivityRef.get().finish();
-                                    }
-                                },500);
+                                mActivityRef.get().finish();
                                 break;
                             case com.gnetop.ltgame.core.common.Constants.QQ_BIND://QQ绑定
                                 LoginRealizeManager.bindQQ(mActivityRef.get(),
@@ -205,12 +201,7 @@ class QQHelper {
                                         qqUserInfo.getUserId(),
                                         qqUserInfo.getUserNickName(),
                                         mListener);
-                                new Handler().postDelayed(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        mActivityRef.get().finish();
-                                    }
-                                },500);
+                                mActivityRef.get().finish();
                                 break;
 
                             case com.gnetop.ltgame.core.common.Constants.QQ_UI_TOKEN: //获取token
