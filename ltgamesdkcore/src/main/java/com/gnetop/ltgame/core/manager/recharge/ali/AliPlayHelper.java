@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+import android.preference.PreferenceActivity;
 import android.text.TextUtils;
 
 import com.alipay.sdk.app.AuthTask;
@@ -23,31 +24,42 @@ import java.util.Map;
 
 public class AliPlayHelper {
 
-    private String mOrderInfo;
-    private WeakReference<Activity> mActivityRef;
+    private static String mOrderInfo;
+    private static WeakReference<Activity> mActivityRef;
     private int mRechargeTarget;
-    private OnRechargeStateListener mListener;
+    private static OnRechargeStateListener mListener;
     private int role_number;//  角色编号（游戏服务器用户ID）
     private int server_number;// 服务器编号（游戏提供）
+    private MyHandler mHandler;
     //支付回调
     private static final int SDK_PAY_FLAG = 1;
     //授权回调
     private static final int SDK_AUTH_FLAG = 2;
 
     AliPlayHelper(Activity activity, int role_number,
-                  int server_number, OnRechargeStateListener mListener) {
-        this.mActivityRef = new WeakReference<>(activity);
+                  int server_number, OnRechargeStateListener listener) {
+        mActivityRef = new WeakReference<>(activity);
         this.role_number = role_number;
         this.server_number = server_number;
         this.mRechargeTarget = Target.RECHARGE_ALI_PLAY;
-        this.mListener = mListener;
+        mListener = listener;
+        mHandler = new MyHandler(activity);
     }
 
     /**
      * Handler
      */
-    private Handler mHandler = new Handler(Looper.myLooper()) {
+    private static class MyHandler extends Handler {
+
+        private final WeakReference<Activity> mActivity;
+
+        MyHandler(Activity activity) {
+            mActivity = new WeakReference<>(activity);
+        }
+
+        @Override
         public void handleMessage(Message msg) {
+            super.handleMessage(msg);
             switch (msg.what) {
                 case SDK_PAY_FLAG: {//支付标记
                     @SuppressWarnings("unchecked")
@@ -58,27 +70,27 @@ public class AliPlayHelper {
                     if (TextUtils.equals(resultStatus, "9000")) {//支付成功
                         uploadToServer(payResult.getResult());
                     } else if (TextUtils.equals(resultStatus, "4000")) {//支付失败
-                        mListener.onState(mActivityRef.get(), RechargeResult.failOf(
+                        mListener.onState(mActivity.get(), RechargeResult.failOf(
                                 LTResultCode.STATE_ALI_PLAY_FAILED, resultInfo));
                     } else if (TextUtils.equals(resultStatus, "8000")) {//支付宝支付结果未知（有可能已经支付成功）
                         // 请查询商户订单列表中订单的支付状态
-                        mListener.onState(mActivityRef.get(), RechargeResult.failOf(
+                        mListener.onState(mActivity.get(), RechargeResult.failOf(
                                 LTResultCode.STATE_ALI_PLAY_HANDLE, resultInfo));
                     } else if (TextUtils.equals(resultStatus, "6001")) {//用户取消
-                        mListener.onState(mActivityRef.get(), RechargeResult.failOf(
+                        mListener.onState(mActivity.get(), RechargeResult.failOf(
                                 LTResultCode.STATE_ALI_PLAY_CANCEL, resultInfo));
                     } else if (TextUtils.equals(resultStatus, "6002")) {//网络错误
-                        mListener.onState(mActivityRef.get(), RechargeResult.failOf(
+                        mListener.onState(mActivity.get(), RechargeResult.failOf(
                                 LTResultCode.STATE_ALI_PLAY_NTE_WORK, resultInfo));
                     } else if (TextUtils.equals(resultStatus, "6004")) {//支付宝支付结果未知（有可能已经支付成功）
                         // 请查询商户订单列表中订单的支付状态
-                        mListener.onState(mActivityRef.get(), RechargeResult.failOf(
+                        mListener.onState(mActivity.get(), RechargeResult.failOf(
                                 LTResultCode.STATE_ALI_PLAY_RESULT, resultInfo));
                     } else if (TextUtils.equals(resultStatus, "5000")) {//重复请求
-                        mListener.onState(mActivityRef.get(), RechargeResult.failOf(
+                        mListener.onState(mActivity.get(), RechargeResult.failOf(
                                 LTResultCode.STATE_ALI_PLAY_REPEAT, resultInfo));
                     } else {//支付错误
-                        mListener.onState(mActivityRef.get(), RechargeResult.failOf(
+                        mListener.onState(mActivity.get(), RechargeResult.failOf(
                                 LTResultCode.STATE_ALI_PLAY_ERROR, resultInfo));
                     }
                     break;
@@ -93,10 +105,10 @@ public class AliPlayHelper {
                         ResultModel resultModel = new ResultModel();
                         resultModel.setAliResult(authResult.getResult());
                         baseEntry.setData(resultModel);
-                        mListener.onState(mActivityRef.get(), RechargeResult.successOf(
+                        mListener.onState(mActivity.get(), RechargeResult.successOf(
                                 LTResultCode.STATE_ALI_PLAY_AUTH_SUCCESS, baseEntry));
                     } else {// 授权失败
-                        mListener.onState(mActivityRef.get(), RechargeResult.failOf(
+                        mListener.onState(mActivity.get(), RechargeResult.failOf(
                                 LTResultCode.STATE_ALI_PLAY_FAILED, authResult.getResult()));
                     }
                     break;
@@ -105,15 +117,13 @@ public class AliPlayHelper {
                     break;
             }
         }
-
-        ;
-    };
+    }
 
 
     /**
      * 获取订单信息
      */
-    public void getOrderInfo() {
+    void getOrderInfo() {
         pay(mOrderInfo);
         auth(mOrderInfo);
     }
@@ -169,7 +179,7 @@ public class AliPlayHelper {
     /**
      * 上传到服务器验证
      */
-    private void uploadToServer(String purchaseToken) {
+    private static void uploadToServer(String purchaseToken) {
         LoginRealizeManager.aliPlay(mActivityRef.get(),
                 purchaseToken, mOrderInfo, new OnRechargeStateListener() {
 
@@ -195,6 +205,12 @@ public class AliPlayHelper {
                     }
 
                 });
+    }
+
+    void onDestroy() {
+        if (mHandler != null) {
+            mHandler.removeCallbacksAndMessages(null);
+        }
     }
 
 }

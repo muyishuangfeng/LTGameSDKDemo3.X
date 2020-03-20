@@ -7,7 +7,7 @@ import android.view.Window;
 import android.widget.TextView;
 
 import com.gnetop.ltgame.core.R;
-import com.gnetop.ltgame.core.util.LTGameSDKLog;
+import com.gnetop.ltgame.core.util.LTLogUtil;
 
 
 /**
@@ -99,7 +99,7 @@ public class MyProgressBar {
                 dialogprogress = null;
             }
         } catch (Exception e) {
-            LTGameSDKLog.loge(e.toString());
+            LTLogUtil.e(e.toString());
         }
     }
 }

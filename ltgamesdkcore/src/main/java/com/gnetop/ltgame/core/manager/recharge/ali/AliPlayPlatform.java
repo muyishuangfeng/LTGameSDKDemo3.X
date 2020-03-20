@@ -16,6 +16,7 @@ import com.gnetop.ltgame.core.util.LTGameUtil;
 
 public class AliPlayPlatform extends AbsPlatform {
 
+    private AliPlayHelper mHelper;
 
     public AliPlayPlatform(Context context, String appId, int target) {
         super(context, appId, target);
@@ -24,11 +25,17 @@ public class AliPlayPlatform extends AbsPlatform {
     @Override
     public void recharge(Activity activity, int target, RechargeObject object,
                          OnRechargeStateListener listener) {
-        AliPlayHelper mHelper = new AliPlayHelper(activity, object.getRole_number(),
+        mHelper = new AliPlayHelper(activity, object.getRole_number(),
                 object.getServer_number(), listener);
         mHelper.getOrderInfo();
     }
 
+    @Override
+    public void recycle() {
+        super.recycle();
+        if (mHelper != null)
+            mHelper.onDestroy();
+    }
 
     /**
      * 工厂

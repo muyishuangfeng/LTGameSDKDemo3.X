@@ -8,7 +8,7 @@ import com.gnetop.ltgame.core.BuildConfig;
  *
  * @author mahaiyun
  */
-public class LTGameSDKLog {
+public class LTLogUtil {
 
     private static final String TAG = "LTGameSDK";
     /**
@@ -35,7 +35,7 @@ public class LTGameSDKLog {
      *
      * @param msg 日志
      */
-    public static void logv(String msg) {
+    public static void v(String msg) {
         if (IS_PRINT_LOG && BuildConfig.DEBUG) {
             android.util.Log.v(TAG, msg);
         }
@@ -46,7 +46,7 @@ public class LTGameSDKLog {
      *
      * @param msg 日志
      */
-    public static void logd(String msg) {
+    public static void d(String msg) {
         if (IS_PRINT_LOG && BuildConfig.DEBUG) {
             android.util.Log.d(TAG, msg);
         }
@@ -57,7 +57,7 @@ public class LTGameSDKLog {
      *
      * @param msg 日志
      */
-    public static void logi(String msg) {
+    public static void i(String msg) {
         if (IS_PRINT_LOG && BuildConfig.DEBUG) {
             android.util.Log.i(TAG, msg);
         }
@@ -68,7 +68,7 @@ public class LTGameSDKLog {
      *
      * @param msg 日志
      */
-    public static void logw(String msg) {
+    public static void w(String msg) {
         if (IS_PRINT_LOG && BuildConfig.DEBUG) {
             android.util.Log.w(TAG, msg);
         }
@@ -79,7 +79,7 @@ public class LTGameSDKLog {
      *
      * @param msg 日志
      */
-    public static void loge(String msg) {
+    public static void e(String msg) {
         if (IS_PRINT_LOG && BuildConfig.DEBUG) {
             android.util.Log.e(TAG, msg);
         }
@@ -90,7 +90,7 @@ public class LTGameSDKLog {
      *
      * @param msg 日志
      */
-    public static void logwtf(String msg) {
+    public static void wtf(String msg) {
         if (IS_PRINT_LOG && BuildConfig.DEBUG) {
             android.util.Log.wtf(TAG, msg);
         }
