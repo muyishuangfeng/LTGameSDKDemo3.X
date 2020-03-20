@@ -30,6 +30,6 @@ public class UrlUtils {
         intent.setAction("android.intent.action.VIEW");
         Uri content_url = Uri.parse(url);
         intent.setData(content_url);
-        activity.startActivity(intent);
+        activity.getApplicationContext().startActivity(intent);
     }
 }

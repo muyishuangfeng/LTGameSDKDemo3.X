@@ -143,22 +143,22 @@ public class LoginUIFragment extends BaseFragment implements View.OnClickListene
     public void onClick(View view) {
         int resID = view.getId();
         if (resID == R.id.lyt_login_facebook) {//facebook
-            LoginUIManager.getInstance().getFBInfo(mActivity, mData, mListener);
+            LoginUIManager.getInstance(mActivity).getFBInfo( mData, mListener);
         } else if (resID == R.id.lyt_login_google) {//google
-            LoginUIManager.getInstance().getGoogleInfo(mActivity, mData, mListener);
+            LoginUIManager.getInstance(mActivity).getGoogleInfo( mData, mListener);
         } else if (resID == R.id.txt_abroad_visitor || resID == R.id.txt_home_visitor) {//游客登录
             if (!TextUtils.isEmpty(PreferencesUtils.getString(mActivity, Constants.USER_BIND_FLAG)) &&
                     TextUtils.equals(PreferencesUtils.getString(mActivity, Constants.USER_BIND_FLAG), "YES")) {//游客登录过
-                LoginUIManager.getInstance().guestLogin(mActivity, mData, mListener);
+                LoginUIManager.getInstance(mActivity).guestLogin( mData, mListener);
             } else {
                 guestLogin();
             }
         } else if (resID == R.id.txt_abroad_email || resID == R.id.txt_home_email) {//邮箱登录
             emailLogin();
         } else if (resID == R.id.lyt_login_qq) {//QQ登录
-            LoginUIManager.getInstance().getQQInfo(mActivity, mData, mListener);
+            LoginUIManager.getInstance(mActivity).getQQInfo( mData, mListener);
         } else if (resID == R.id.lyt_login_wx) {//微信登录
-            LoginUIManager.getInstance().getWXInfo(mActivity, mData, mListener);
+            LoginUIManager.getInstance(mActivity).getWXInfo( mData, mListener);
         }
     }
 
@@ -174,8 +174,7 @@ public class LoginUIFragment extends BaseFragment implements View.OnClickListene
                     case LTResultCode.STATE_GOOGLE_UI_TOKEN: //google获取信息
                         if (result.getResultModel() != null) {
                             showDialog(getResources().getString(R.string.text_loading));
-                            LoginUIManager.getInstance().googleLogin(
-                                    mActivity,
+                            LoginUIManager.getInstance(mActivity).googleLogin(
                                     result.getResultModel().getData().getId(),
                                     result.getResultModel().getData().getEmali(),
                                     result.getResultModel().getData().getNickName(),
@@ -187,7 +186,7 @@ public class LoginUIFragment extends BaseFragment implements View.OnClickListene
                     case LTResultCode.STATE_FB_UI_TOKEN: //Facebook获取信息
                         if (result.getResultModel() != null) {
                             showDialog(getResources().getString(R.string.text_loading));
-                            LoginUIManager.getInstance().fbLogin(mActivity,
+                            LoginUIManager.getInstance(mActivity).fbLogin(
                                     result.getResultModel().getData().getId(),
                                     result.getResultModel().getData().getEmali(),
                                     result.getResultModel().getData().getNickName(),
@@ -199,7 +198,7 @@ public class LoginUIFragment extends BaseFragment implements View.OnClickListene
                     case LTResultCode.STATE_WX_UI_TOKEN: //微信获取信息
                         if (result.getResultModel() != null) {
                             showDialog(getResources().getString(R.string.text_loading));
-                            LoginUIManager.getInstance().wxLogin(mActivity,
+                            LoginUIManager.getInstance(mActivity).wxLogin(
                                     result.getResultModel().getData().getId(),
                                     result.getResultModel().getData().getEmali(),
                                     result.getResultModel().getData().getNickName(),
@@ -210,7 +209,7 @@ public class LoginUIFragment extends BaseFragment implements View.OnClickListene
                     case LTResultCode.STATE_QQ_UI_TOKEN: //QQ获取信息
                         if (result.getResultModel() != null) {
                             showDialog(getResources().getString(R.string.text_loading));
-                            LoginUIManager.getInstance().qqLogin(mActivity,
+                            LoginUIManager.getInstance(mActivity).qqLogin(
                                     result.getResultModel().getData().getId(),
                                     result.getResultModel().getData().getEmali(),
                                     result.getResultModel().getData().getNickName(),
@@ -219,28 +218,28 @@ public class LoginUIFragment extends BaseFragment implements View.OnClickListene
 
                         break;
                     case LTResultCode.STATE_GOOGLE_LOGIN_FAILED: //google登录失败
-                        LoginUIManager.getInstance().setResultFailed(activity,
+                        LoginUIManager.getInstance(mActivity).setResultFailed(
                                 LTResultCode.STATE_GOOGLE_LOGIN_FAILED,
                                 result.msg);
                         ToastUtil.getInstance().showToast(mActivity, result.msg);
                         dismissDialog();
                         break;
                     case LTResultCode.STATE_FB_LOGIN_FAILED: //Facebook登录失败
-                        LoginUIManager.getInstance().setResultFailed(activity,
+                        LoginUIManager.getInstance(mActivity).setResultFailed(
                                 LTResultCode.STATE_FB_LOGIN_FAILED,
                                 result.msg);
                         ToastUtil.getInstance().showToast(mActivity, result.msg);
                         dismissDialog();
                         break;
                     case LTResultCode.STATE_QQ_LOGIN_FAILED: //QQ登录失败
-                        LoginUIManager.getInstance().setResultFailed(activity,
+                        LoginUIManager.getInstance(mActivity).setResultFailed(
                                 LTResultCode.STATE_QQ_LOGIN_FAILED,
                                 result.msg);
                         ToastUtil.getInstance().showToast(mActivity, result.msg);
                         dismissDialog();
                         break;
                     case LTResultCode.STATE_WX_LOGIN_FAILED: //微信登录失败
-                        LoginUIManager.getInstance().setResultFailed(activity,
+                        LoginUIManager.getInstance(mActivity).setResultFailed(
                                 LTResultCode.STATE_WX_LOGIN_FAILED,
                                 result.msg);
                         ToastUtil.getInstance().showToast(mActivity, result.msg);
@@ -248,7 +247,7 @@ public class LoginUIFragment extends BaseFragment implements View.OnClickListene
                         break;
                     case LTResultCode.STATE_GOOGLE_LOGIN_SUCCESS: //google登录成功
                         if (result.getResultModel() != null) {
-                            LoginUIManager.getInstance().setResultSuccess(activity,
+                            LoginUIManager.getInstance(mActivity).setResultSuccess(
                                     LTResultCode.STATE_GOOGLE_LOGIN_SUCCESS,
                                     result.getResultModel());
                             dismissDialog();
@@ -258,7 +257,7 @@ public class LoginUIFragment extends BaseFragment implements View.OnClickListene
                         break;
                     case LTResultCode.STATE_FB_LOGIN_SUCCESS: //facebook登录成功
                         if (result.getResultModel() != null) {
-                            LoginUIManager.getInstance().setResultSuccess(activity,
+                            LoginUIManager.getInstance(mActivity).setResultSuccess(
                                     LTResultCode.STATE_FB_LOGIN_SUCCESS,
                                     result.getResultModel());
                             dismissDialog();
@@ -268,7 +267,7 @@ public class LoginUIFragment extends BaseFragment implements View.OnClickListene
                         break;
                     case LTResultCode.STATE_QQ_LOGIN_SUCCESS: //QQ登录成功
                         if (result.getResultModel() != null) {
-                            LoginUIManager.getInstance().setResultSuccess(activity,
+                            LoginUIManager.getInstance(mActivity).setResultSuccess(
                                     LTResultCode.STATE_QQ_LOGIN_SUCCESS,
                                     result.getResultModel());
                             dismissDialog();
@@ -278,7 +277,7 @@ public class LoginUIFragment extends BaseFragment implements View.OnClickListene
                         break;
                     case LTResultCode.STATE_WX_LOGIN_SUCCESS: //微信登录成功
                         if (result.getResultModel() != null) {
-                            LoginUIManager.getInstance().setResultSuccess(activity,
+                            LoginUIManager.getInstance(mActivity).setResultSuccess(
                                     LTResultCode.STATE_WX_LOGIN_SUCCESS,
                                     result.getResultModel());
                             dismissDialog();

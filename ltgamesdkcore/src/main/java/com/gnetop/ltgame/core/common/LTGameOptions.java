@@ -6,6 +6,7 @@ import android.content.Context;
 import com.gnetop.ltgame.core.util.FileUtil;
 
 import java.io.File;
+import java.lang.ref.WeakReference;
 
 /**
  * 配置项
@@ -52,20 +53,14 @@ public class LTGameOptions {
     private boolean isWeChatEnable;
     //是否支持游客登录
     private boolean isGuestEnable;
-    //是否支持支付宝支付
-    private boolean isAliPay;
-    //是否支持微信支付
-    private boolean isWeChatPay;
     //是否支持OneStore支付
     private boolean isOneStoreEnable;
     private long tokenExpiresHours;
     private boolean wxOnlyAuthCode;
     //国内还是国外
     private String mCountryModel;
-    //用户协议
-    private String mAgreementUrl;
-    //隐私政策
-    private String mPrivacyUrl;
+    private String mAgreementUrl;//用户协议
+    private String mPrivacyUrl;//隐私政策
 
     public long getTokenExpiresHoursMs() {
         if (tokenExpiresHours <= 0) {
@@ -141,9 +136,6 @@ public class LTGameOptions {
     public boolean isGuestEnable() {
         return isGuestEnable;
     }
-    public boolean isAliPay() {
-        return isAliPay;
-    }
 
     public void setGuestEnable(boolean guestEnable) {
         isGuestEnable = guestEnable;
@@ -217,8 +209,6 @@ public class LTGameOptions {
                 ", ltAppId='" + ltAppId + '\'' +
                 ", adID='" + adID + '\'' +
                 ", packageID='" + packageID + '\'' +
-                ", mAgreementUrl='" + mAgreementUrl + '\'' +
-                ", mPrivacyUrl='" + mPrivacyUrl + '\'' +
                 ", mPayTest=" + mPayTest +
                 ", mPublicKey='" + mPublicKey + '\'' +
                 ", mISServerTest=" + mISServerTest +
@@ -284,8 +274,6 @@ public class LTGameOptions {
         this.isGoogleEnable = builder.isGoogleEnable;
         this.isGuestEnable = builder.isGuestEnable;
         this.isWeChatEnable = builder.isWeChatEnable;
-        this.isWeChatPay = builder.isWeChatPay;
-        this.isAliPay = builder.isAliPay;
         this.isGPEnable = builder.isGPEnable;
         this.isOneStoreEnable = builder.isOneStoreEnable;
         this.tokenExpiresHours = builder.tokenExpiresHours;
@@ -330,10 +318,6 @@ public class LTGameOptions {
         private String mPrivacyUrl;//隐私政策
         // token 失效时间，默认立刻失效
         private int tokenExpiresHours = -1;
-        //是否支持支付宝支付
-        private boolean isAliPay;
-        //是否支持微信支付
-        private boolean isWeChatPay;
 
         //乐推AppID
         private String ltAppId;
@@ -350,11 +334,11 @@ public class LTGameOptions {
         //是否是测试服务器:0是，1，不是
         private String mISServerTest;
         private String wxSecretKey;
-        private Context context;
+        private WeakReference<Context>mContext;
 
 
         public Builder(Context context) {
-            this.context = context;
+            mContext=new WeakReference<>(context);
         }
 
 
@@ -380,16 +364,6 @@ public class LTGameOptions {
             this.wxAppId = wxAppId;
             this.wxSecretKey = wxSecretKey;
             this.isWeChatEnable = true;
-            return this;
-        }
-
-        public Builder setWeChat() {
-            this.isWeChatPay = true;
-            return this;
-        }
-
-        public Builder setAliPay() {
-            this.isAliPay = true;
             return this;
         }
 
@@ -481,7 +455,7 @@ public class LTGameOptions {
 
 
         public LTGameOptions build() {
-            File storageDir = new File(context.getExternalCacheDir(), SHARE_CACHE_DIR_NAME);
+            File storageDir = new File(mContext.get().getExternalCacheDir(), SHARE_CACHE_DIR_NAME);
             if (!FileUtil.isExist(storageDir)) {
                 storageDir.mkdirs();
             }

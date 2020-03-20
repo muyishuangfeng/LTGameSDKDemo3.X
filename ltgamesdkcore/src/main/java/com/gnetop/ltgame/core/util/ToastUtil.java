@@ -36,14 +36,14 @@ public class ToastUtil {
      * 长时间显示
      */
     public final void longToast(Context context, int id) {
-        longToast(context, context.getString(id));
+        longToast(context.getApplicationContext(), context.getApplicationContext().getString(id));
     }
 
     /**
      * 长时间显示
      */
     public final void longToast(Context context, final String toast) {
-        toast(context, toast, Toast.LENGTH_LONG);
+        toast(context.getApplicationContext(), toast, Toast.LENGTH_LONG);
     }
 
     /**
@@ -52,12 +52,12 @@ public class ToastUtil {
     private void toast(final Context context, final String toast,
                        final int length) {
         if (Looper.getMainLooper() == Looper.myLooper()) {
-            doShowToast(context, toast, length);
+            doShowToast(context.getApplicationContext(), toast, length);
         } else {
             new Handler(Looper.getMainLooper()).post(new Runnable() {
                 @Override
                 public void run() {
-                    doShowToast(context, toast, length);
+                    doShowToast(context.getApplicationContext(), toast, length);
                 }
             });
         }
@@ -68,12 +68,12 @@ public class ToastUtil {
      */
     private void doShowToast(Context context, String toast, int length) {
         try {
-            final Toast t = getToast(context);
+            final Toast t = getToast(context.getApplicationContext());
             t.setText(toast);
             t.setDuration(length);
             t.show();
         } catch (Exception e) {
-            Toast.makeText(context, toast, length).show();
+            Toast.makeText(context.getApplicationContext(), toast, length).show();
         }
     }
 
@@ -91,22 +91,22 @@ public class ToastUtil {
      * 短时间显示
      */
     public final void shortToast(Context context, int id) {
-        shortToast(context, context.getString(id));
+        shortToast(context.getApplicationContext(), context.getApplicationContext().getString(id));
     }
 
     /**
      * 短时间显示
      */
     public final void shortToast(Context context, String toast) {
-        toast(context, toast, Toast.LENGTH_SHORT);
+        toast(context.getApplicationContext(), toast, Toast.LENGTH_SHORT);
     }
 
     public final void shortOrLongToast(Context context, int id, int length) {
-        shortOrLongToast(context, context.getString(id), length);
+        shortOrLongToast(context.getApplicationContext(), context.getApplicationContext().getString(id), length);
     }
 
     public final void shortOrLongToast(Context context, String res, int length) {
-        toast(context, res, length);
+        toast(context.getApplicationContext(), res, length);
     }
 
     /**
@@ -117,9 +117,9 @@ public class ToastUtil {
      */
     public void showToast(Context context, String msg) {
         try {
-            mToast = new Toast(context);
+            mToast = new Toast(context.getApplicationContext());
             mToast.setGravity(Gravity.CENTER, 0, 0);
-            View view = View.inflate(context, R.layout.general_toast, null);
+            View view = View.inflate(context.getApplicationContext(), R.layout.general_toast, null);
             TextView tv = (TextView) view.findViewById(R.id.toast_msg_tv);
             tv.setText(msg);
             mToast.setView(view);

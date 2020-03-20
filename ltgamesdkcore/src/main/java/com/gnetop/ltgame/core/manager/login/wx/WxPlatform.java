@@ -119,7 +119,7 @@ public class WxPlatform extends AbsPlatform {
             }
             switch (baseResp.errCode) {
                 case BaseResp.ErrCode.ERR_OK:
-                    // 用户同意  authResp.country;  authResp.lang;  authResp.state;
+                    // 用户同意
                     SendAuth.Resp authResp = (SendAuth.Resp) resp;
                     String authCode = authResp.code;
                     mWeChatLoginHelper.getAccessTokenByCode(authCode);

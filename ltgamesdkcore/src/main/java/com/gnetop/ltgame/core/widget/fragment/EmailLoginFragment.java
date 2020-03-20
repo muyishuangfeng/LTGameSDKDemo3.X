@@ -66,7 +66,7 @@ public class EmailLoginFragment extends BaseFragment implements View.OnClickList
     @Override
     protected void initView(View view) {
 
-        mDialog=new GeneralCenterDialog(mActivity);
+        mDialog = new GeneralCenterDialog(mActivity);
         mBtnCode = view.findViewById(R.id.btn_count_down);
         mBtnCode.setOnClickListener(this);
 
@@ -172,6 +172,7 @@ public class EmailLoginFragment extends BaseFragment implements View.OnClickList
         }
 
     }
+
     /**
      * 初始化数据
      */
@@ -192,26 +193,26 @@ public class EmailLoginFragment extends BaseFragment implements View.OnClickList
                             mTxtError.setText(result.msg);
                         }
                         mBtnCode.setClickable(true);
-                        LoginUIManager.getInstance().setResultFailed(activity,
+                        LoginUIManager.getInstance(mActivity).setResultFailed(
                                 LTResultCode.STATE_EMAIL_GET_CODE_FAILED,
                                 result.msg);
                         dismissDialog();
                         break;
                     case LTResultCode.STATE_EMAIL_BIND_FAILED: //绑定失败
-                            LoginUIManager.getInstance().setResultFailed(activity,
-                                    LTResultCode.STATE_EMAIL_BIND_FAILED,result.msg);
+                        LoginUIManager.getInstance(mActivity).setResultFailed(
+                                LTResultCode.STATE_EMAIL_BIND_FAILED, result.msg);
                         ToastUtil.getInstance().showToast(mActivity, result.msg);
                         dismissDialog();
                         break;
                     case LTResultCode.STATE_EMAIL_LOGIN_FAILED: //登录失败
-                        LoginUIManager.getInstance().setResultFailed(activity,
+                        LoginUIManager.getInstance(mActivity).setResultFailed(
                                 LTResultCode.STATE_EMAIL_LOGIN_FAILED,
                                 result.msg);
                         ToastUtil.getInstance().showToast(mActivity, result.msg);
                         dismissDialog();
                         break;
                     case LTResultCode.STATE_EMAIL_ALREADY_BIND: //已经绑定了邮箱
-                        LoginUIManager.getInstance().setResultFailed(activity,
+                        LoginUIManager.getInstance(mActivity).setResultFailed(
                                 LTResultCode.STATE_EMAIL_ALREADY_BIND,
                                 result.msg);
                         ToastUtil.getInstance().showToast(mActivity, result.msg);
@@ -221,7 +222,7 @@ public class EmailLoginFragment extends BaseFragment implements View.OnClickList
 
                     case LTResultCode.STATE_EMAIL_BIND_SUCCESS: //绑定成功
                         if (result.getResultModel() != null) {
-                            LoginUIManager.getInstance().setResultSuccess(activity,
+                            LoginUIManager.getInstance(mActivity).setResultSuccess(
                                     LTResultCode.STATE_EMAIL_BIND_SUCCESS,
                                     result.getResultModel());
                             PreferencesUtils.putString(mActivity, Constants.USER_GUEST_FLAG, "NO");
@@ -232,7 +233,7 @@ public class EmailLoginFragment extends BaseFragment implements View.OnClickList
                         break;
                     case LTResultCode.STATE_EMAIL_LOGIN_SUCCESS: //登录成功
                         if (result.getResultModel() != null) {
-                            LoginUIManager.getInstance().setResultSuccess(activity,
+                            LoginUIManager.getInstance(mActivity).setResultSuccess(
                                     LTResultCode.STATE_EMAIL_LOGIN_SUCCESS,
                                     result.getResultModel());
                             dismissDialog();
@@ -284,7 +285,7 @@ public class EmailLoginFragment extends BaseFragment implements View.OnClickList
         mBtnCode.setClickable(false);
         if (!TextUtils.isEmpty(email)) {
             if (RegexUtil.isEmail(email)) {
-                LoginUIManager.getInstance().getAuthCode(mActivity, email, mListener);
+                LoginUIManager.getInstance(mActivity).getAuthCode(email, mListener);
             }
         }
 
@@ -345,7 +346,7 @@ public class EmailLoginFragment extends BaseFragment implements View.OnClickList
         if (!TextUtils.isEmpty(email) && !TextUtils.isEmpty(code)) {
             mData.setEmail(mEdtEmail.getText().toString());
             mData.setAuthCode(mEdtCode.getText().toString());
-            LoginUIManager.getInstance().emailLogin(mActivity, mData, mListener);
+            LoginUIManager.getInstance(mActivity).emailLogin(mData, mListener);
         }
     }
 
@@ -356,7 +357,7 @@ public class EmailLoginFragment extends BaseFragment implements View.OnClickList
         if (!TextUtils.isEmpty(email) && !TextUtils.isEmpty(code)) {
             mData.setEmail(mEdtEmail.getText().toString());
             mData.setAuthCode(mEdtCode.getText().toString());
-            LoginUIManager.getInstance().bindEmail(mActivity, mData, mListener);
+            LoginUIManager.getInstance(mActivity).bindEmail(mData, mListener);
         }
     }
 }

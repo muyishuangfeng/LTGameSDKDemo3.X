@@ -29,7 +29,7 @@ import java.util.concurrent.Executors;
  */
 public class LTGameSDK {
 
-    private static LTGameSDK sInstance;
+    private volatile static LTGameSDK sInstance;
     private String mAdID;
 
     private LTGameSDK() {
@@ -136,7 +136,7 @@ public class LTGameSDK {
                                 .setPrivacyUrl(result.getPrivacyUrl())
                                 .setTokenTime(result.getTokenTime())
                                 //.setOneStore(result.getOneStorePublicKey())
-                                .setWX(result.getWxAppID(),result.getAppSecret())
+                                .setWX(result.getWxAppID(), result.getAppSecret())
                                 .appID(result.getLTAppID())
                                 .emailEnable()
                                 .setQQ(result.getQqAppID())
@@ -282,7 +282,7 @@ public class LTGameSDK {
         object.setType(result.getType());
         //object.setWxAppID(mAppID);
         //object.setAppSecret(mSecret);
-        LoginManager.login(context, Target.LOGIN_WX ,
+        LoginManager.login(context, Target.LOGIN_WX,
                 object, mOnLoginListener);
     }
 
@@ -291,14 +291,14 @@ public class LTGameSDK {
      * UI登录
      */
     private void uiLogin(Activity activity, LoginObject result, OnLoginStateListener mOnLoginListener) {
-        LoginUIManager.getInstance().loginIn(activity, result, mOnLoginListener);
+        LoginUIManager.getInstance(activity).loginIn(result, mOnLoginListener);
     }
 
     /**
      * UI退出登录
      */
     private void uiLoginOut(Activity activity, LoginObject result, OnLoginStateListener mOnLoginListener) {
-        LoginUIManager.getInstance().loginOut(activity, result, mOnLoginListener);
+        LoginUIManager.getInstance(activity).loginOut(result, mOnLoginListener);
     }
 
     /**
@@ -342,7 +342,7 @@ public class LTGameSDK {
      */
     public void uploadRole(Activity context,
                            LoginObject result, OnLoginStateListener mOnLoginListener) {
-        LoginRealizeManager.bindRole(context, result.getRole_number(), result.getRole_name(),
+        LoginRealizeManager.bindRole(context.getApplicationContext(), result.getRole_number(), result.getRole_name(),
                 result.getRole_sex(), result.getRole_level(), result.getRole_create_time(),
                 result.getServer_number(), mOnLoginListener);
     }
@@ -351,7 +351,7 @@ public class LTGameSDK {
      * 自动登录验证
      */
     public void autoLogin(Activity activity, OnLoginStateListener mListener) {
-        LoginRealizeManager.autoLogin(activity, mListener);
+        LoginRealizeManager.autoLogin(activity.getApplicationContext(), mListener);
     }
 
 }

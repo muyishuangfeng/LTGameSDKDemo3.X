@@ -103,7 +103,7 @@ public class GuestTurnFragment extends BaseFragment implements View.OnClickListe
         } else if (view.getId() == R.id.btn_guest_turn_bind) {//绑定
             bind();
         } else if (view.getId() == R.id.txt_guest_turn_continue) {//继续
-            LoginUIManager.getInstance().guestLogin(mActivity, mData, mOnLoginListener);
+            LoginUIManager.getInstance(mActivity).guestLogin( mData, mOnLoginListener);
             showDialog(getResources().getString(R.string.text_loading));
         }
 
@@ -212,7 +212,7 @@ public class GuestTurnFragment extends BaseFragment implements View.OnClickListe
                 switch (result.state) {
                     case LTResultCode.STATE_GUEST_LOGIN_SUCCESS:
                         if (result.getResultModel() != null) {
-                            LoginUIManager.getInstance().setResultSuccess(activity,
+                            LoginUIManager.getInstance(mActivity).setResultSuccess(
                                     LTResultCode.STATE_GUEST_LOGIN_SUCCESS,
                                     result.getResultModel());
                             PreferencesUtils.init(activity);
@@ -226,7 +226,7 @@ public class GuestTurnFragment extends BaseFragment implements View.OnClickListe
                         }
                         break;
                     case LTResultCode.STATE_GUEST_LOGIN_FAILED:
-                        LoginUIManager.getInstance().setResultFailed(activity,
+                        LoginUIManager.getInstance(mActivity).setResultFailed(
                                 LTResultCode.STATE_GUEST_LOGIN_FAILED,
                                 result.msg);
                         ToastUtil.getInstance().showToast(mActivity, result.msg);

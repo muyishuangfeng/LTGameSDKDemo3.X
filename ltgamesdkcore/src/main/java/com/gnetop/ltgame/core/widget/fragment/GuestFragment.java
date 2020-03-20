@@ -103,7 +103,7 @@ public class GuestFragment extends BaseFragment implements View.OnClickListener 
         if (view.getId() == R.id.btn_guest_cancel) {//取消
             backLogin();
         } else if (view.getId() == R.id.btn_guest_continue) {//继续
-            LoginUIManager.getInstance().guestLogin(mActivity, mData, mOnLoginListener);
+            LoginUIManager.getInstance(mActivity).guestLogin( mData, mOnLoginListener);
             showDialog(getResources().getString(R.string.text_loading));
         }
 
@@ -194,7 +194,7 @@ public class GuestFragment extends BaseFragment implements View.OnClickListener 
                 switch (result.state) {
                     case LTResultCode.STATE_GUEST_LOGIN_SUCCESS:
                         if (result.getResultModel() != null) {
-                            LoginUIManager.getInstance().setResultSuccess(activity,
+                            LoginUIManager.getInstance(mActivity).setResultSuccess(
                                     LTResultCode.STATE_GUEST_LOGIN_SUCCESS,
                                     result.getResultModel());
                             PreferencesUtils.init(activity);
@@ -208,7 +208,7 @@ public class GuestFragment extends BaseFragment implements View.OnClickListener 
                         }
                         break;
                     case LTResultCode.STATE_GUEST_LOGIN_FAILED:
-                        LoginUIManager.getInstance().setResultFailed(activity,
+                        LoginUIManager.getInstance(mActivity).setResultFailed(
                                 LTResultCode.STATE_GUEST_LOGIN_FAILED,
                                 result.msg);
                         ToastUtil.getInstance().showToast(mActivity, result.msg);

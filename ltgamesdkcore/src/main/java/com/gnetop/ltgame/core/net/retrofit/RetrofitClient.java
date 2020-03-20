@@ -14,6 +14,7 @@ import com.gnetop.ltgame.core.util.PreferencesUtils;
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 
 import java.io.IOException;
+import java.lang.ref.WeakReference;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -31,7 +32,7 @@ public class RetrofitClient implements BaseApi {
     private volatile static Retrofit retrofit = null;
     private Retrofit.Builder retrofitBuilder = new Retrofit.Builder();
     private OkHttpClient.Builder httpBuilder = new OkHttpClient.Builder();
-    private Activity activity;
+    private WeakReference<Activity>mActivity;
 
     public RetrofitClient(String baseUrl) {
         retrofitBuilder.addConverterFactory(ScalarsConverterFactory.create())
@@ -54,7 +55,7 @@ public class RetrofitClient implements BaseApi {
      */
     @Override
     public Retrofit getRetrofit(Activity activity) {
-        this.activity = activity;
+        mActivity=new WeakReference<>(activity);
         if (retrofit == null) {
             //锁定代码块
             synchronized (RetrofitClient.class) {
@@ -105,13 +106,13 @@ public class RetrofitClient implements BaseApi {
                     String mLtAppID = "";
                     if (!TextUtils.isEmpty(options.getISServerTest())) {
                         mServerTest = options.getISServerTest();
-                    } else if (!TextUtils.isEmpty(PreferencesUtils.getString(activity, Constants.LT_SDK_SERVER_TEST_TAG))) {
-                        mServerTest = PreferencesUtils.getString(activity, Constants.LT_SDK_SERVER_TEST_TAG);
+                    } else if (!TextUtils.isEmpty(PreferencesUtils.getString(mActivity.get(), Constants.LT_SDK_SERVER_TEST_TAG))) {
+                        mServerTest = PreferencesUtils.getString(mActivity.get(), Constants.LT_SDK_SERVER_TEST_TAG);
                     }
                     if (!TextUtils.isEmpty(options.getLtAppId())) {
                         mLtAppID = options.getLtAppId();
-                    } else if (!TextUtils.isEmpty(PreferencesUtils.getString(activity, Constants.LT_SDK_APP_ID))) {
-                        mLtAppID = PreferencesUtils.getString(activity, Constants.LT_SDK_APP_ID);
+                    } else if (!TextUtils.isEmpty(PreferencesUtils.getString(mActivity.get(), Constants.LT_SDK_APP_ID))) {
+                        mLtAppID = PreferencesUtils.getString(mActivity.get(), Constants.LT_SDK_APP_ID);
                     }
                     if (mServerTest.equals(Constants.LT_SERVER_TEST)) {
                         baseURL = HttpUrl.parse(Api.TEST_SERVER_URL + mLtAppID + Api.TEST_SERVER_DOMAIN);
@@ -156,7 +157,7 @@ public class RetrofitClient implements BaseApi {
                 }
                 Intent intent = new Intent(Constants.MSG_SEND_EXCEPTION);
                 intent.putExtra(Constants.MSG_EXCEPTION_NAME, result);
-                activity.sendBroadcast(intent);
+                mActivity.get().sendBroadcast(intent);
                 LTGameOptions options = LTGameCommon.getInstance().options();
                 if (options.isDebug()) {
                     Log.e("SDK_API_LOG", "--->" + message);

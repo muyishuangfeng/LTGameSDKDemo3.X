@@ -1,5 +1,7 @@
 package com.gnetop.ltgame.core.util;
 
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.util.Base64;
 
 import com.gnetop.ltgame.core.common.Constants;
@@ -26,12 +28,10 @@ import javax.crypto.spec.SecretKeySpec;
  */
 public class EncryptAndDecryptUtil {
     private static SecretKeySpec sSecretKeySpec;
-    /*****************************************MD5 encryption****************************************************/
+    //*****************************************MD5 encryption****************************************************//
     /**
      * md5加密
      *
-     * @param str
-     * @return
      */
     public static String getMD5Str(String str) {
         MessageDigest messageDigest = null;
@@ -55,13 +55,14 @@ public class EncryptAndDecryptUtil {
         }
         return md5StrBuff.toString();
     }
-    /*****************************************AES encryption****************************************************/
+    //*****************************************AES encryption****************************************************//
     /**
      * @return the Base64-encode bytes of AES encryption
      */
     private static final String TRANSFORMATION = "AES/CBC/PKCS7Padding";
 
-    public static String encryptAES2Base64( String textToEncrypt) {
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    public static String encryptAES2Base64(String textToEncrypt) {
         if (textToEncrypt == null) {
             return "";
         } else {
@@ -76,7 +77,8 @@ public class EncryptAndDecryptUtil {
     /**
      * @return the bytes of AES decryption for Base64-encode bytes
      */
-    public static String decryptBase64AES( String encryptedData) {
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    public static String decryptBase64AES(String encryptedData) {
         if (encryptedData == null) {
             return "";
         } else {

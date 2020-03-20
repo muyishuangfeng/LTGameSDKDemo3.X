@@ -14,7 +14,7 @@ public class LTGameCommon {
     // 配置项
     private LTGameOptions mOptions;
     //单例
-    private static LTGameCommon sInstance;
+    private volatile static LTGameCommon sInstance;
     // platform factory
     private static SparseArray<PlatformFactory> mPlatformFactories;
     private static final String TAG = LTGameCommon.class.getSimpleName();
@@ -74,10 +74,6 @@ public class LTGameCommon {
         // 游客登录
         if (mOptions.isGuestEnable()) {
             addPlatform(Target.PLATFORM_GUEST, "com.gnetop.ltgame.core.manager.login.guest.GuestPlatform$Factory");
-        }
-        // 游客登录
-        if (mOptions.isAliPay()) {
-            addPlatform(Target.PLATFORM_ALI_PLAY, "com.gnetop.ltgame.core.manager.recharge.ali.AliPlayPlatform$Factory");
         }
 
     }

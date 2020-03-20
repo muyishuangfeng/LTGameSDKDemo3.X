@@ -12,8 +12,9 @@ public class PreferencesUtils {
     }
 
     public static void init(Context context) {
-        settings = context.getSharedPreferences("LT_GAME_SDK" +
-                AppUtil.getPackageName(context), Context.MODE_PRIVATE);
+        settings = context.getApplicationContext()
+                .getSharedPreferences("LT_GAME_SDK" +
+                AppUtil.getPackageName(context.getApplicationContext()), Context.MODE_PRIVATE);
     }
 
 
@@ -38,7 +39,7 @@ public class PreferencesUtils {
      * name that is not a string
      */
     public static String getString(Context context,String key) {
-        return getString(context,key, null);
+        return getString(context.getApplicationContext(),key, null);
     }
 
     /**
@@ -112,7 +113,7 @@ public class PreferencesUtils {
      * name that is not a long
      */
     public static long getLong(Context context,String key) {
-        return getLong(context,key, -1);
+        return getLong(context.getApplicationContext(),key, -1);
     }
 
     /**
@@ -186,7 +187,7 @@ public class PreferencesUtils {
      * @see #getBoolean(Context, String, boolean)
      */
     public static boolean getBoolean(Context context, String key) {
-        return getBoolean(context, key, false);
+        return getBoolean(context.getApplicationContext(), key, false);
     }
 
     /**

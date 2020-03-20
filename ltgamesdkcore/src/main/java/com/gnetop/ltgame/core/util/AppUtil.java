@@ -19,7 +19,8 @@ public class AppUtil {
         //当前应用pid
         int pid = android.os.Process.myPid();
         //任务管理类
-        ActivityManager manager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+        ActivityManager manager = (ActivityManager) context.getApplicationContext()
+                .getSystemService(Context.ACTIVITY_SERVICE);
         //遍历所有应用
         assert manager != null;
         List<ActivityManager.RunningAppProcessInfo> infos = manager.getRunningAppProcesses();
