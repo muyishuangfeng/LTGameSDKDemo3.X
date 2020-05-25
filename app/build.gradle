@@ -61,5 +61,5 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 
     implementation 'com.android.support:multidex:1.0.3'
-    implementation project(path: ':ltgamesdkcore')
+    implementation 'com.github.muyishuangfeng:LTGameSDK_Android3.X:1.0.3'
 }

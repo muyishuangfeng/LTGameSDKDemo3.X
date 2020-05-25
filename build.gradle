@@ -1,7 +1,7 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
 buildscript {
-    
+
     repositories {
         google()
         jcenter()
@@ -19,11 +19,14 @@ allprojects {
     repositories {
         google()
         jcenter()
-        maven { url "https://jitpack.io" }
-        flatDir {
-            //所有的module的repositories下把library module中的libs目录添加到依赖关系中
-            dirs project(':ltgamesdkcore').file('libs')
+        maven {
+            url "https://www.jitpack.io"
+            credentials { username authToken }
         }
+//        flatDir {
+//            //所有的module的repositories下把library module中的libs目录添加到依赖关系中
+//            dirs project(':ltgamesdkcore').file('libs')
+//        }
     }
 }
 

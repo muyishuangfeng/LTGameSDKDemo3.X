@@ -1,1 +1,1 @@
-include ':app', ':ltgamesdkcore'
+include ':app'

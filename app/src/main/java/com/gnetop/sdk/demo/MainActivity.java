@@ -25,8 +25,8 @@ public class MainActivity extends AppCompatActivity {
             mBtnQQ, mBtnWX, mBtnAuto;
     TextView mTxtResult;
 
-    private static final String mLtAppID = "35";
-    private static final String mAuthID = "443503959733-0vhjo7df08ahd9i7d5lj9mdtt7bahsbq.apps.googleusercontent.com";
+    private static final String mLtAppID = "2";
+    private static final String mAuthID = "443503959733-8g44ku3gefop1s85op1ubdv0lloso5hd.apps.googleusercontent.com";
     private static final String mFacebookId = "2717734461592670";
     private static final String mAgreementUrl = "http://www.baidu.com";
     private static final String mProvacyUrl = "http://www.baidu.com";
@@ -72,7 +72,6 @@ public class MainActivity extends AppCompatActivity {
                 PreferencesUtils.getString(this, Constants.LT_SDK_DEVICE_ADID) + "===" +
                 PreferencesUtils.getString(this, Constants.LT_SDK_SERVER_TEST_TAG) + "===" +
                 PreferencesUtils.getString(this, Constants.LT_SDK_FB_APP_ID) + "===" +
-                PreferencesUtils.getString(this, Constants.LT_SDK_GP_PUBLIC_KEY) + "===" +
                 PreferencesUtils.getString(this, Constants.LT_SDK_PROVACY_URL) + "===" +
                 PreferencesUtils.getString(this, Constants.LT_SDK_AGREEMENT_URL) + "===" +
                 PreferencesUtils.getString(this, Constants.LT_SDK_QQ_APP_ID) + "===" +
