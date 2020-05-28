@@ -19,7 +19,7 @@ import com.gnetop.ltgame.core.model.LoginResult;
 
 public class FacebookActivity extends AppCompatActivity {
 
-    Button mBtnStart, mBtnLoginOut,mBtnBind;
+    Button mBtnStart, mBtnLoginOut, mBtnBind;
     TextView mTxtResult;
     String TAG = "FacebookActivity";
     private OnLoginStateListener mOnLoginListener;
@@ -46,34 +46,34 @@ public class FacebookActivity extends AppCompatActivity {
         mBtnStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mRequest=MainActivity.mRequest;
+                mRequest = MainActivity.mRequest;
                 mRequest.setLoginType(Constants.FB_LOGIN);
                 mRequest.setType(Constants.FB_LOGIN);
                 LTGameSDK.getDefaultInstance().login(
-                        FacebookActivity.this,  mRequest, mOnLoginListener);
+                        FacebookActivity.this, mRequest, mOnLoginListener);
 
             }
         });
         mBtnLoginOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mRequest=MainActivity.mRequest;
+                mRequest = MainActivity.mRequest;
                 mRequest.setLoginType(Constants.FB_LOGIN);
                 mRequest.setType(Constants.FB_LOGIN_OUT);
                 LTGameSDK.getDefaultInstance().login(
-                        FacebookActivity.this,  mRequest, mOnLoginListener);
+                        FacebookActivity.this, mRequest, mOnLoginListener);
 
             }
         });
-        mBtnBind=findViewById(R.id.btn_bind);
+        mBtnBind = findViewById(R.id.btn_bind);
         mBtnBind.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mRequest=MainActivity.mRequest;
+                mRequest = MainActivity.mRequest;
                 mRequest.setLoginType(Constants.FB_LOGIN);
                 mRequest.setType(Constants.FB_BIND);
                 LTGameSDK.getDefaultInstance().login(
-                        FacebookActivity.this,  mRequest, mOnLoginListener);
+                        FacebookActivity.this, mRequest, mOnLoginListener);
 
             }
         });
@@ -101,18 +101,18 @@ public class FacebookActivity extends AppCompatActivity {
                         }
                         break;
                     case LTResultCode.STATE_FB_LOGIN_FAILED:
-                        Log.e("TAG", "STATE_FB_LOGIN_FAILED==========");
+                        Log.e("TAG", "STATE_FB_LOGIN_FAILED==========" + result.getMsg());
 
                         break;
                     case LTResultCode.STATE_FB_BIND_FAILED:
-                        Log.e("TAG", "STATE_FB_BIND_FAILED==========");
+                        Log.e("TAG", "STATE_FB_BIND_FAILED==========" + result.getMsg());
 
                         break;
                     case LTResultCode.STATE_FB_BIND_SUCCESS:
-                        Log.e("TAG", "STATE_FB_BIND_SUCCESS==========");
+                        Log.e("TAG", "STATE_FB_BIND_SUCCESS==========" + result.getMsg());
                         break;
                     case LTResultCode.STATE_CODE_PARAMETERS_ERROR:
-                        Log.e("TAG", "STATE_CODE_PARAMETERS_ERROR==========");
+                        Log.e("TAG", "STATE_CODE_PARAMETERS_ERROR==========" + result.getMsg());
                         break;
                 }
             }

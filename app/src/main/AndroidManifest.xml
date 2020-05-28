@@ -4,7 +4,7 @@
     package="com.gnetop.sdk.demo">
 
     <application
-        android:name="com.gnetop.sdk.demo.MyApp"
+        android:name=".MyApp"
         android:allowBackup="true"
         android:appComponentFactory="1.0.0"
         android:icon="@mipmap/ic_launcher"
@@ -16,28 +16,28 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning"
         tools:replace="android:appComponentFactory,android:allowBackup">
-        <activity android:name="com.gnetop.sdk.demo.GuestActivity" />
-        <activity android:name="com.gnetop.sdk.demo.MainActivity">
+        <activity android:name=".GuestActivity" />
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.gnetop.sdk.demo.GoogleActivity" />
-        <activity android:name="com.gnetop.sdk.demo.GooglePlayActivity" />
-        <activity android:name="com.gnetop.sdk.demo.FacebookActivity" />
+        <activity android:name=".GoogleActivity" />
+        <activity android:name=".GooglePlayActivity" />
+        <activity android:name=".FacebookActivity" />
 
         <activity
-            android:name="com.gnetop.sdk.demo.UIActivity"
+            android:name=".UIActivity"
             android:screenOrientation="landscape" />
         <activity
-            android:name="com.gnetop.sdk.demo.PortUIActivity"
+            android:name=".PortUIActivity"
             android:screenOrientation="portrait" />
 
-        <activity android:name="com.gnetop.sdk.demo.EmailActivity" />
-        <activity android:name="com.gnetop.sdk.demo.QQActivity" />
-        <activity android:name="com.gnetop.sdk.demo.WeChatActivity" />
+        <activity android:name=".EmailActivity" />
+        <activity android:name=".QQActivity" />
+        <activity android:name=".WeChatActivity" />
 
     </application>
 

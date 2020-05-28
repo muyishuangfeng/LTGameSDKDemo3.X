@@ -38,10 +38,10 @@ public class WeChatActivity extends AppCompatActivity {
         mBtnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mRequest=MainActivity.mRequest;
+                mRequest = MainActivity.mRequest;
                 mRequest.setLoginType(Constants.WX_LOGIN);
                 mRequest.setType(Constants.WX_LOGIN);
-                LTGameSDK.getDefaultInstance().login(WeChatActivity.this,  mRequest,
+                LTGameSDK.getDefaultInstance().login(WeChatActivity.this, mRequest,
                         mOnLoginListener);
 
 
@@ -52,10 +52,10 @@ public class WeChatActivity extends AppCompatActivity {
         mBtnBind.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mRequest=MainActivity.mRequest;
+                mRequest = MainActivity.mRequest;
                 mRequest.setLoginType(Constants.WX_LOGIN);
                 mRequest.setType(Constants.WX_BIND);
-                LTGameSDK.getDefaultInstance().login(WeChatActivity.this,  mRequest,
+                LTGameSDK.getDefaultInstance().login(WeChatActivity.this, mRequest,
                         mOnLoginListener);
             }
         });
@@ -80,37 +80,37 @@ public class WeChatActivity extends AppCompatActivity {
                         }
                         break;
                     case LTResultCode.STATE_WX_LOGIN_FAILED:
-                        Log.e("TAG", "STATE_GUEST_LOGIN_FAILED==========");
+                        Log.e("TAG", "STATE_GUEST_LOGIN_FAILED==========" + result.getMsg());
                         break;
                     case LTResultCode.STATE_WX_ACCESS_TOKEN_FAILED:
-                        Log.e("TAG", "STATE_WX_ACCESS_TOKEN_FAILED==========");
+                        Log.e("TAG", "STATE_WX_ACCESS_TOKEN_FAILED==========" + result.getMsg());
                         break;
                     case LTResultCode.STATE_WX_ALREADY_BIND:
-                        Log.e("TAG", "STATE_WX_ALREADY_BIND==========");
+                        Log.e("TAG", "STATE_WX_ALREADY_BIND==========" + result.getMsg());
                         break;
                     case LTResultCode.STATE_WX_BIND_FAILED:
-                        Log.e("TAG", "STATE_WX_BIND_FAILED==========");
+                        Log.e("TAG", "STATE_WX_BIND_FAILED==========" + result.getMsg());
                         break;
                     case LTResultCode.STATE_WX_BIND_SUCCESS:
                         Log.e("TAG", "STATE_WX_BIND_SUCCESS==========");
                         break;
                     case LTResultCode.STATE_WX_CHECK_ACCESS_TOKEN_FAILED:
-                        Log.e("TAG", "STATE_WX_CHECK_ACCESS_TOKEN_FAILED==========");
+                        Log.e("TAG", "STATE_WX_CHECK_ACCESS_TOKEN_FAILED==========" + result.getMsg());
                         break;
                     case LTResultCode.STATE_WX_INFO_FAILED:
-                        Log.e("TAG", "STATE_WX_INFO_FAILED==========");
+                        Log.e("TAG", "STATE_WX_INFO_FAILED==========" + result.getMsg());
                         break;
                     case LTResultCode.STATE_WX_REFRESH_TOKEN_FAILED:
-                        Log.e("TAG", "STATE_WX_REFRESH_TOKEN_FAILED==========");
+                        Log.e("TAG", "STATE_WX_REFRESH_TOKEN_FAILED==========" + result.getMsg());
                         break;
                     case LTResultCode.STATE_WX_SCAN_FAILED:
-                        Log.e("TAG", "STATE_WX_SCAN_FAILED==========");
+                        Log.e("TAG", "STATE_WX_SCAN_FAILED==========" + result.getMsg());
                         break;
                     case LTResultCode.STATE_WX_SCAN_SUCCESS:
                         Log.e("TAG", "STATE_WX_SCAN_SUCCESS==========");
                         break;
                     case LTResultCode.STATE_CODE_PARAMETERS_ERROR:
-                        Log.e("TAG", "STATE_CODE_PARAMETERS_ERROR==========");
+                        Log.e("TAG", "STATE_CODE_PARAMETERS_ERROR==========" + result.getMsg());
                         break;
                 }
             }

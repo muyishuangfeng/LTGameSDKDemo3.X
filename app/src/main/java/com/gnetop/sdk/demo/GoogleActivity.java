@@ -107,22 +107,22 @@ public class GoogleActivity extends AppCompatActivity {
                         }
                         break;
                     case LTResultCode.STATE_GOOGLE_ALREADY_BIND:
-                        Log.e("TAG", "STATE_GOOGLE_ALREADY_BIND==========");
+                        Log.e("TAG", "STATE_GOOGLE_ALREADY_BIND=========="+result.getMsg());
                         break;
                     case LTResultCode.STATE_GOOGLE_BIND_FAILED:
-                        Log.e("TAG", "STATE_GOOGLE_BIND_FAILED==========");
+                        Log.e("TAG", "STATE_GOOGLE_BIND_FAILED=========="+result.getMsg());
                         break;
                     case LTResultCode.STATE_GOOGLE_LOGIN_FAILED:
-                        Log.e("TAG", "STATE_GOOGLE_LOGIN_FAILED==========");
+                        Log.e("TAG", "STATE_GOOGLE_LOGIN_FAILED=========="+result.getMsg());
                         break;
                     case LTResultCode.STATE_CODE_PARAMETERS_ERROR:
-                        Log.e("TAG", "STATE_CODE_PARAMETERS_ERROR==========");
+                        Log.e("TAG", "STATE_CODE_PARAMETERS_ERROR=========="+result.getMsg());
                         break;
                     case LTResultCode.STATE_AUTO_LOGIN_SUCCESS:
-                        Log.e("TAG", "STATE_AUTO_LOGIN_SUCCESS==========");
+                        Log.e("TAG", "STATE_AUTO_LOGIN_SUCCESS=========="+result.getMsg());
                         break;
                     case LTResultCode.STATE_AUTO_LOGIN_FAILED:
-                        Log.e("TAG", "STATE_AUTO_LOGIN_FAILED==========");
+                        Log.e("TAG", "STATE_AUTO_LOGIN_FAILED=========="+result.getMsg());
                         break;
                 }
 

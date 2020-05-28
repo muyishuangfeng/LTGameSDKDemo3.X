@@ -38,9 +38,9 @@ public class GuestActivity extends AppCompatActivity {
         mBtnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mRequest=MainActivity.mRequest;
+                mRequest = MainActivity.mRequest;
                 mRequest.setLoginType(Constants.GUEST_LOGIN);
-                LTGameSDK.getDefaultInstance().login(GuestActivity.this,  mRequest, mOnLoginListener);
+                LTGameSDK.getDefaultInstance().login(GuestActivity.this, mRequest, mOnLoginListener);
 
 
             }
@@ -80,10 +80,10 @@ public class GuestActivity extends AppCompatActivity {
                         }
                         break;
                     case LTResultCode.STATE_GUEST_LOGIN_FAILED:
-                        Log.e("TAG", "STATE_GUEST_LOGIN_FAILED==========");
+                        Log.e("TAG", "STATE_GUEST_LOGIN_FAILED==========" + result.getMsg());
                         break;
                     case LTResultCode.STATE_CODE_PARAMETERS_ERROR:
-                        Log.e("TAG", "STATE_CODE_PARAMETERS_ERROR==========");
+                        Log.e("TAG", "STATE_CODE_PARAMETERS_ERROR==========" + result.getMsg());
                         break;
                 }
             }

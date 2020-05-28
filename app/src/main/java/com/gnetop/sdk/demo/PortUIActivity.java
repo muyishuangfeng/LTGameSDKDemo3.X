@@ -16,6 +16,7 @@ import com.gnetop.ltgame.core.impl.OnLoginStateListener;
 import com.gnetop.ltgame.core.manager.lt.LTGameSDK;
 import com.gnetop.ltgame.core.model.LoginObject;
 import com.gnetop.ltgame.core.model.LoginResult;
+import com.gnetop.ltgame.core.util.PreferencesUtils;
 
 
 public class PortUIActivity extends AppCompatActivity {
@@ -36,25 +37,27 @@ public class PortUIActivity extends AppCompatActivity {
 
 
     protected void initView() {
-
+        Log.e("TSA", PreferencesUtils.getInt(Constants.USER_LT_UID) + "==" +
+                PreferencesUtils.getString(this, Constants.USER_LT_UID_KEY) + "==" +
+                PreferencesUtils.getString(this, Constants.USER_GUEST_FLAG));
 
         mTxtResult = findViewById(R.id.txt_result);
         mBtnLogin = findViewById(R.id.btn_login);
         mBtnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mRequest=MainActivity.mRequest;
+                mRequest = MainActivity.mRequest;
                 mRequest.setLoginType(Constants.UI_LOGIN);
-                LTGameSDK.getDefaultInstance().login(PortUIActivity.this,  mRequest, mOnLoginListener);
+                LTGameSDK.getDefaultInstance().login(PortUIActivity.this, mRequest, mOnLoginListener);
             }
         });
         mBtnLoginOut = findViewById(R.id.btn_loginOut);
         mBtnLoginOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mRequest=MainActivity.mRequest;
+                mRequest = MainActivity.mRequest;
                 mRequest.setLoginType(Constants.UI_LOGIN_OUT);
-                LTGameSDK.getDefaultInstance().login(PortUIActivity.this,  mRequest, mOnLoginListener);
+                LTGameSDK.getDefaultInstance().login(PortUIActivity.this, mRequest, mOnLoginListener);
 
             }
         });
@@ -89,14 +92,14 @@ public class PortUIActivity extends AppCompatActivity {
                     }
                     break;
                 case LTResultCode.STATE_GOOGLE_BIND_FAILED:
-                    Log.e("TAGUI", "STATE_GOOGLE_BIND_FAILED==========");
+                    Log.e("TAGUI", "STATE_GOOGLE_BIND_FAILED==========" + result.getMsg());
                     break;
                 case LTResultCode.STATE_GOOGLE_LOGIN_FAILED:
-                    Log.e("TAGUI", "STATE_GOOGLE_LOGIN_FAILED==========");
+                    Log.e("TAGUI", "STATE_GOOGLE_LOGIN_FAILED==========" + result.getMsg());
                     break;
                 case LTResultCode.STATE_AUTO_LOGIN_SUCCESS:
-                    mTxtResult.setText(result.getResultModel().toString());
-                    Log.e("TAGUI", "STATE_AUTO_LOGIN_SUCCESS==========");
+                    mTxtResult.setText(result.getMsg());
+                    Log.e("TAGUI", "STATE_AUTO_LOGIN_SUCCESS==========" + result.getMsg());
                     break;
                 case LTResultCode.STATE_FB_LOGIN_SUCCESS:
                     if (result.getResultModel() != null) {
@@ -112,15 +115,15 @@ public class PortUIActivity extends AppCompatActivity {
                     }
                     break;
                 case LTResultCode.STATE_FB_LOGIN_FAILED:
-                    Log.e("TAGUI", "STATE_FB_LOGIN_FAILED==========");
+                    Log.e("TAGUI", "STATE_FB_LOGIN_FAILED==========" + result.getMsg());
 
                     break;
                 case LTResultCode.STATE_FB_BIND_FAILED:
-                    Log.e("TAGUI", "STATE_FB_BIND_FAILED==========");
+                    Log.e("TAGUI", "STATE_FB_BIND_FAILED==========" + result.getMsg());
 
                     break;
                 case LTResultCode.STATE_FB_BIND_SUCCESS:
-                    Log.e("TAGUI", "STATE_FB_BIND_SUCCESS==========");
+                    Log.e("TAGUI", "STATE_FB_BIND_SUCCESS==========" + result.getMsg());
 
                     break;
                 case LTResultCode.STATE_GUEST_LOGIN_SUCCESS:
@@ -133,7 +136,7 @@ public class PortUIActivity extends AppCompatActivity {
                     }
                     break;
                 case LTResultCode.STATE_GUEST_LOGIN_FAILED:
-                    Log.e("TAGUI", "STATE_GUEST_LOGIN_FAILED==========");
+                    Log.e("TAGUI", "STATE_GUEST_LOGIN_FAILED==========" + result.getMsg());
                     break;
                 case LTResultCode.STATE_EMAIL_LOGIN_SUCCESS:
                     Log.e("TAGUI", "STATE_EMAIL_LOGIN_SUCCESS");
@@ -152,16 +155,16 @@ public class PortUIActivity extends AppCompatActivity {
                     }
                     break;
                 case LTResultCode.STATE_EMAIL_ALREADY_BIND:
-                    Log.e("TAGUI", "STATE_EMAIL_ALREADY_BIND==========");
+                    Log.e("TAGUI", "STATE_EMAIL_ALREADY_BIND==========" + result.getMsg());
                     break;
                 case LTResultCode.STATE_EMAIL_BIND_FAILED:
-                    Log.e("TAGUI", "STATE_EMAIL_BIND_FAILED==========");
+                    Log.e("TAGUI", "STATE_EMAIL_BIND_FAILED==========" + result.getMsg());
                     break;
                 case LTResultCode.STATE_EMAIL_LOGIN_FAILED:
-                    Log.e("TAGUI", "STATE_EMAIL_LOGIN_FAILED==========");
+                    Log.e("TAGUI", "STATE_EMAIL_LOGIN_FAILED==========" + result.getMsg());
                     break;
                 case LTResultCode.STATE_CODE_PARAMETERS_ERROR:
-                    Log.e("TAG", "STATE_CODE_PARAMETERS_ERROR==========");
+                    Log.e("TAG", "STATE_CODE_PARAMETERS_ERROR==========" + result.getMsg());
                     break;
             }
         }

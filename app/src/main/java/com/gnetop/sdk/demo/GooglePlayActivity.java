@@ -19,12 +19,11 @@ import com.gnetop.ltgame.core.model.RechargeResult;
 
 public class GooglePlayActivity extends AppCompatActivity {
 
-    Button mBtnPay;
+    Button mBtnPay,mBtnOrder;
     TextView mTxtResult;
     private static final String TAG = GooglePlayActivity.class.getSimpleName();
     private String mGoodsID = "com.gnetop.one";
     String mSKU = "com.gnetop.one";
-    private static final String mGPPublicKey = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAleVlYQtKhvo+lb83j73kXGH8xAMhHcaAZoS22Bo3Jdujix9Ou5DjtUW3i6MIFqWEbnb9da50iH5IrxkkdJCcqzeYDdLk2Y3Gc+kyaw5ch4I//hjC2hh8nHgo8eWfrxSFce/DpNBeS1j4mWcjWZhYJtxheEUk8iTyXIVWHC8dCyifibs7z8wCXMhy3Q66Zym5GarAYjpuQsXTxHuOYUXakLWCwIXG8d8ihoRxweI7PtLpVyNU5FKgse42uouMRz6TgVotgu+NdamNyTH/CutQMPGeNXUj6FpHUDEWQhsRp27k0KsA8YWJDJBj4R9bJ5GDqD8XJo2y5V7/vy1OH4afkQIDAQAB";
     RechargeObject mRequest;
     private int mPayTest = 1;
 
@@ -47,17 +46,18 @@ public class GooglePlayActivity extends AppCompatActivity {
                 mRequest.setGoods_number(mGoodsID);
                 mRequest.setPayTest(mPayTest);
                 mRequest.setSku(mSKU);
-                mRequest.setGPPublicKey(mGPPublicKey);
-                mRequest.setRole_number(1);
+                mRequest.setRole_number(12);
                 mRequest.setServer_number(1);
                 LTGameSDK.getDefaultInstance().recharge(GooglePlayActivity.this,
                         mRequest, mOnRechargeListener);
             }
         });
+
     }
 
 
     OnRechargeStateListener mOnRechargeListener = new OnRechargeStateListener() {
+
         @Override
         public void onState(Activity activity, RechargeResult result) {
             switch (result.state) {
@@ -68,8 +68,8 @@ public class GooglePlayActivity extends AppCompatActivity {
                     Log.e(TAG, "STATE_GP_CREATE_ORDER_FAILED");
                     break;
                 case LTResultCode.STATE_RECHARGE_SUCCESS_CODE://支付成功
+                    mTxtResult.setText(result.getResultModel().getData().toString());
                     Log.e(TAG, "STATE_RECHARGE_SUCCESS_CODE");
-                    mTxtResult.setText(result.toString());
                     break;
                 case LTResultCode.STATE_GP_RESPONSE_RESULT_FAILED://支付失败
                     Log.e(TAG, "STATE_GP_RESPONSE_RESULT_FAILED");

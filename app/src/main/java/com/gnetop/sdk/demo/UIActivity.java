@@ -88,10 +88,10 @@ public class UIActivity extends AppCompatActivity {
                     }
                     break;
                 case LTResultCode.STATE_GOOGLE_BIND_FAILED:
-                    Log.e("TAGUI", "STATE_GOOGLE_BIND_FAILED==========");
+                    Log.e("TAGUI", "STATE_GOOGLE_BIND_FAILED=========="+result.getMsg());
                     break;
                 case LTResultCode.STATE_GOOGLE_LOGIN_FAILED:
-                    Log.e("TAGUI", "STATE_GOOGLE_LOGIN_FAILED==========");
+                    Log.e("TAGUI", "STATE_GOOGLE_LOGIN_FAILED=========="+result.getMsg());
                     break;
                 case LTResultCode.STATE_AUTO_LOGIN_SUCCESS:
                     mTxtResult.setText(result.getResultModel().toString());
@@ -111,11 +111,11 @@ public class UIActivity extends AppCompatActivity {
                     }
                     break;
                 case LTResultCode.STATE_FB_LOGIN_FAILED:
-                    Log.e("TAGUI", "STATE_FB_LOGIN_FAILED==========");
+                    Log.e("TAGUI", "STATE_FB_LOGIN_FAILED=========="+result.getMsg());
 
                     break;
                 case LTResultCode.STATE_FB_BIND_FAILED:
-                    Log.e("TAGUI", "STATE_FB_BIND_FAILED==========");
+                    Log.e("TAGUI", "STATE_FB_BIND_FAILED=========="+result.getMsg());
 
                     break;
                 case LTResultCode.STATE_FB_BIND_SUCCESS:
@@ -132,7 +132,7 @@ public class UIActivity extends AppCompatActivity {
                     }
                     break;
                 case LTResultCode.STATE_GUEST_LOGIN_FAILED:
-                    Log.e("TAGUI", "STATE_GUEST_LOGIN_FAILED==========");
+                    Log.e("TAGUI", "STATE_GUEST_LOGIN_FAILED=========="+result.getMsg());
                     break;
                 case LTResultCode.STATE_EMAIL_LOGIN_SUCCESS:
                     Log.e("TAGUI", "STATE_EMAIL_LOGIN_SUCCESS");
@@ -151,16 +151,16 @@ public class UIActivity extends AppCompatActivity {
                     }
                     break;
                 case LTResultCode.STATE_EMAIL_ALREADY_BIND:
-                    Log.e("TAGUI", "STATE_EMAIL_ALREADY_BIND==========");
+                    Log.e("TAGUI", "STATE_EMAIL_ALREADY_BIND=========="+result.getMsg());
                     break;
                 case LTResultCode.STATE_EMAIL_BIND_FAILED:
-                    Log.e("TAGUI", "STATE_EMAIL_BIND_FAILED==========");
+                    Log.e("TAGUI", "STATE_EMAIL_BIND_FAILED=========="+result.getMsg());
                     break;
                 case LTResultCode.STATE_EMAIL_LOGIN_FAILED:
-                    Log.e("TAGUI", "STATE_EMAIL_LOGIN_FAILED==========");
+                    Log.e("TAGUI", "STATE_EMAIL_LOGIN_FAILED=========="+result.getMsg());
                     break;
                 case LTResultCode.STATE_CODE_PARAMETERS_ERROR:
-                    Log.e("TAG", "STATE_CODE_PARAMETERS_ERROR==========");
+                    Log.e("TAG", "STATE_CODE_PARAMETERS_ERROR=========="+result.getMsg());
                     break;
             }
         }

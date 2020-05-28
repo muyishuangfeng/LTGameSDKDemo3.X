@@ -467,4 +467,18 @@ public class DateUtil {
         }
         return 0;
     }
+
+    /**
+     * 获取精确到秒的时间戳
+     */
+    public static long getSecondTimestamp(){
+        Date date=new Date();
+        String timestamp = String.valueOf(date.getTime());
+        int length = timestamp.length();
+        if (length > 3) {
+            return Long.parseLong(timestamp.substring(0,length-3));
+        } else {
+            return 0;
+        }
+    }
 }
