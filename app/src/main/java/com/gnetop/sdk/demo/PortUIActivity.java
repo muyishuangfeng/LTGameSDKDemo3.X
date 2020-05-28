@@ -98,7 +98,7 @@ public class PortUIActivity extends AppCompatActivity {
                     Log.e("TAGUI", "STATE_GOOGLE_LOGIN_FAILED==========" + result.getMsg());
                     break;
                 case LTResultCode.STATE_AUTO_LOGIN_SUCCESS:
-                    mTxtResult.setText(result.getMsg());
+                    mTxtResult.setText(result.getResultModel().getData().toString());
                     Log.e("TAGUI", "STATE_AUTO_LOGIN_SUCCESS==========" + result.getMsg());
                     break;
                 case LTResultCode.STATE_FB_LOGIN_SUCCESS:
