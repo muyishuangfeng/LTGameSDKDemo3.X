@@ -16,6 +16,9 @@ import com.gnetop.ltgame.core.manager.lt.LTGameSDK;
 import com.gnetop.ltgame.core.model.RechargeObject;
 import com.gnetop.ltgame.core.model.RechargeResult;
 
+import java.util.Map;
+import java.util.WeakHashMap;
+
 
 public class GooglePlayActivity extends AppCompatActivity {
 
@@ -36,12 +39,16 @@ public class GooglePlayActivity extends AppCompatActivity {
     }
 
     private void initView() {
+        Map<String,Object>params=new WeakHashMap<>();
+        params.put("date","123");
+        params.put("muyi",456);
         mTxtResult = findViewById(R.id.txt_result);
         mBtnPay = findViewById(R.id.btn_pay);
         mBtnPay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mRequest = new RechargeObject();
+                mRequest.setParams(params);
                 mRequest.setRechargeType(Constants.GP_RECHARGE);
                 mRequest.setGoods_number(mGoodsID);
                 mRequest.setPayTest(mPayTest);
