@@ -148,11 +148,17 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 mRequest = new LoginObject();
+                //角色创建时间
                 mRequest.setRole_create_time(DateUtil.getSecondTimestamp());
+                //角色ID
                 mRequest.setRole_number(12);
+                //角色名称
                 mRequest.setRole_name("Silence");
+                //角色性别
                 mRequest.setRole_sex("0");
+                //服务器ID
                 mRequest.setServer_number(1);
+                //角色等级
                 mRequest.setRole_level("51");
                 LTGameSDK.getDefaultInstance().uploadRole(MainActivity.this, mRequest,
                         mOnStateListener);
