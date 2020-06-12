@@ -148,15 +148,15 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 mRequest = new LoginObject();
-                //角色创建时间
+                //角色创建时间，时间戳 精确到秒
                 mRequest.setRole_create_time(DateUtil.getSecondTimestamp());
-                //角色ID
+                //角色编号（游戏服务器用户ID）
                 mRequest.setRole_number(12);
                 //角色名称
                 mRequest.setRole_name("Silence");
-                //角色性别
+                //角色性别 0女 1男 2 未知
                 mRequest.setRole_sex("0");
-                //服务器ID
+                //服务器编号
                 mRequest.setServer_number(1);
                 //角色等级
                 mRequest.setRole_level("51");
