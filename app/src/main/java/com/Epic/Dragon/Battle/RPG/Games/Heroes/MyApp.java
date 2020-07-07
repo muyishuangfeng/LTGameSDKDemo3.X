@@ -1,4 +1,4 @@
-package com.gnetop.sdk.demo;
+package com.Epic.Dragon.Battle.RPG.Games.Heroes;
 
 import android.app.Application;
 import android.support.multidex.MultiDex;

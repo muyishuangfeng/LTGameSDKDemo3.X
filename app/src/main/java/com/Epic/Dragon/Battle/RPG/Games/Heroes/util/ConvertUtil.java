@@ -1,4 +1,4 @@
-package com.gnetop.sdk.demo.util;
+package com.Epic.Dragon.Battle.RPG.Games.Heroes.util;
 
 import android.util.Log;
 

@@ -1,4 +1,4 @@
-package com.gnetop.sdk.demo;
+package com.Epic.Dragon.Battle.RPG.Games.Heroes;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -16,7 +16,6 @@ import com.gnetop.ltgame.core.manager.lt.LTGameSDK;
 import com.gnetop.ltgame.core.model.LoginObject;
 import com.gnetop.ltgame.core.model.LoginResult;
 import com.gnetop.ltgame.core.util.PreferencesUtils;
-import com.gnetop.sdk.demo.util.DateUtil;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -25,9 +24,9 @@ public class MainActivity extends AppCompatActivity {
             mBtnQQ, mBtnWX, mBtnAuto;
     TextView mTxtResult;
 
-    private static final String mLtAppID = "2";
-    private static final String mAuthID = "443503959733-0vhjo7df08ahd9i7d5lj9mdtt7bahsbq.apps.googleusercontent.com";
-    private static final String mFacebookId = "2717734461592670";
+    private static final String mLtAppID = "4";
+    private static final String mAuthID = "298347680331-nu3cd65dtgf26kf9nvv59qebe39gvo5v.apps.googleusercontent.com";
+    private static final String mFacebookId = "251194162797290";
     private static final String mAgreementUrl = "http://www.baidu.com";
     private static final String mProvacyUrl = "http://www.baidu.com";
     private static final String QQ_APP_ID = "1108097616";
@@ -149,17 +148,17 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 mRequest = new LoginObject();
                 //角色创建时间，时间戳 精确到秒
-                mRequest.setRole_create_time(DateUtil.getSecondTimestamp());
+                mRequest.setRole_create_time(1593811595);
                 //角色编号（游戏服务器用户ID）
-                mRequest.setRole_number(12);
+                mRequest.setRole_number(1000005);
                 //角色名称
-                mRequest.setRole_name("Silence");
+                mRequest.setRole_name("MorganLucy");
                 //角色性别 0女 1男 2 未知
-                mRequest.setRole_sex("0");
+                mRequest.setRole_sex("1");
                 //服务器编号
                 mRequest.setServer_number(1);
                 //角色等级
-                mRequest.setRole_level("51");
+                mRequest.setRole_level("32");
                 LTGameSDK.getDefaultInstance().uploadRole(MainActivity.this, mRequest,
                         mOnStateListener);
             }

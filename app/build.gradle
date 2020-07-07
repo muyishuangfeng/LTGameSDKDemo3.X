@@ -2,30 +2,30 @@ apply plugin: 'com.android.application'
 
 android {
     signingConfigs {
-        config {
-            keyAlias 'sdk'
-            keyPassword '123456'
-            storeFile file('../sdk.jks')
-            storePassword '123456'
-        }
 //        config {
-//            keyAlias 'xunlongqishituan'
-//            keyPassword 'abc,.123'
-//            storeFile file('../xunlongqishituan_android_key.key')
-//            storePassword 'abc,.123'
+//            keyAlias 'sdk'
+//            keyPassword '123456'
+//            storeFile file('../sdk.jks')
+//            storePassword '123456'
 //        }
+        config {
+            keyAlias 'xunlongqishituan'
+            keyPassword 'abc,.123'
+            storeFile file('../xunlongqishituan_android_key.key')
+            storePassword 'abc,.123'
+        }
     }
     compileSdkVersion 28
     defaultConfig {
-        applicationId "com.gnetop.sdk.demo"
+        applicationId "com.Epic.Dragon.Battle.RPG.Games.Heroes"
         minSdkVersion 21
         targetSdkVersion 28
-        versionCode 4
-        versionName "1.0.3"
+        versionCode 3
+        versionName "2.0.2"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         signingConfig signingConfigs.config
-        manifestPlaceholders = [fb_app_id         : "2717734461592670",
-                                fb_login_protocol_scheme: "fb2717734461592670",
+        manifestPlaceholders = [fb_app_id         : "251194162797290",
+                                fb_login_protocol_scheme: "fb251194162797290",
                                 qq_app_id                 : "1108097616"]
         multiDexEnabled true
         javaCompileOptions {
@@ -39,14 +39,14 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.config
-            manifestPlaceholders = [fb_app_id         : "2717734461592670",
-                                    fb_login_protocol_scheme: "fb2717734461592670",
+            manifestPlaceholders = [fb_app_id         : "251194162797290",
+                                    fb_login_protocol_scheme: "fb251194162797290",
                                     qq_app_id                 : "1108097616"]
         }
         debug {
             signingConfig signingConfigs.config
-            manifestPlaceholders = [fb_app_id         : "2717734461592670",
-                                    fb_login_protocol_scheme: "fb2717734461592670",
+            manifestPlaceholders = [fb_app_id         : "251194162797290",
+                                    fb_login_protocol_scheme: "fb251194162797290",
                                     qq_app_id                 : "1108097616"]
         }
     }
@@ -67,5 +67,5 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 
     implementation 'com.android.support:multidex:1.0.3'
-    implementation 'com.github.muyishuangfeng:LTGameSDK_Android3.X:1.0.8'
+    implementation 'com.github.muyishuangfeng:LTGameSDK_Android3.X:1.0.9'
 }

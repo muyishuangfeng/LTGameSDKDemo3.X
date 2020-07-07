@@ -1,4 +1,4 @@
-package com.gnetop.sdk.demo;
+package com.Epic.Dragon.Battle.RPG.Games.Heroes;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -25,8 +25,8 @@ public class GooglePlayActivity extends AppCompatActivity {
     Button mBtnPay,mBtnOrder;
     TextView mTxtResult;
     private static final String TAG = GooglePlayActivity.class.getSimpleName();
-    private String mGoodsID = "com.gnetop.one";
-    String mSKU = "com.gnetop.one";
+    private String mGoodsID = "ios.magickts.11";
+    String mSKU = "ios.magickts.11";
     RechargeObject mRequest;
     private int mPayTest = 1;
 
@@ -53,7 +53,7 @@ public class GooglePlayActivity extends AppCompatActivity {
                 mRequest.setGoods_number(mGoodsID);
                 mRequest.setPayTest(mPayTest);
                 mRequest.setSku(mSKU);
-                mRequest.setRole_number(12);
+                mRequest.setRole_number(1000005);
                 mRequest.setServer_number(1);
                 LTGameSDK.getDefaultInstance().recharge(GooglePlayActivity.this,
                         mRequest, mOnRechargeListener);

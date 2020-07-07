@@ -1,4 +1,4 @@
-package com.gnetop.sdk.demo;
+package com.Epic.Dragon.Battle.RPG.Games.Heroes;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -16,7 +16,7 @@ import com.gnetop.ltgame.core.model.LoginObject;
 import com.gnetop.ltgame.core.model.LoginResult;
 
 
-public class QQActivity extends AppCompatActivity {
+public class GuestActivity extends AppCompatActivity {
 
     Button mBtnLogin, mBtnBind, mBtnFB;
     TextView mTxtResult;
@@ -27,7 +27,7 @@ public class QQActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_qq);
+        setContentView(R.layout.activity_guest);
         initView();
         initData();
     }
@@ -39,11 +39,8 @@ public class QQActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 mRequest = MainActivity.mRequest;
-                mRequest.setLoginType(Constants.QQ_LOGIN);
-                mRequest.setType(Constants.QQ_LOGIN);
-                mRequest.setLoginOut(false);
-                LTGameSDK.getDefaultInstance().login(QQActivity.this, mRequest,
-                        mOnLoginListener);
+                mRequest.setLoginType(Constants.GUEST_LOGIN);
+                LTGameSDK.getDefaultInstance().login(GuestActivity.this, mRequest, mOnLoginListener);
 
 
             }
@@ -52,12 +49,7 @@ public class QQActivity extends AppCompatActivity {
         mBtnFB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mRequest = MainActivity.mRequest;
-                mRequest.setLoginType(Constants.QQ_LOGIN);
-                mRequest.setType(Constants.QQ_BIND);
-                mRequest.setLoginOut(false);
-                LTGameSDK.getDefaultInstance().login(QQActivity.this, mRequest,
-                        mOnLoginListener);
+
             }
         });
         mBtnBind = findViewById(R.id.btn_bind);
@@ -78,8 +70,8 @@ public class QQActivity extends AppCompatActivity {
             @Override
             public void onState(Activity activity, LoginResult result) {
                 switch (result.state) {
-                    case LTResultCode.STATE_QQ_LOGIN_SUCCESS:
-                        Log.e("TAG", "STATE_QQ_LOGIN_SUCCESS==========");
+                    case LTResultCode.STATE_GUEST_LOGIN_SUCCESS:
+                        Log.e("TAG", "STATE_GUEST_LOGIN_SUCCESS==========");
                         if (result.getResultModel() != null) {
                             String mLtToken = result.getResultModel().getData().getUkey();
                             int mLtId = result.getResultModel().getData().getUser_id();
@@ -87,17 +79,11 @@ public class QQActivity extends AppCompatActivity {
 
                         }
                         break;
-                    case LTResultCode.STATE_QQ_LOGIN_FAILED:
-                        Log.e("TAG", "STATE_QQ_LOGIN_FAILED=========="+result.getMsg());
-                        break;
-                    case LTResultCode.STATE_QQ_BIND_FAILED:
-                        Log.e("TAG", "STATE_QQ_BIND_FAILED=========="+result.getMsg());
-                        break;
-                    case LTResultCode.STATE_QQ_BIND_SUCCESS:
-                        Log.e("TAG", "STATE_QQ_BIND_SUCCESS==========");
+                    case LTResultCode.STATE_GUEST_LOGIN_FAILED:
+                        Log.e("TAG", "STATE_GUEST_LOGIN_FAILED==========" + result.getMsg());
                         break;
                     case LTResultCode.STATE_CODE_PARAMETERS_ERROR:
-                        Log.e("TAG", "STATE_CODE_PARAMETERS_ERROR=========="+result.getMsg());
+                        Log.e("TAG", "STATE_CODE_PARAMETERS_ERROR==========" + result.getMsg());
                         break;
                 }
             }
