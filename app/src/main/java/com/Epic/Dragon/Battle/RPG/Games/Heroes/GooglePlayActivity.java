@@ -90,8 +90,7 @@ public class GooglePlayActivity extends AppCompatActivity {
                     mTxtResult.setText(result.getResultModel().getData().toString());
                     Log.e(TAG, "STATE_RECHARGE_SUCCESS_CODE");
                     //TODO:补单操作
-                    GooglePlayHelper mHelper=new GooglePlayHelper(GooglePlayActivity.this,1);
-                    mHelper.addOrder();
+                    LTGameSDK.getDefaultInstance().addOrder(GooglePlayActivity.this,1);
                     break;
                 case LTResultCode.STATE_GP_RESPONSE_RESULT_FAILED://支付失败
                     Log.e(TAG, "STATE_GP_RESPONSE_RESULT_FAILED");
