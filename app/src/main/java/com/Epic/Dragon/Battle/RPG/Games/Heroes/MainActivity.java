@@ -33,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String wxAppID = "wx12163d2efc218137";
     private static final String wxSecret = "55210ccc632b6273f7c9e995346dc211";
     private static final String mCountryModel = Constants.LT_SDK_COUNTRY_ABROAD;
+    private int mPayTest = 1;
     static LoginObject mRequest;
     private boolean debug = true;
     private String isServerTest = Constants.LT_SERVER_TEST;
@@ -52,6 +53,8 @@ public class MainActivity extends AppCompatActivity {
     private void initView() {
         mRequest = new LoginObject();
         mRequest.setFBAppID(mFacebookId);
+        //TODO:设置是否是沙盒
+        mRequest.setPayTest(mPayTest);
         mRequest.setServerTest(isServerTest);
         mRequest.setDebug(debug);
         mRequest.setmGoogleClient(mAuthID);
@@ -148,17 +151,29 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 mRequest = new LoginObject();
                 //角色创建时间，时间戳 精确到秒
-                mRequest.setRole_create_time(1593811595);
+                mRequest.setRole_create_time(1594063352);
                 //角色编号（游戏服务器用户ID）
-                mRequest.setRole_number(1000005);
+                mRequest.setRole_number(2000062);
                 //角色名称
-                mRequest.setRole_name("MorganLucy");
+                mRequest.setRole_name("WrightDaisy");
                 //角色性别 0女 1男 2 未知
                 mRequest.setRole_sex("1");
                 //服务器编号
-                mRequest.setServer_number(1);
+                mRequest.setServer_number(2);
                 //角色等级
-                mRequest.setRole_level("32");
+                mRequest.setRole_level("25");
+//                //角色创建时间，时间戳 精确到秒
+//                mRequest.setRole_create_time(1593811595);
+//                //角色编号（游戏服务器用户ID）
+//                mRequest.setRole_number(1000005);
+//                //角色名称
+//                mRequest.setRole_name("MorganLucy");
+//                //角色性别 0女 1男 2 未知
+//                mRequest.setRole_sex("1");
+//                //服务器编号
+//                mRequest.setServer_number(1);
+//                //角色等级
+//                mRequest.setRole_level("32");
                 LTGameSDK.getDefaultInstance().uploadRole(MainActivity.this, mRequest,
                         mOnStateListener);
             }

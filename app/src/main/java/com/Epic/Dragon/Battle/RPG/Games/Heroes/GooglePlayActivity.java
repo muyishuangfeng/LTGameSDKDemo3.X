@@ -13,6 +13,8 @@ import com.gnetop.ltgame.core.common.Constants;
 import com.gnetop.ltgame.core.exception.LTResultCode;
 import com.gnetop.ltgame.core.impl.OnRechargeStateListener;
 import com.gnetop.ltgame.core.manager.lt.LTGameSDK;
+import com.gnetop.ltgame.core.manager.lt.LoginRealizeManager;
+import com.gnetop.ltgame.core.manager.recharge.gp.GooglePlayHelper;
 import com.gnetop.ltgame.core.model.RechargeObject;
 import com.gnetop.ltgame.core.model.RechargeResult;
 
@@ -53,10 +55,20 @@ public class GooglePlayActivity extends AppCompatActivity {
                 mRequest.setGoods_number(mGoodsID);
                 mRequest.setPayTest(mPayTest);
                 mRequest.setSku(mSKU);
-                mRequest.setRole_number(1000005);
-                mRequest.setServer_number(1);
+                mRequest.setRole_number(2000062);
+                mRequest.setServer_number(2);
+//                mRequest.setRole_number(1000005);
+//                mRequest.setServer_number(1);
                 LTGameSDK.getDefaultInstance().recharge(GooglePlayActivity.this,
                         mRequest, mOnRechargeListener);
+            }
+        });
+        mBtnOrder = findViewById(R.id.btn_add_order);
+        mBtnOrder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //TODO:补单操作
+                LTGameSDK.getDefaultInstance().addOrder(GooglePlayActivity.this,1);
             }
         });
 
@@ -77,6 +89,9 @@ public class GooglePlayActivity extends AppCompatActivity {
                 case LTResultCode.STATE_RECHARGE_SUCCESS_CODE://支付成功
                     mTxtResult.setText(result.getResultModel().getData().toString());
                     Log.e(TAG, "STATE_RECHARGE_SUCCESS_CODE");
+                    //TODO:补单操作
+                    GooglePlayHelper mHelper=new GooglePlayHelper(GooglePlayActivity.this,1);
+                    mHelper.addOrder();
                     break;
                 case LTResultCode.STATE_GP_RESPONSE_RESULT_FAILED://支付失败
                     Log.e(TAG, "STATE_GP_RESPONSE_RESULT_FAILED");
